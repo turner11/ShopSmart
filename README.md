@@ -9,6 +9,10 @@ the ShopSmart
 is a Tool
 that Saves him time.
 
+For more details about SOW, please refer to the link below.
+
+This is part of the Software engineering project. [cours page](https://github.com/jce-il/se-class)
+
 
 ## קישורים
 
