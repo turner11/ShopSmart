@@ -1,4 +1,4 @@
-SmartShop
+Shop-Smart
 =========
 Welcome to the **ShopSmart** Page.
 ![Logo](https://raw.github.com/turner11/ShopSmart/master/Images/ShopSmart_Logo.PNG)
