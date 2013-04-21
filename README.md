@@ -19,4 +19,5 @@ This is part of the Software engineering project. [cours page](https://github.co
 * [Project vision - חזון הפרויקט](SOW)
 * [Project Inception - אתחול הפרויקט](https://github.com/turner11/ShopSmart/wiki/Inception)
 * [SRS - מפרט דרישות תכנה](https://github.com/turner11/ShopSmart/wiki/SRS)
+* [SDS - מפרט תיכון תכנה](https://github.com/turner11/ShopSmart/wiki/SDS)
 
