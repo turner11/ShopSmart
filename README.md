@@ -19,6 +19,6 @@ This is part of the Software engineering project. [cours page](https://github.co
 * [Project vision - חזון הפרויקט](SOW)
 * [Project Inception - אתחול הפרויקט](https://github.com/turner11/ShopSmart/wiki/Inception)
 * [SRS - מפרט דרישות תכנה](https://github.com/turner11/ShopSmart/wiki/SRS)
-* [SDS - מפרט תיכון תכנה](https://github.com/turner11/ShopSmart/wiki/SDS)
+* [SDS - מפרט תיכון תכנה](https://github.com/turner11/ShopSmart/wiki/1.-SDS---%D7%9E%D7%A4%D7%A8%D7%98-%D7%AA%D7%99%D7%9B%D7%95%D7%9F-%D7%AA%D7%9B%D7%A0%D7%94)
 * [Main risk handling](https://github.com/turner11/ShopSmart/wiki/Main-risk-handling)
 * [Client Relations](https://github.com/turner11/ShopSmart/wiki/Client-relations)
