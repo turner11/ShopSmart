@@ -26,3 +26,12 @@ This is part of the Software engineering project. [cours page](https://github.co
 * [Shop-Smart Code]()
 * [Shop-Smart Binaries]()
 * [User Documentation](https://github.com/turner11/ShopSmart/wiki/User Documentation)
+ 
+## Developers documentation - תיעוד למפתחים
+
+Repository URL: https://github.com/turner11/ShopSmart/
+You may check it out using github tools (e.g. Github for windows / Github Shell) .
+
+License:  This project is open source under BSD licensing, with any restrictions JCE Azrieli college might have. 
+
+Structure: 
