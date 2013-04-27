@@ -29,9 +29,18 @@ This is part of the Software engineering project. [cours page](https://github.co
  
 ## Developers documentation - תיעוד למפתחים
 
-Repository URL: https://github.com/turner11/ShopSmart/
+###Repository URL:
+ https://github.com/turner11/ShopSmart/
 You may check it out using github tools (e.g. Github for windows / Github Shell) .
 
-License:  This project is open source under BSD licensing, with any restrictions JCE Azrieli college might have. 
+###License:  
+This project is open source under BSD licensing, with any restrictions JCE Azrieli college might have. 
 
-Structure: 
+###Structure: 
+The system is built of a client and a server.
+The Client has a GUI module and a communication component.
+The server holds:
+ 1. Another communication component which "talks" with client
+ 2. A business logic module.
+ 3. An SQL Server.
+For communicating with DB we are using Entity Framework.
