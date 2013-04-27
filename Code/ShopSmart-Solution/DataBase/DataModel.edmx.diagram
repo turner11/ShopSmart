@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b28296acbf8440d8a14d39028c779d0c" Name="Diagram1">
+        <EntityTypeShape EntityType="ShopSmartModel.Category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.CategorySort" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.Customer" Width="1.5" PointX="3.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.Product" Width="1.5" PointX="6" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.ShoplistItem" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.ShopList" Width="1.5" PointX="6" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.Supermarket" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.sysdiagram" Width="1.5" PointX="8.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.UserType" Width="1.5" PointX="1.5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.FullyJoinedProduct" Width="1.5" PointX="8.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopSmartModel.FullyJoinedShoppingList" Width="1.5" PointX="10.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="ShopSmartModel.FK_CategorySorts_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopSmartModel.FK_Products_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopSmartModel.FK_CategorySorts_Supermarkets" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopSmartModel.FK_Customers_UserTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopSmartModel.FK_ShopLists_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopSmartModel.FK_ItemsToBuy_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopSmartModel.FK_ItemsToBuy_ShopLists" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopSmartModel.FK_ShopLists_Supermarkets" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

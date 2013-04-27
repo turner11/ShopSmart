@@ -1,0 +1,911 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ShopSmartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ShopSmartModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="ShopSmartModel.Store.Categories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CategorySorts" EntityType="ShopSmartModel.Store.CategorySorts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Customers" EntityType="ShopSmartModel.Store.Customers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Products" EntityType="ShopSmartModel.Store.Products" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ShoplistItems" EntityType="ShopSmartModel.Store.ShoplistItems" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ShopLists" EntityType="ShopSmartModel.Store.ShopLists" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Supermarkets" EntityType="ShopSmartModel.Store.Supermarkets" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="ShopSmartModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserTypes" EntityType="ShopSmartModel.Store.UserTypes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FullyJoinedProducts" EntityType="ShopSmartModel.Store.FullyJoinedProducts" store:Type="Views" store:Schema="dbo" store:Name="FullyJoinedProducts">
+            <DefiningQuery>SELECT 
+      [FullyJoinedProducts].[Id] AS [Id], 
+      [FullyJoinedProducts].[ProductName] AS [ProductName], 
+      [FullyJoinedProducts].[Price] AS [Price], 
+      [FullyJoinedProducts].[Main] AS [Main], 
+      [FullyJoinedProducts].[CategoryId] AS [CategoryId], 
+      [FullyJoinedProducts].[CategoryName] AS [CategoryName], 
+      [FullyJoinedProducts].[CategorySort] AS [CategorySort], 
+      [FullyJoinedProducts].[SuperMarketName] AS [SuperMarketName], 
+      [FullyJoinedProducts].[SuperMarketId] AS [SuperMarketId]
+      FROM [dbo].[FullyJoinedProducts] AS [FullyJoinedProducts]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FullyJoinedShoppingLists" EntityType="ShopSmartModel.Store.FullyJoinedShoppingLists" store:Type="Views" store:Schema="dbo" store:Name="FullyJoinedShoppingLists">
+            <DefiningQuery>SELECT 
+      [FullyJoinedShoppingLists].[Id] AS [Id], 
+      [FullyJoinedShoppingLists].[ProductName] AS [ProductName], 
+      [FullyJoinedShoppingLists].[Price] AS [Price], 
+      [FullyJoinedShoppingLists].[Main] AS [Main], 
+      [FullyJoinedShoppingLists].[CategoryId] AS [CategoryId], 
+      [FullyJoinedShoppingLists].[CategoryName] AS [CategoryName], 
+      [FullyJoinedShoppingLists].[CategorySort] AS [CategorySort], 
+      [FullyJoinedShoppingLists].[ItemId] AS [ItemId], 
+      [FullyJoinedShoppingLists].[Quantity] AS [Quantity], 
+      [FullyJoinedShoppingLists].[ShopListTitle] AS [ShopListTitle], 
+      [FullyJoinedShoppingLists].[ShopListDate] AS [ShopListDate], 
+      [FullyJoinedShoppingLists].[ShopListId] AS [ShopListId], 
+      [FullyJoinedShoppingLists].[SuperMarketName] AS [SuperMarketName], 
+      [FullyJoinedShoppingLists].[SuperMarketId] AS [SuperMarketId], 
+      [FullyJoinedShoppingLists].[CustomerUserName] AS [CustomerUserName], 
+      [FullyJoinedShoppingLists].[CustomerId] AS [CustomerId]
+      FROM [dbo].[FullyJoinedShoppingLists] AS [FullyJoinedShoppingLists]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CategorySorts_Categories" Association="ShopSmartModel.Store.FK_CategorySorts_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CategorySorts" EntitySet="CategorySorts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategorySorts_Supermarkets" Association="ShopSmartModel.Store.FK_CategorySorts_Supermarkets">
+            <End Role="Supermarkets" EntitySet="Supermarkets" />
+            <End Role="CategorySorts" EntitySet="CategorySorts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customers_UserTypes" Association="ShopSmartModel.Store.FK_Customers_UserTypes">
+            <End Role="UserTypes" EntitySet="UserTypes" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsToBuy_Products" Association="ShopSmartModel.Store.FK_ItemsToBuy_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ShoplistItems" EntitySet="ShoplistItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsToBuy_ShopLists" Association="ShopSmartModel.Store.FK_ItemsToBuy_ShopLists">
+            <End Role="ShopLists" EntitySet="ShopLists" />
+            <End Role="ShoplistItems" EntitySet="ShoplistItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Categories" Association="ShopSmartModel.Store.FK_Products_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopLists_Customers" Association="ShopSmartModel.Store.FK_ShopLists_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="ShopLists" EntitySet="ShopLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopLists_Supermarkets" Association="ShopSmartModel.Store.FK_ShopLists_Supermarkets">
+            <End Role="Supermarkets" EntitySet="Supermarkets" />
+            <End Role="ShopLists" EntitySet="ShopLists" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CategorySorts">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="SupermarketId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="SupermarketId" Type="int" Nullable="false" />
+          <Property Name="SortValue" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="UserTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="20" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="255" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Main" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShoplistItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ShopListId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShopLists">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="SuperMarketId" Type="int" />
+        </EntityType>
+        <EntityType Name="Supermarkets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="UserTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'ShopSmart.dbo.FullyJoinedProducts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="FullyJoinedProducts">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Main" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="CategorySort" />
+            <PropertyRef Name="SuperMarketName" />
+            <PropertyRef Name="SuperMarketId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Main" Type="bit" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CategorySort" Type="int" Nullable="false" />
+          <Property Name="SuperMarketName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="SuperMarketId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'ShopSmart.dbo.FullyJoinedShoppingLists' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="FullyJoinedShoppingLists">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Main" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="CategorySort" />
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="Quantity" />
+            <PropertyRef Name="ShopListTitle" />
+            <PropertyRef Name="ShopListDate" />
+            <PropertyRef Name="ShopListId" />
+            <PropertyRef Name="SuperMarketName" />
+            <PropertyRef Name="SuperMarketId" />
+            <PropertyRef Name="CustomerUserName" />
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Main" Type="bit" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CategorySort" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="ShopListTitle" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ShopListDate" Type="date" Nullable="false" />
+          <Property Name="ShopListId" Type="int" Nullable="false" />
+          <Property Name="SuperMarketName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="SuperMarketId" Type="int" Nullable="false" />
+          <Property Name="CustomerUserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CategorySorts_Categories">
+          <End Role="Categories" Type="ShopSmartModel.Store.Categories" Multiplicity="1" />
+          <End Role="CategorySorts" Type="ShopSmartModel.Store.CategorySorts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategorySorts">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategorySorts_Supermarkets">
+          <End Role="Supermarkets" Type="ShopSmartModel.Store.Supermarkets" Multiplicity="1" />
+          <End Role="CategorySorts" Type="ShopSmartModel.Store.CategorySorts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supermarkets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategorySorts">
+              <PropertyRef Name="SupermarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customers_UserTypes">
+          <End Role="UserTypes" Type="ShopSmartModel.Store.UserTypes" Multiplicity="1" />
+          <End Role="Customers" Type="ShopSmartModel.Store.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemsToBuy_Products">
+          <End Role="Products" Type="ShopSmartModel.Store.Products" Multiplicity="1" />
+          <End Role="ShoplistItems" Type="ShopSmartModel.Store.ShoplistItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoplistItems">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemsToBuy_ShopLists">
+          <End Role="ShopLists" Type="ShopSmartModel.Store.ShopLists" Multiplicity="1" />
+          <End Role="ShoplistItems" Type="ShopSmartModel.Store.ShoplistItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShopLists">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoplistItems">
+              <PropertyRef Name="ShopListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Categories">
+          <End Role="Categories" Type="ShopSmartModel.Store.Categories" Multiplicity="1" />
+          <End Role="Products" Type="ShopSmartModel.Store.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopLists_Customers">
+          <End Role="Customers" Type="ShopSmartModel.Store.Customers" Multiplicity="0..1" />
+          <End Role="ShopLists" Type="ShopSmartModel.Store.ShopLists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopLists">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopLists_Supermarkets">
+          <End Role="Supermarkets" Type="ShopSmartModel.Store.Supermarkets" Multiplicity="0..1" />
+          <End Role="ShopLists" Type="ShopSmartModel.Store.ShopLists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supermarkets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopLists">
+              <PropertyRef Name="SuperMarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetProductsBySupermarkrt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SuperMarketId" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Id" Type="int" Nullable="false" />
+                <Property Name="ProductName" Type="nvarchar" MaxLength="20" />
+                <Property Name="Price" Type="money" />
+                <Property Name="Main" Type="bit" Nullable="false" />
+                <Property Name="CategoryId" Type="int" Nullable="false" />
+                <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+                <Property Name="CategorySort" Type="int" Nullable="false" />
+                <Property Name="SuperMarketName" Type="nvarchar" Nullable="false" MaxLength="50" />
+                <Property Name="SuperMarketId" Type="int" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShopSmartModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ShopSmartEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="ShopSmartModel.Category" />
+          <EntitySet Name="CategorySorts" EntityType="ShopSmartModel.CategorySort" />
+          <EntitySet Name="Customers" EntityType="ShopSmartModel.Customer" />
+          <EntitySet Name="Products" EntityType="ShopSmartModel.Product" />
+          <EntitySet Name="ShoplistItems" EntityType="ShopSmartModel.ShoplistItem" />
+          <EntitySet Name="ShopLists" EntityType="ShopSmartModel.ShopList" />
+          <EntitySet Name="Supermarkets" EntityType="ShopSmartModel.Supermarket" />
+          <EntitySet Name="sysdiagrams" EntityType="ShopSmartModel.sysdiagram" />
+          <EntitySet Name="UserTypes" EntityType="ShopSmartModel.UserType" />
+          <EntitySet Name="FullyJoinedProducts" EntityType="ShopSmartModel.FullyJoinedProduct" />
+          <EntitySet Name="FullyJoinedShoppingLists" EntityType="ShopSmartModel.FullyJoinedShoppingList" />
+          <AssociationSet Name="FK_CategorySorts_Categories" Association="ShopSmartModel.FK_CategorySorts_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CategorySorts" EntitySet="CategorySorts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Categories" Association="ShopSmartModel.FK_Products_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategorySorts_Supermarkets" Association="ShopSmartModel.FK_CategorySorts_Supermarkets">
+            <End Role="Supermarkets" EntitySet="Supermarkets" />
+            <End Role="CategorySorts" EntitySet="CategorySorts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customers_UserTypes" Association="ShopSmartModel.FK_Customers_UserTypes">
+            <End Role="UserTypes" EntitySet="UserTypes" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopLists_Customers" Association="ShopSmartModel.FK_ShopLists_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="ShopLists" EntitySet="ShopLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsToBuy_Products" Association="ShopSmartModel.FK_ItemsToBuy_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ShoplistItems" EntitySet="ShoplistItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsToBuy_ShopLists" Association="ShopSmartModel.FK_ItemsToBuy_ShopLists">
+            <End Role="ShopLists" EntitySet="ShopLists" />
+            <End Role="ShoplistItems" EntitySet="ShoplistItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopLists_Supermarkets" Association="ShopSmartModel.FK_ShopLists_Supermarkets">
+            <End Role="Supermarkets" EntitySet="Supermarkets" />
+            <End Role="ShopLists" EntitySet="ShopLists" />
+          </AssociationSet>
+          <FunctionImport Name="GetProductsBySupermarkrt" ReturnType="Collection(ShopSmartModel.GetProductsBySupermarkrt_Result)" IsComposable="true">
+            <Parameter Name="SuperMarketId" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ShopSmartModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ShopSmartModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="GetProductsBySupermarkrt_Result">
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Main" Type="Boolean" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="CategorySort" Type="Int32" Nullable="false" />
+          <Property Name="SuperMarketName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="SuperMarketId" Type="Int32" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="CategorySorts" Relationship="ShopSmartModel.FK_CategorySorts_Categories" FromRole="Categories" ToRole="CategorySorts" />
+          <NavigationProperty Name="Products" Relationship="ShopSmartModel.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="CategorySort">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="SupermarketId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SupermarketId" Type="Int32" Nullable="false" />
+          <Property Name="SortValue" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="ShopSmartModel.FK_CategorySorts_Categories" FromRole="CategorySorts" ToRole="Categories" />
+          <NavigationProperty Name="Supermarket" Relationship="ShopSmartModel.FK_CategorySorts_Supermarkets" FromRole="CategorySorts" ToRole="Supermarkets" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserType" Relationship="ShopSmartModel.FK_Customers_UserTypes" FromRole="Customers" ToRole="UserTypes" />
+          <NavigationProperty Name="ShopLists" Relationship="ShopSmartModel.FK_ShopLists_Customers" FromRole="Customers" ToRole="ShopLists" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Main" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="ShopSmartModel.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
+          <NavigationProperty Name="ShoplistItems" Relationship="ShopSmartModel.FK_ItemsToBuy_Products" FromRole="Products" ToRole="ShoplistItems" />
+        </EntityType>
+        <EntityType Name="ShoplistItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ShopListId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="ShopSmartModel.FK_ItemsToBuy_Products" FromRole="ShoplistItems" ToRole="Products" />
+          <NavigationProperty Name="ShopList" Relationship="ShopSmartModel.FK_ItemsToBuy_ShopLists" FromRole="ShoplistItems" ToRole="ShopLists" />
+        </EntityType>
+        <EntityType Name="ShopList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="SuperMarketId" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="ShopSmartModel.FK_ShopLists_Customers" FromRole="ShopLists" ToRole="Customers" />
+          <NavigationProperty Name="ShoplistItems" Relationship="ShopSmartModel.FK_ItemsToBuy_ShopLists" FromRole="ShopLists" ToRole="ShoplistItems" />
+          <NavigationProperty Name="Supermarket" Relationship="ShopSmartModel.FK_ShopLists_Supermarkets" FromRole="ShopLists" ToRole="Supermarkets" />
+        </EntityType>
+        <EntityType Name="Supermarket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="CategorySorts" Relationship="ShopSmartModel.FK_CategorySorts_Supermarkets" FromRole="Supermarkets" ToRole="CategorySorts" />
+          <NavigationProperty Name="ShopLists" Relationship="ShopSmartModel.FK_ShopLists_Supermarkets" FromRole="Supermarkets" ToRole="ShopLists" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Customers" Relationship="ShopSmartModel.FK_Customers_UserTypes" FromRole="UserTypes" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="FullyJoinedProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Main" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="CategorySort" />
+            <PropertyRef Name="SuperMarketName" />
+            <PropertyRef Name="SuperMarketId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Main" Type="Boolean" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="CategorySort" Type="Int32" Nullable="false" />
+          <Property Name="SuperMarketName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="SuperMarketId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FullyJoinedShoppingList">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Main" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="CategorySort" />
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="Quantity" />
+            <PropertyRef Name="ShopListTitle" />
+            <PropertyRef Name="ShopListDate" />
+            <PropertyRef Name="ShopListId" />
+            <PropertyRef Name="SuperMarketName" />
+            <PropertyRef Name="SuperMarketId" />
+            <PropertyRef Name="CustomerUserName" />
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Main" Type="Boolean" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="CategorySort" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="ShopListTitle" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShopListDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ShopListId" Type="Int32" Nullable="false" />
+          <Property Name="SuperMarketName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="SuperMarketId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerUserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CategorySorts_Categories">
+          <End Role="Categories" Type="ShopSmartModel.Category" Multiplicity="1" />
+          <End Role="CategorySorts" Type="ShopSmartModel.CategorySort" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategorySorts">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Categories">
+          <End Role="Categories" Type="ShopSmartModel.Category" Multiplicity="1" />
+          <End Role="Products" Type="ShopSmartModel.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategorySorts_Supermarkets">
+          <End Role="Supermarkets" Type="ShopSmartModel.Supermarket" Multiplicity="1" />
+          <End Role="CategorySorts" Type="ShopSmartModel.CategorySort" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supermarkets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategorySorts">
+              <PropertyRef Name="SupermarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customers_UserTypes">
+          <End Role="UserTypes" Type="ShopSmartModel.UserType" Multiplicity="1" />
+          <End Role="Customers" Type="ShopSmartModel.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopLists_Customers">
+          <End Role="Customers" Type="ShopSmartModel.Customer" Multiplicity="0..1" />
+          <End Role="ShopLists" Type="ShopSmartModel.ShopList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopLists">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemsToBuy_Products">
+          <End Role="Products" Type="ShopSmartModel.Product" Multiplicity="1" />
+          <End Role="ShoplistItems" Type="ShopSmartModel.ShoplistItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoplistItems">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemsToBuy_ShopLists">
+          <End Role="ShopLists" Type="ShopSmartModel.ShopList" Multiplicity="1" />
+          <End Role="ShoplistItems" Type="ShopSmartModel.ShoplistItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShopLists">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoplistItems">
+              <PropertyRef Name="ShopListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopLists_Supermarkets">
+          <End Role="Supermarkets" Type="ShopSmartModel.Supermarket" Multiplicity="0..1" />
+          <End Role="ShopLists" Type="ShopSmartModel.ShopList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supermarkets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopLists">
+              <PropertyRef Name="SuperMarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShopSmartModelStoreContainer" CdmEntityContainer="ShopSmartEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ShopSmartModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategorySorts">
+            <EntityTypeMapping TypeName="ShopSmartModel.CategorySort">
+              <MappingFragment StoreEntitySet="CategorySorts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="SupermarketId" ColumnName="SupermarketId" />
+                <ScalarProperty Name="SortValue" ColumnName="SortValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ShopSmartModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ShopSmartModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Main" ColumnName="Main" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoplistItems">
+            <EntityTypeMapping TypeName="ShopSmartModel.ShoplistItem">
+              <MappingFragment StoreEntitySet="ShoplistItems">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ShopListId" ColumnName="ShopListId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShopLists">
+            <EntityTypeMapping TypeName="ShopSmartModel.ShopList">
+              <MappingFragment StoreEntitySet="ShopLists">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SuperMarketId" ColumnName="SuperMarketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supermarkets">
+            <EntityTypeMapping TypeName="ShopSmartModel.Supermarket">
+              <MappingFragment StoreEntitySet="Supermarkets">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ShopSmartModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="ShopSmartModel.UserType">
+              <MappingFragment StoreEntitySet="UserTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FullyJoinedProducts">
+            <EntityTypeMapping TypeName="ShopSmartModel.FullyJoinedProduct">
+              <MappingFragment StoreEntitySet="FullyJoinedProducts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Main" ColumnName="Main" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategorySort" ColumnName="CategorySort" />
+                <ScalarProperty Name="SuperMarketName" ColumnName="SuperMarketName" />
+                <ScalarProperty Name="SuperMarketId" ColumnName="SuperMarketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FullyJoinedShoppingLists">
+            <EntityTypeMapping TypeName="ShopSmartModel.FullyJoinedShoppingList">
+              <MappingFragment StoreEntitySet="FullyJoinedShoppingLists">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Main" ColumnName="Main" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategorySort" ColumnName="CategorySort" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ShopListTitle" ColumnName="ShopListTitle" />
+                <ScalarProperty Name="ShopListDate" ColumnName="ShopListDate" />
+                <ScalarProperty Name="ShopListId" ColumnName="ShopListId" />
+                <ScalarProperty Name="SuperMarketName" ColumnName="SuperMarketName" />
+                <ScalarProperty Name="SuperMarketId" ColumnName="SuperMarketId" />
+                <ScalarProperty Name="CustomerUserName" ColumnName="CustomerUserName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionName="ShopSmartModel.Store.GetProductsBySupermarkrt" FunctionImportName="GetProductsBySupermarkrt">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopSmartModel.GetProductsBySupermarkrt_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Main" ColumnName="Main" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategorySort" ColumnName="CategorySort" />
+                <ScalarProperty Name="SuperMarketName" ColumnName="SuperMarketName" />
+                <ScalarProperty Name="SuperMarketId" ColumnName="SuperMarketId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ShopSmartModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ShopSmartModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ShopSmartModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ShopSmartModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopSmartModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ShopSmartModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopSmartModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ShopSmartModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ShopSmartModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
