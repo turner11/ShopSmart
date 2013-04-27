@@ -23,3 +23,5 @@ This is part of the Software engineering project. [cours page](https://github.co
 * [Main risk handling](https://github.com/turner11/ShopSmart/wiki/Main-risk-handling)
 * [Client Relations](https://github.com/turner11/ShopSmart/wiki/Client-relations)
 * [Tutorial for working environment](https://github.com/turner11/ShopSmart/wiki/Environment-Tutorial)
+* [Shop-Smart Code]()
+* [Shop-Smart Binaries]()
