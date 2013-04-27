@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ShopSmart.Dal
 {
+    /// <summary>
+    /// Hanles access to Data base and data manipulation
+    /// </summary>
     public static class DataBase
     {
     }

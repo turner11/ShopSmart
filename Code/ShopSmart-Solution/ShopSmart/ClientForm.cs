@@ -10,6 +10,9 @@ using ShopSmart.Common;
 
 namespace ShopSmart.Client
 {
+    /// <summary>
+    /// The GUI for client side
+    /// </summary>
     public partial class ClientForm : Form
     {
         public ClientForm()

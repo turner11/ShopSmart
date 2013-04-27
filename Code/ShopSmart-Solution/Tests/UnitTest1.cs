@@ -6,6 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
+    /// <summary>
+    /// Handles the tests for the whole solution
+    /// </summary>
     [TestClass]
     public class UnitTest1
     {
