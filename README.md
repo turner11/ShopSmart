@@ -25,3 +25,4 @@ This is part of the Software engineering project. [cours page](https://github.co
 * [Tutorial for working environment](https://github.com/turner11/ShopSmart/wiki/Environment-Tutorial)
 * [Shop-Smart Code]()
 * [Shop-Smart Binaries]()
+* [Project Inception - אתחול הפרויקט](https://github.com/turner11/ShopSmart/wiki/User Documentation)
