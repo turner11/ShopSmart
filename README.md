@@ -44,3 +44,21 @@ The server holds:
  2. A business logic module.
  3. An SQL Server.
 For communicating with DB we are using Entity Framework.
+
+###Building the program
+For building the program, pull the solution out of repository. The built sequence is part of the sln file.
+
+### Testing
+This is not implemented yet. 
+The plan is to have a test project with unit tests.
+
+###New versions
+For new new versions the following is required:
+ 1. Documenting all changes.
+ 2. If applicable: creating / modifying Unit test for changes.
+ 3. Committing all changes (and document commit).
+ 4. Syncing commit with github.
+
+###Github issues
+For adding Issues , please go to the [issues page](https://github.com/turner11/ShopSmart/issues?state=open).
+If you want to work on an open issue, please add the request in the bug note, or directly contact us on develop@smartshop.cpm
