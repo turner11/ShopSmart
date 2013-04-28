@@ -46,6 +46,10 @@ The server holds:
  3. An SQL Server.
 For communicating with DB we are using Entity Framework.
 
+#Note: 
+The software relays on a database. In order to build the database, you can run the script available [here](https://raw.github.com/turner11/ShopSmart/master/Code/BuildDbScript.sql) on an MS SQL Server
+This script assumes you do not have an existing ShopSmart db on your server
+
 ###Building the program
 For building the program, pull the solution out of repository. The built sequence is part of the sln file.
 
