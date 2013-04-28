@@ -31,6 +31,7 @@ This is part of the Software engineering project. [cours page](https://github.co
 
 ###Repository URL:
 https://github.com/turner11/ShopSmart/ 
+
  You may check out the latest version (or any other version...) using github tools (e.g. Github for windows / Github Shell) .
 
 ###License:  
