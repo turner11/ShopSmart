@@ -62,4 +62,4 @@ For new new versions the following is required:
 
 ###Github issues
 For adding Issues , please go to the [issues page](https://github.com/turner11/ShopSmart/issues?state=open).
-If you want to work on an open issue, please add the request in the bug note, or directly contact us on develop@smartshop.cpm
+If you want to work on an open issue, please add the request in the bug note, or directly contact us on develop@smartshop.com
