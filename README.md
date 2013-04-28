@@ -29,15 +29,15 @@ This is part of the Software engineering project. [cours page](https://github.co
  
 ## Developers documentation - תיעוד למפתחים
 
-###Repository URL:
+#Repository URL:
 https://github.com/turner11/ShopSmart/ 
 
  You may check out the latest version (or any other version...) using github tools (e.g. Github for windows / Github Shell) .
 
-###License:  
+#License:  
 This project is open source under BSD licensing, with any restrictions JCE Azrieli college might have. 
 
-###Structure: 
+#Structure: 
 The system is built of a client and a server.
 The Client has a GUI module and a communication component.
 The server holds:
@@ -46,27 +46,27 @@ The server holds:
  3. An SQL Server.
 For communicating with DB we are using Entity Framework.
 
-#Note: 
+###Note: 
 The software relays on a database. In order to build the database, you can run the script available [here](https://raw.github.com/turner11/ShopSmart/master/Code/BuildDbScript.sql) on an MS SQL Server
 This script assumes you do not have an existing ShopSmart db on your server
 
-###Building the program
+#Building the program
 For building the program, pull the solution out of repository. The built sequence is part of the sln file.
 
-### Testing
+# Testing
 This is not implemented yet. 
 The plan is to have a test project with unit tests.
 
-###New versions
+#New versions
 For new new versions the following is required:
  1. Documenting all changes.
  2. If applicable: creating / modifying Unit test for changes.
  3. Committing all changes (and document commit).
  4. Syncing commit with github.
 
-###Github issues
+#Github issues
 For adding Issues , please go to the [issues page](https://github.com/turner11/ShopSmart/issues?state=open).
 If you want to work on an open issue, please add the request in the bug note, or directly contact us on develop@smartshop.com
 
-###General
+#General
 You might also be interested in the [User Documentation](https://github.com/turner11/ShopSmart/wiki/User%20Documentation) page and the [Shop-Smart Binaries]() (to be implemented...) 
