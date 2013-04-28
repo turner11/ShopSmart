@@ -65,4 +65,4 @@ For adding Issues , please go to the [issues page](https://github.com/turner11/S
 If you want to work on an open issue, please add the request in the bug note, or directly contact us on develop@smartshop.com
 
 ###General
-You might also be interested in the [User Documentation](https://github.com/turner11/ShopSmart/wiki/User) page and the [Shop-Smart Binaries]() (to be implemented...) 
+You might also be interested in the [User Documentation](https://github.com/turner11/ShopSmart/wiki/User%20Documentation) page and the [Shop-Smart Binaries]() (to be implemented...) 
