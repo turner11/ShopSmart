@@ -23,7 +23,7 @@ This is part of the Software engineering project. [cours page](https://github.co
 * [Main risk handling](https://github.com/turner11/ShopSmart/wiki/Main-risk-handling)
 * [Client Relations](https://github.com/turner11/ShopSmart/wiki/Client-relations)
 * [Tutorial for working environment](https://github.com/turner11/ShopSmart/wiki/Environment-Tutorial)
-* [Shop-Smart Code]()
+* [Shop-Smart Code](https://github.com/turner11/ShopSmart/tree/master/Code/ShopSmart-Solution)
 * [Shop-Smart Binaries]()
 * [User Documentation](https://github.com/turner11/ShopSmart/wiki/User Documentation)
  
@@ -63,3 +63,6 @@ For new new versions the following is required:
 ###Github issues
 For adding Issues , please go to the [issues page](https://github.com/turner11/ShopSmart/issues?state=open).
 If you want to work on an open issue, please add the request in the bug note, or directly contact us on develop@smartshop.com
+
+###General
+You might also be interested in the [User Documentation](https://github.com/turner11/ShopSmart/wiki/User) page and the [Shop-Smart Binaries]() (to be implemented...) 
