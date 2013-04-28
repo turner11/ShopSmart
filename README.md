@@ -30,8 +30,8 @@ This is part of the Software engineering project. [cours page](https://github.co
 ## Developers documentation - תיעוד למפתחים
 
 ###Repository URL:
- https://github.com/turner11/ShopSmart/
-You may check it out using github tools (e.g. Github for windows / Github Shell) .
+https://github.com/turner11/ShopSmart/ 
+You may check out the latest version (or any other version...) using github tools (e.g. Github for windows / Github Shell) .
 
 ###License:  
 This project is open source under BSD licensing, with any restrictions JCE Azrieli college might have. 
