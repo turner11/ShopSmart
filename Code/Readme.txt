@@ -1,0 +1,1 @@
+Please run the script in order to build the DB
