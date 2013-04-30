@@ -37,7 +37,7 @@ namespace ShopSmart.Bl
         /// Sorts the specified shop list.
         /// </summary>
         /// <param name="shoppingList">The shopping list.</param>
-        private void SortShopList(ShopList shoppingList)
+        public static void SortShopList(ShopList shoppingList)
         {
             //if we got a null, there is nothing for us to do
             if (shoppingList != null)

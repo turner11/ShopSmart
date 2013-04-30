@@ -11,5 +11,6 @@ namespace ShopSmart.Dal
     /// </summary>
     public static class DataBase
     {
+       
     }
 }

@@ -61,10 +61,6 @@
       <Project>{81acc0eb-38fa-478f-aadf-5bae79dc00d7}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommunicationLogics\CommunicationLogics.csproj">
-      <Project>{256b9762-a95b-432e-84b2-12dd59db55d8}</Project>
-      <Name>CommunicationLogics</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DataBase\DataBase.csproj">
       <Project>{3992a9a9-715a-4bd2-899d-e32835674316}</Project>
       <Name>DataBase</Name>
