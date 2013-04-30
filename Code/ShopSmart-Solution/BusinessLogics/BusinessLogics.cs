@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using ShopSmart.Dal;
@@ -16,7 +17,7 @@ namespace ShopSmart.Bl
         /// <summary>
         /// The data base that we are working against
         /// </summary>
-        ShopSmartEntities _db;
+        DataBase _db;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessLogics"/> class.
@@ -24,12 +25,9 @@ namespace ShopSmart.Bl
         public BusinessLogics()
         {
             //Initializing the DAL
-            this._db = new ShopSmartEntities();
+            this._db = new DataBase();
             //we will have to detect and save changes manually
-            this._db.Configuration.AutoDetectChangesEnabled = false;
-            this._db.Configuration.LazyLoadingEnabled = true;
-            this._db.Configuration.ProxyCreationEnabled= true;
-            this._db.Configuration.ValidateOnSaveEnabled= true;
+            
         }
 
 
@@ -39,6 +37,8 @@ namespace ShopSmart.Bl
         /// <param name="shoppingList">The shopping list.</param>
         public static void SortShopList(ShopList shoppingList)
         {
+            
+            
             //if we got a null, there is nothing for us to do
             if (shoppingList != null)
             {
@@ -67,5 +67,30 @@ namespace ShopSmart.Bl
                 //TODO: Add log
             }
         }
+
+        //TODO: Make this generic
+        #region Get items from DB
+        /// <summary>
+        /// Gets all products.
+        /// </summary>
+        /// <returns>list containg products</returns>
+        public List<Product> GetAllProducts()
+        {
+            IEnumerable<Product> dbProducts = this._db.GetAllProducts() ?? (IEnumerable<Product>)new List<Product>();
+            List<Product> products = dbProducts.ToList<Product>();
+            return products;
+        }
+
+        /// <summary>
+        /// Gets all categories.
+        /// </summary>
+        /// <returns>list containg products</returns>
+        public List<Category> GetAllCategories()
+        {
+            IEnumerable<Category> dbCategories = this._db.GetAllCategories() ?? (IEnumerable<Category>)new List<Category>();
+            List<Category> categories = dbCategories.ToList<Category>();
+            return categories;
+        } 
+        #endregion
     }
 }

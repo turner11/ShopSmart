@@ -22,6 +22,7 @@ namespace ShopSmart.Dal
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public System.Guid guid { get; set; }
     
         public virtual ICollection<CategorySort> CategorySorts { get; set; }
         public virtual ICollection<Product> Products { get; set; }

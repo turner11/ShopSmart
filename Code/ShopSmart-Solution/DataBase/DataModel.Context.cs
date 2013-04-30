@@ -21,6 +21,7 @@ namespace ShopSmart.Dal
         public ShopSmartEntities()
             : base("name=ShopSmartEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

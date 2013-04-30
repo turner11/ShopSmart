@@ -37,6 +37,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,6 +58,16 @@
     </Compile>
     <Compile Include="ClientForm.Designer.cs">
       <DependentUpon>ClientForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductsNode.cs" />
+    <Compile Include="ProductsNode.Designer.cs">
+      <DependentUpon>ProductsNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductsTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProductsTreeView.Designer.cs">
+      <DependentUpon>ProductsTreeView.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +104,14 @@
       <Project>{81acc0eb-38fa-478f-aadf-5bae79dc00d7}</Project>
       <Name>Common</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </ProjectReference>
+    <ProjectReference Include="..\CommunicationLogics\CommunicationLogics.csproj">
+      <Project>{ebf2e027-021d-44a4-81ff-c3b7f9802e2c}</Project>
+      <Name>CommunicationLogics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataBase\DataBase.csproj">
+      <Project>{3992a9a9-715a-4bd2-899d-e32835674316}</Project>
+      <Name>DataBase</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

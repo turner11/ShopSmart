@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShopSmartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ShopSmartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="ShopSmartModelStoreContainer">
           <EntitySet Name="Categories" EntityType="ShopSmartModel.Store.Categories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CategorySorts" EntityType="ShopSmartModel.Store.CategorySorts" store:Type="Tables" Schema="dbo" />
@@ -86,6 +86,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CategorySorts">
@@ -118,6 +119,7 @@
           <Property Name="Notes" Type="nvarchar" MaxLength="255" />
           <Property Name="Price" Type="money" />
           <Property Name="Main" Type="bit" Nullable="false" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="ShoplistItems">
           <Key>
@@ -144,6 +146,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -365,12 +368,11 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShopSmartModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="ShopSmartEntities" p1:LazyLoadingEnabled="true">
+        <EntityContainer Name="ShopSmartEntities" p1:LazyLoadingEnabled="false">
           <EntitySet Name="Categories" EntityType="ShopSmartModel.Category" />
           <EntitySet Name="CategorySorts" EntityType="ShopSmartModel.CategorySort" />
           <EntitySet Name="Customers" EntityType="ShopSmartModel.Customer" />
@@ -415,7 +417,7 @@
             <End Role="ShopLists" EntitySet="ShopLists" />
           </AssociationSet>
           <FunctionImport Name="GetProductsBySupermarkrt" ReturnType="Collection(ShopSmartModel.GetProductsBySupermarkrt_Result)" IsComposable="true">
-            <Parameter Name="SuperMarketId" Type="Int32" />
+          <Parameter Name="SuperMarketId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -467,6 +469,7 @@
           <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CategorySorts" Relationship="ShopSmartModel.FK_CategorySorts_Categories" FromRole="Categories" ToRole="CategorySorts" />
           <NavigationProperty Name="Products" Relationship="ShopSmartModel.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
+          <Property Type="Guid" Name="guid" Nullable="false" />
         </EntityType>
         <EntityType Name="CategorySort">
           <Key>
@@ -504,6 +507,7 @@
           <Property Name="Main" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="ShopSmartModel.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="ShoplistItems" Relationship="ShopSmartModel.FK_ItemsToBuy_Products" FromRole="Products" ToRole="ShoplistItems" />
+          <Property Type="Guid" Name="guid" Nullable="false" />
         </EntityType>
         <EntityType Name="ShoplistItem">
           <Key>
@@ -537,6 +541,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CategorySorts" Relationship="ShopSmartModel.FK_CategorySorts_Supermarkets" FromRole="Supermarkets" ToRole="CategorySorts" />
           <NavigationProperty Name="ShopLists" Relationship="ShopSmartModel.FK_ShopLists_Supermarkets" FromRole="Supermarkets" ToRole="ShopLists" />
+          <Property Type="Guid" Name="guid" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -724,6 +729,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="ShopSmartModel.Category">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -753,6 +759,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ShopSmartModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
@@ -786,6 +793,7 @@
           <EntitySetMapping Name="Supermarkets">
             <EntityTypeMapping TypeName="ShopSmartModel.Supermarket">
               <MappingFragment StoreEntitySet="Supermarkets">
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -900,7 +908,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

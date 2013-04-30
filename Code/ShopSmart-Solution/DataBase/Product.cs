@@ -25,6 +25,7 @@ namespace ShopSmart.Dal
         public string Notes { get; set; }
         public Nullable<decimal> Price { get; set; }
         public bool Main { get; set; }
+        public System.Guid guid { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual ICollection<ShoplistItem> ShoplistItems { get; set; }
