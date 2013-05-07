@@ -30,15 +30,26 @@
         {
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpShoppingList = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.gvProducts = new System.Windows.Forms.DataGridView();
             this.txbFilter = new System.Windows.Forms.TextBox();
+            this.chbCheckAll = new System.Windows.Forms.CheckBox();
+            this.tlpCategories = new System.Windows.Forms.TableLayoutPanel();
             this.cblCategories = new System.Windows.Forms.CheckedListBox();
+            this.btnSend = new System.Windows.Forms.Button();
             this.tpSettings = new System.Windows.Forms.TabPage();
+            this.tlbSettings = new System.Windows.Forms.TableLayoutPanel();
+            this.lblSuperMarkets = new System.Windows.Forms.Label();
+            this.cmbSuperMarkets = new System.Windows.Forms.ComboBox();
+            this.clmToBuy = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.clmQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tcMain.SuspendLayout();
             this.tpShoppingList.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tlpMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvProducts)).BeginInit();
+            this.tlpCategories.SuspendLayout();
+            this.tpSettings.SuspendLayout();
+            this.tlbSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMain
@@ -56,7 +67,7 @@
             // 
             // tpShoppingList
             // 
-            this.tpShoppingList.Controls.Add(this.tableLayoutPanel1);
+            this.tpShoppingList.Controls.Add(this.tlpMain);
             this.tpShoppingList.Location = new System.Drawing.Point(4, 25);
             this.tpShoppingList.Name = "tpShoppingList";
             this.tpShoppingList.Padding = new System.Windows.Forms.Padding(3);
@@ -65,36 +76,46 @@
             this.tpShoppingList.Text = "רשימת קניות";
             this.tpShoppingList.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // tlpMain
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel1.Controls.Add(this.gvProducts, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txbFilter, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.cblCategories, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(677, 444);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.tlpMain.ColumnCount = 2;
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tlpMain.Controls.Add(this.gvProducts, 1, 1);
+            this.tlpMain.Controls.Add(this.txbFilter, 1, 0);
+            this.tlpMain.Controls.Add(this.chbCheckAll, 0, 0);
+            this.tlpMain.Controls.Add(this.tlpCategories, 0, 1);
+            this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMain.Location = new System.Drawing.Point(3, 3);
+            this.tlpMain.Name = "tlpMain";
+            this.tlpMain.RowCount = 2;
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpMain.Size = new System.Drawing.Size(677, 444);
+            this.tlpMain.TabIndex = 0;
             // 
             // gvProducts
             // 
             this.gvProducts.AllowUserToAddRows = false;
             this.gvProducts.AllowUserToDeleteRows = false;
             this.gvProducts.AllowUserToOrderColumns = true;
+            this.gvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.gvProducts.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gvProducts.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.gvProducts.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.gvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.clmToBuy,
+            this.clmQuantity});
             this.gvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvProducts.Location = new System.Drawing.Point(3, 33);
+            this.gvProducts.MultiSelect = false;
             this.gvProducts.Name = "gvProducts";
-            this.gvProducts.ReadOnly = true;
             this.gvProducts.RowTemplate.Height = 24;
             this.gvProducts.Size = new System.Drawing.Size(468, 408);
             this.gvProducts.TabIndex = 0;
+            this.gvProducts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvProducts_CellEndEdit);
+            this.gvProducts.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gvProducts_EditingControlShowing);
             // 
             // txbFilter
             // 
@@ -103,17 +124,58 @@
             this.txbFilter.Size = new System.Drawing.Size(206, 22);
             this.txbFilter.TabIndex = 1;
             // 
+            // chbCheckAll
+            // 
+            this.chbCheckAll.AutoSize = true;
+            this.chbCheckAll.Checked = true;
+            this.chbCheckAll.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbCheckAll.Location = new System.Drawing.Point(597, 3);
+            this.chbCheckAll.Name = "chbCheckAll";
+            this.chbCheckAll.Size = new System.Drawing.Size(77, 21);
+            this.chbCheckAll.TabIndex = 3;
+            this.chbCheckAll.Text = "סמן הכל";
+            this.chbCheckAll.UseVisualStyleBackColor = true;
+            this.chbCheckAll.CheckedChanged += new System.EventHandler(this.chbCheckAll_CheckedChanged);
+            // 
+            // tlpCategories
+            // 
+            this.tlpCategories.ColumnCount = 1;
+            this.tlpCategories.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCategories.Controls.Add(this.cblCategories, 0, 0);
+            this.tlpCategories.Controls.Add(this.btnSend, 0, 1);
+            this.tlpCategories.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpCategories.Location = new System.Drawing.Point(477, 33);
+            this.tlpCategories.Name = "tlpCategories";
+            this.tlpCategories.RowCount = 2;
+            this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tlpCategories.Size = new System.Drawing.Size(197, 408);
+            this.tlpCategories.TabIndex = 4;
+            // 
             // cblCategories
             // 
             this.cblCategories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cblCategories.FormattingEnabled = true;
-            this.cblCategories.Location = new System.Drawing.Point(477, 33);
+            this.cblCategories.Location = new System.Drawing.Point(3, 3);
             this.cblCategories.Name = "cblCategories";
-            this.cblCategories.Size = new System.Drawing.Size(197, 408);
+            this.cblCategories.Size = new System.Drawing.Size(191, 372);
             this.cblCategories.TabIndex = 2;
+            this.cblCategories.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.cblCategories_ItemCheck);
+            // 
+            // btnSend
+            // 
+            this.btnSend.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSend.Location = new System.Drawing.Point(3, 381);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(191, 24);
+            this.btnSend.TabIndex = 3;
+            this.btnSend.Text = "שלח";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // tpSettings
             // 
+            this.tpSettings.Controls.Add(this.tlbSettings);
             this.tpSettings.Location = new System.Drawing.Point(4, 25);
             this.tpSettings.Name = "tpSettings";
             this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
@@ -121,6 +183,55 @@
             this.tpSettings.TabIndex = 1;
             this.tpSettings.Text = "הגדרות";
             this.tpSettings.UseVisualStyleBackColor = true;
+            // 
+            // tlbSettings
+            // 
+            this.tlbSettings.ColumnCount = 2;
+            this.tlbSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlbSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlbSettings.Controls.Add(this.lblSuperMarkets, 0, 0);
+            this.tlbSettings.Controls.Add(this.cmbSuperMarkets, 1, 0);
+            this.tlbSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlbSettings.Location = new System.Drawing.Point(3, 3);
+            this.tlbSettings.Name = "tlbSettings";
+            this.tlbSettings.RowCount = 2;
+            this.tlbSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tlbSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlbSettings.Size = new System.Drawing.Size(677, 444);
+            this.tlbSettings.TabIndex = 0;
+            // 
+            // lblSuperMarkets
+            // 
+            this.lblSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblSuperMarkets.AutoSize = true;
+            this.lblSuperMarkets.Location = new System.Drawing.Point(594, 11);
+            this.lblSuperMarkets.Name = "lblSuperMarkets";
+            this.lblSuperMarkets.Size = new System.Drawing.Size(66, 17);
+            this.lblSuperMarkets.TabIndex = 0;
+            this.lblSuperMarkets.Text = "סופרמרקט";
+            // 
+            // cmbSuperMarkets
+            // 
+            this.cmbSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbSuperMarkets.FormattingEnabled = true;
+            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 8);
+            this.cmbSuperMarkets.Name = "cmbSuperMarkets";
+            this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
+            this.cmbSuperMarkets.TabIndex = 1;
+            // 
+            // clmToBuy
+            // 
+            this.clmToBuy.Frozen = true;
+            this.clmToBuy.HeaderText = "לקנות?";
+            this.clmToBuy.Name = "clmToBuy";
+            this.clmToBuy.Width = 54;
+            // 
+            // clmQuantity
+            // 
+            this.clmQuantity.Frozen = true;
+            this.clmQuantity.HeaderText = "כמות";
+            this.clmQuantity.Name = "clmQuantity";
+            this.clmQuantity.Width = 60;
             // 
             // ClientForm
             // 
@@ -130,11 +241,16 @@
             this.Controls.Add(this.tcMain);
             this.Name = "ClientForm";
             this.Text = "Shop-Smart";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.tcMain.ResumeLayout(false);
             this.tpShoppingList.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.tlpMain.ResumeLayout(false);
+            this.tlpMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvProducts)).EndInit();
+            this.tlpCategories.ResumeLayout(false);
+            this.tpSettings.ResumeLayout(false);
+            this.tlbSettings.ResumeLayout(false);
+            this.tlbSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -143,11 +259,19 @@
 
         private System.Windows.Forms.TabControl tcMain;
         private System.Windows.Forms.TabPage tpShoppingList;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tlpMain;
         private System.Windows.Forms.TabPage tpSettings;
         private System.Windows.Forms.DataGridView gvProducts;
         private System.Windows.Forms.TextBox txbFilter;
         private System.Windows.Forms.CheckedListBox cblCategories;
+        private System.Windows.Forms.CheckBox chbCheckAll;
+        private System.Windows.Forms.TableLayoutPanel tlpCategories;
+        private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.TableLayoutPanel tlbSettings;
+        private System.Windows.Forms.Label lblSuperMarkets;
+        private System.Windows.Forms.ComboBox cmbSuperMarkets;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn clmToBuy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmQuantity;
     }
 }
 

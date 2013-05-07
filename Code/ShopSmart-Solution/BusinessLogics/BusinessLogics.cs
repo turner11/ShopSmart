@@ -37,18 +37,9 @@ namespace ShopSmart.Bl
         /// <param name="shoppingList">The shopping list.</param>
         public static void SortShopList(ShopList shoppingList)
         {
-            
-            
-            //if we got a null, there is nothing for us to do
-            if (shoppingList != null)
-            {
-                //the ordered items in
-                IOrderedEnumerable<ShoplistItem> orderedItems = shoppingList.ShoplistItems.OrderBy(item => item.Product.Category.Id);
-                shoppingList.ShoplistItems = orderedItems.ToList<ShoplistItem>();
-                
-
-            }
-           
+            Array items = shoppingList.ShoplistItems.ToArray<ShoplistItem>();
+            Array.Sort(items);
+            shoppingList.ShoplistItems = (ICollection<ShoplistItem>)items;            
         }
 
         /// <summary>
@@ -73,7 +64,7 @@ namespace ShopSmart.Bl
         /// <summary>
         /// Gets all products.
         /// </summary>
-        /// <returns>list containg products</returns>
+        /// <returns>list of products</returns>
         public List<Product> GetAllProducts()
         {
             IEnumerable<Product> dbProducts = this._db.GetAllProducts() ?? (IEnumerable<Product>)new List<Product>();
@@ -81,16 +72,30 @@ namespace ShopSmart.Bl
             return products;
         }
 
+
+        //TODO: Make this generic
+        /// <summary>
+        /// Gets all SuperMarkets.
+        /// </summary>
+        /// <returns>list of SuperMarkets</returns>
+        public List<Supermarket> GetAllSuperMarkets()
+        {
+            IEnumerable<Supermarket> dbSupermarket = this._db.GetAllSuperMarkets() ?? (IEnumerable<Supermarket>)new List<Supermarket>();
+            List<Supermarket> supers = dbSupermarket.ToList<Supermarket>();
+            return supers;
+        }
+
         /// <summary>
         /// Gets all categories.
         /// </summary>
-        /// <returns>list containg products</returns>
+        /// <returns>list of products</returns>
         public List<Category> GetAllCategories()
         {
             IEnumerable<Category> dbCategories = this._db.GetAllCategories() ?? (IEnumerable<Category>)new List<Category>();
             List<Category> categories = dbCategories.ToList<Category>();
-            return categories;
+            return categories; 
         } 
         #endregion
+
     }
 }

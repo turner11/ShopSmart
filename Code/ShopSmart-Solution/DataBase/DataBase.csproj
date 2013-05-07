@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -76,6 +77,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DbClasses.cs" />
     <Compile Include="FullyJoinedProduct.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -107,6 +109,7 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Types.cs" />
     <Compile Include="UserType.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
