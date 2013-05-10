@@ -27,6 +27,7 @@ This is part of the Software engineering project. [cours page](https://github.co
 * [Shop-Smart Binaries]()
 * [User Documentation](https://github.com/turner11/ShopSmart/wiki/User Documentation)
 * [Iteration 1](https://github.com/turner11/ShopSmart/wiki/Iteration1)
+* [Iteration 2](https://github.com/turner11/ShopSmart/wiki/Iteration2)
  
 ## Developers documentation - תיעוד למפתחים
 
