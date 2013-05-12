@@ -32,6 +32,8 @@
             this.tpShoppingList = new System.Windows.Forms.TabPage();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.gvProducts = new System.Windows.Forms.DataGridView();
+            this.clmToBuy = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.clmQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txbFilter = new System.Windows.Forms.TextBox();
             this.chbCheckAll = new System.Windows.Forms.CheckBox();
             this.tlpCategories = new System.Windows.Forms.TableLayoutPanel();
@@ -41,8 +43,6 @@
             this.tlbSettings = new System.Windows.Forms.TableLayoutPanel();
             this.lblSuperMarkets = new System.Windows.Forms.Label();
             this.cmbSuperMarkets = new System.Windows.Forms.ComboBox();
-            this.clmToBuy = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.clmQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tcMain.SuspendLayout();
             this.tpShoppingList.SuspendLayout();
             this.tlpMain.SuspendLayout();
@@ -117,12 +117,27 @@
             this.gvProducts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvProducts_CellEndEdit);
             this.gvProducts.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gvProducts_EditingControlShowing);
             // 
+            // clmToBuy
+            // 
+            this.clmToBuy.Frozen = true;
+            this.clmToBuy.HeaderText = "לקנות?";
+            this.clmToBuy.Name = "clmToBuy";
+            this.clmToBuy.Width = 54;
+            // 
+            // clmQuantity
+            // 
+            this.clmQuantity.Frozen = true;
+            this.clmQuantity.HeaderText = "כמות";
+            this.clmQuantity.Name = "clmQuantity";
+            this.clmQuantity.Width = 60;
+            // 
             // txbFilter
             // 
             this.txbFilter.Location = new System.Drawing.Point(265, 3);
             this.txbFilter.Name = "txbFilter";
             this.txbFilter.Size = new System.Drawing.Size(206, 22);
             this.txbFilter.TabIndex = 1;
+            this.txbFilter.TextChanged += new System.EventHandler(this.txbFilter_TextChanged);
             // 
             // chbCheckAll
             // 
@@ -214,24 +229,10 @@
             // 
             this.cmbSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbSuperMarkets.FormattingEnabled = true;
-            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 8);
+            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 7);
             this.cmbSuperMarkets.Name = "cmbSuperMarkets";
             this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
             this.cmbSuperMarkets.TabIndex = 1;
-            // 
-            // clmToBuy
-            // 
-            this.clmToBuy.Frozen = true;
-            this.clmToBuy.HeaderText = "לקנות?";
-            this.clmToBuy.Name = "clmToBuy";
-            this.clmToBuy.Width = 54;
-            // 
-            // clmQuantity
-            // 
-            this.clmQuantity.Frozen = true;
-            this.clmQuantity.HeaderText = "כמות";
-            this.clmQuantity.Name = "clmQuantity";
-            this.clmQuantity.Width = 60;
             // 
             // ClientForm
             // 

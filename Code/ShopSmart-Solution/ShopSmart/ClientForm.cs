@@ -365,6 +365,13 @@ namespace ShopSmart.Client
 
         #endregion
 
+        private void txbFilter_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
+
        
 
 
