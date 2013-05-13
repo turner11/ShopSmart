@@ -24,7 +24,7 @@ This is part of the Software engineering project. [cours page](https://github.co
 * [Client Relations](https://github.com/turner11/ShopSmart/wiki/Client-relations)
 * [Tutorial for working environment](https://github.com/turner11/ShopSmart/wiki/Environment-Tutorial)
 * [Shop-Smart Code](https://github.com/turner11/ShopSmart/tree/master/Code/ShopSmart-Solution)
-* [Shop-Smart Installaion](https://github.com/turner11/ShopSmart/blob/master/Code/ShopSmart-Solution/Deploy/Deploy.zip?raw=true) (not applicable until service is up)
+* [Shop-Smart Installaion](https://github.com/turner11/ShopSmart/blob/master/Code/ShopSmart-Solution/Deploy/Deploy.zip?raw=true) (not applicable until service is up. for testting, an sql db should be installed using this [script](https://raw.github.com/turner11/ShopSmart/master/Code/BuildDbScript.sql))
 * [User Documentation](https://github.com/turner11/ShopSmart/wiki/User Documentation)
 * [Iteration 1](https://github.com/turner11/ShopSmart/wiki/Iteration1)
 * [Iteration 2](https://github.com/turner11/ShopSmart/wiki/Iteration2)
