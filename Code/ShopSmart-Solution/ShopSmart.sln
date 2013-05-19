@@ -27,8 +27,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D100B9
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationLogics", "CommunicationLogics\CommunicationLogics.csproj", "{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExporter", "FileExporter\FileExporter.csproj", "{C2BF559A-4D36-429F-A54D-CE9D190F12A3}"
 EndProject
 Global
@@ -104,16 +102,6 @@ Global
 		{3992A9A9-715A-4BD2-899D-E32835674316}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3992A9A9-715A-4BD2-899D-E32835674316}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3992A9A9-715A-4BD2-899D-E32835674316}.Release|x86.ActiveCfg = Release|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{EBF2E027-021D-44A4-81FF-C3B7F9802E2C}.Release|x86.ActiveCfg = Release|Any CPU
 		{C2BF559A-4D36-429F-A54D-CE9D190F12A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C2BF559A-4D36-429F-A54D-CE9D190F12A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2BF559A-4D36-429F-A54D-CE9D190F12A3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

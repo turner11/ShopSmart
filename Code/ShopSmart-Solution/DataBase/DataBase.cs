@@ -50,7 +50,7 @@ namespace ShopSmart.Dal
         /// Gets all products.
         /// </summary>
         /// <returns>DbSet of products</returns>
-        public DbSet<Product> GetAllProducts()
+        public virtual IEnumerable<Product> GetAllProducts()
         {
             return this._db.Products;
         }
@@ -60,7 +60,7 @@ namespace ShopSmart.Dal
         /// Gets all categories.
         /// </summary>
         /// <returns>DbSet of products</returns>
-        public IEnumerable<Category> GetAllCategories()
+        public virtual IEnumerable<Category> GetAllCategories()
         {
             return this._db.Categories;
         }
@@ -70,7 +70,7 @@ namespace ShopSmart.Dal
         /// Gets all categories.
         /// </summary>
         /// <returns>DbSet of products</returns>
-        public IEnumerable<Supermarket> GetAllSuperMarkets()
+        public virtual IEnumerable<Supermarket> GetAllSuperMarkets()
         {
             return this._db.Supermarkets;
         }

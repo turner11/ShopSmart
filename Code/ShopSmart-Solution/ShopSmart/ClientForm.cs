@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using ShopSmart.Bl;
 using ShopSmart.Dal; //TODO: Find way to remove this reference!
 using ShopSmart.Common;
-using CommunicationLogics;
 using System.Diagnostics;
 using System.IO;
 
@@ -187,7 +186,7 @@ namespace ShopSmart.Client
             if (category != null && bindingContext != null)
             {
                 //getting all rows that contains products with the category weare dealing with   
-                //TODO: use a parameter and not fixed "8"
+                //TODO: use a parameter and not fixed "9"
                 IEnumerable<DataGridViewRow> enumeratedRows =
                     this.gvProducts.Rows.Cast<DataGridViewRow>().Where(row => (row.Cells[9].Value as Category) != null
                                                                      && (row.Cells[9].Value as Category).guid == category.guid);
@@ -199,7 +198,7 @@ namespace ShopSmart.Client
 
                 bindingContext.SuspendBinding();
                 this.gvProducts.SuspendLayout();
-
+                
                 relevantRows.ForEach(row => row.Visible = showRows);
 
                 this.gvProducts.ResumeLayout(true);
@@ -226,12 +225,21 @@ namespace ShopSmart.Client
         private void btnSend_Click(object sender, EventArgs e)
         {
             ShopList shoppingList = this.GetShoppingListFromGui();
-            SortedListService sorter = new SortedListService();
+            BusinessLogics sorter = new BusinessLogics();
 
             ShopList soretd = sorter.GetSortedList(shoppingList);
 
+            ClientForm.ExportListToExcel(soretd);
+        }
+
+        /// <summary>
+        /// Exports the list to excel.
+        /// </summary>
+        /// <param name="shopList">The shop list.</param>
+        private static void ExportListToExcel(ShopList shopList)
+        {
             FileExporter.ExcelExporter exporter = new FileExporter.ExcelExporter();
-            CarlosAg.ExcelXmlWriter.Workbook book = exporter.Generate(soretd);
+            CarlosAg.ExcelXmlWriter.Workbook book = exporter.Generate(shopList);
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.FileName = "ShopList.xls";
@@ -247,30 +255,8 @@ namespace ShopSmart.Client
                 try
                 {
                     book.Save(filename);
-                    /*
-                    XmlTextReader rdr = new XmlTextReader(filename);
 
-                    while (rdr.Read())
-                    {
-
-                    }*/
-                    //XmlDocument xmlDoc = new XmlDocument();
-                    //xmlDoc.Load(rdr);
-                    ////XmlNode n;
-                    ////n = xmlDoc.DocumentElement.FirstChild;
-
-                    //foreach (XmlElement el in xmlDoc)
-                    //{
-                    //    XmlNode nodeSource = el.SelectSingleNode(".//source");
-
-
-                    //}
-
-
-
-
-
-                    File.Open(filename, FileMode.OpenOrCreate);
+                    //File.Open(filename, FileMode.OpenOrCreate);
                 }
                 catch (Exception ex)
                 {

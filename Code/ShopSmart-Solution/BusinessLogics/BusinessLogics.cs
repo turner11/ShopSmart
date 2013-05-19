@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Web.Services;
 using ShopSmart.Dal;
 
 
@@ -10,7 +11,12 @@ namespace ShopSmart.Bl
 {
     /// <summary>
     /// Handles All logics related to Shop lists
-    /// </summary>
+    /// </summary>   
+    [WebService(Namespace = "http://tempuri.org/")]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [System.ComponentModel.ToolboxItem(false)]
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
+    // [System.Web.Script.Services.ScriptService]
     public class BusinessLogics:IDisposable
     {
 
@@ -23,19 +29,39 @@ namespace ShopSmart.Bl
         /// Initializes a new instance of the <see cref="BusinessLogics"/> class.
         /// </summary>
         public BusinessLogics()
+            : this(new DataBase())
         {
-            //Initializing the DAL
-            this._db = new DataBase();
-            //we will have to detect and save changes manually
+           
             
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BusinessLogics"/> class.
+        /// </summary>
+        /// <param name="db">The database object.</param>
+        public BusinessLogics(DataBase db)
+        {
+            //Initializing the DAL
+            this._db = db;
+        }
+
+        /// <summary>
+        /// The web service for getting a sorted list.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        /// <returns>a sorted list</returns>
+        [WebMethod]
+        public ShopList GetSortedList(ShopList list)
+        {
+            this.SortShopList(list);
+            return list;
+        }
 
         /// <summary>
         /// Sorts the specified shop list.
         /// </summary>
         /// <param name="shoppingList">The shopping list.</param>
-        public static void SortShopList(ShopList shoppingList)
+        private void SortShopList(ShopList shoppingList)
         {
             Array items = shoppingList.ShoplistItems.ToArray<ShoplistItem>();
             Array.Sort(items);
@@ -71,7 +97,6 @@ namespace ShopSmart.Bl
             List<Product> products = dbProducts.ToList<Product>();
             return products;
         }
-
 
         //TODO: Make this generic
         /// <summary>
