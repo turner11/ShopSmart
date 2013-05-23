@@ -17,7 +17,7 @@ namespace ShopSmart.Bl
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     // [System.Web.Script.Services.ScriptService]
-    public class BusinessLogics:IDisposable
+    public class SmartShopLogics:IDisposable
     {
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace ShopSmart.Bl
         DataBase _db;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessLogics"/> class.
+        /// Initializes a new instance of the <see cref="SmartShopLogics"/> class.
         /// </summary>
-        public BusinessLogics()
+        public SmartShopLogics()
             : this(new DataBase())
         {
            
@@ -36,10 +36,10 @@ namespace ShopSmart.Bl
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessLogics"/> class.
+        /// Initializes a new instance of the <see cref="SmartShopLogics"/> class.
         /// </summary>
         /// <param name="db">The database object.</param>
-        public BusinessLogics(DataBase db)
+        public SmartShopLogics(DataBase db)
         {
             //Initializing the DAL
             this._db = db;
@@ -67,6 +67,7 @@ namespace ShopSmart.Bl
             Array.Sort(items);
             shoppingList.ShoplistItems = (ICollection<ShoplistItem>)items;            
         }
+       
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -94,7 +95,7 @@ namespace ShopSmart.Bl
         public List<Product> GetAllProducts()
         {
             IEnumerable<Product> dbProducts = this._db.GetAllProducts() ?? (IEnumerable<Product>)new List<Product>();
-            List<Product> products = dbProducts.ToList<Product>();
+            List<Product> products = dbProducts.OrderBy(p=>p.ProductName).ToList<Product>();
             return products;
         }
 

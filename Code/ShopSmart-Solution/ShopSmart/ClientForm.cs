@@ -26,7 +26,7 @@ namespace ShopSmart.Client
         /// <summary>
         /// The logics handler object
         /// </summary>
-        BusinessLogics _logics;
+        SmartShopLogics _logics;
         /// <summary>
         /// The products that are in database
         /// </summary>
@@ -48,7 +48,7 @@ namespace ShopSmart.Client
         public ClientForm()
         {
             InitializeComponent();
-            this._logics = new BusinessLogics();
+            this._logics = new SmartShopLogics();
             this.GetDbItems();
             this.BindProducts();
             this.BindCategories();
@@ -225,7 +225,7 @@ namespace ShopSmart.Client
         private void btnSend_Click(object sender, EventArgs e)
         {
             ShopList shoppingList = this.GetShoppingListFromGui();
-            BusinessLogics sorter = new BusinessLogics();
+            SmartShopLogics sorter = new SmartShopLogics();
 
             ShopList soretd = sorter.GetSortedList(shoppingList);
 
@@ -338,7 +338,7 @@ namespace ShopSmart.Client
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="KeyPressEventArgs"/> instance containing the event data.</param>
-        void QuntityTextBox_TextChanged(object sender, KeyPressEventArgs e)        
+        void QuntityTextBox_TextChanged(object sender, KeyPressEventArgs e)
         {
             //Allow only digits
             if (!char.IsControl(e.KeyChar)
@@ -348,20 +348,14 @@ namespace ShopSmart.Client
             }
 
         }
-
-        #endregion
-
+        
         private void txbFilter_TextChanged(object sender, EventArgs e)
         {
 
         }
+        #endregion
 
         
-
-       
-
-
-
 
     }
 }

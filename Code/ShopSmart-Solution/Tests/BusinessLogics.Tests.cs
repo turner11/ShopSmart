@@ -16,19 +16,20 @@ namespace Tests
     /// Handles the tests for BusinessLogics class
     /// </summary>
     [TestFixture]
-    public class BusinessLogicsTests
+    public class SmartShopLogicsTests
     {
+        #region Tests
         [Test]
-        public void GetSortedShopListTest()
+        public void SortedGivenShopListTest()
         {
-            
+
             //Assign
             Supermarket sm;
             List<Category> categories;
             List<Product> products;
-            BusinessLogicsTests.CreateDataBaseObjects(out sm, out categories, out products);          
-            
-            ShopList list= new ShopList();
+            SmartShopLogicsTests.CreateDataBaseObjects(out sm, out categories, out products);
+
+            ShopList list = new ShopList();
             #region Populating shopping list
             list.Supermarket = sm;
             list.SuperMarketId = sm.Id;
@@ -37,31 +38,31 @@ namespace Tests
                 Product currProduct = products[i];
                 ShoplistItem newItem = new ShoplistItem() { Product = currProduct, Quantity = i, ShopList = list };
                 list.ShoplistItems.Add(newItem);
-            } 
+            }
             #endregion
-           
+
 
             //act
-            DataBase dataBase = Substitute.For<DataBase>();            
-            BusinessLogics bs = new BusinessLogics(dataBase);
+            DataBase dataBase = Substitute.For<DataBase>();
+            SmartShopLogics bs = new SmartShopLogics(dataBase);
             ShopList sorted = bs.GetSortedList(list);
-           
+
             //assert
             int lastCategoryId = -1;
             for (int i = 0; i < sorted.ShoplistItems.Count; i++)
             {
-                List < ShoplistItem> items = sorted.ShoplistItems.ToList();
+                List<ShoplistItem> items = sorted.ShoplistItems.ToList();
                 int currCategory = items[i].Product.Category.CategorySorts.Where(cat => cat.Supermarket == sm).SingleOrDefault().SortValue;
                 //If list is sorted, the sort value should always increase
                 Assert.IsTrue(currCategory >= lastCategoryId, "Shopping list was not sorted properly");
                 lastCategoryId = currCategory;
-                
+
             }
-            
+
         }
-       
+
         [Test]
-        public void GetAllProductsTest()
+        public void GetAllProductsFromDbTest()
         {
             DataBase dataBase = Substitute.For<DataBase>();
 
@@ -69,10 +70,10 @@ namespace Tests
             Supermarket sm;
             List<Category> categories;
             List<Product> products;
-            BusinessLogicsTests.CreateDataBaseObjects(out sm, out categories, out products);   
-            
+            SmartShopLogicsTests.CreateDataBaseObjects(out sm, out categories, out products);
+
             dataBase.GetAllProducts().Returns(products);
-            BusinessLogics bs = new BusinessLogics(dataBase);
+            SmartShopLogics bs = new SmartShopLogics(dataBase);
 
             int expectedProducts = products.Count;
 
@@ -84,7 +85,7 @@ namespace Tests
         }
 
         [Test]
-        public void GetAllCategoriesTest()
+        public void GetAllCategoriesFromDbTest()
         {
             DataBase dataBase = Substitute.For<DataBase>();
 
@@ -92,10 +93,10 @@ namespace Tests
             Supermarket sm;
             List<Category> categories;
             List<Product> products;
-            BusinessLogicsTests.CreateDataBaseObjects(out sm, out categories, out products);
+            SmartShopLogicsTests.CreateDataBaseObjects(out sm, out categories, out products);
 
             dataBase.GetAllCategories().Returns(categories);
-            BusinessLogics bs = new BusinessLogics(dataBase);
+            SmartShopLogics bs = new SmartShopLogics(dataBase);
 
             int expected = categories.Count;
 
@@ -107,7 +108,7 @@ namespace Tests
         }
 
         [Test]
-        public void GetAllSuperMarketsTest()
+        public void GetAllSuperMarketsFromDbTest()
         {
             DataBase dataBase = Substitute.For<DataBase>();
 
@@ -118,13 +119,13 @@ namespace Tests
             List<Supermarket> superMarkets = new List<Supermarket>();
             for (int i = 0; i < expected; i++)
             {
-                Supermarket sm = new Supermarket() {Id = i, Name = "Supermarket "+i };
+                Supermarket sm = new Supermarket() { Id = i, Name = "Supermarket " + i };
                 superMarkets.Add(sm);
             }
-            
+
 
             dataBase.GetAllSuperMarkets().Returns(superMarkets);
-            BusinessLogics bs = new BusinessLogics(dataBase);
+            SmartShopLogics bs = new SmartShopLogics(dataBase);
 
             expected = superMarkets.Count;
 
@@ -133,9 +134,10 @@ namespace Tests
 
             //assert
             Assert.IsTrue(expected == actual, "Got unexpected number of superMarkets");
-        }
-
-
+        } 
+        #endregion
+        
+        #region Helper methods
         /// <summary>
         /// Creates the data base objects for varois tests...
         /// </summary>
@@ -149,11 +151,11 @@ namespace Tests
 
 
             //vegtables
-            Category vegetables = BusinessLogicsTests.CreateCategory(superMarket, "vegetables", 1);
+            Category vegetables = SmartShopLogicsTests.CreateCategory(superMarket, "vegetables", 1);
             //dairy
-            Category dairy = BusinessLogicsTests.CreateCategory(superMarket, "dairy", 5);
+            Category dairy = SmartShopLogicsTests.CreateCategory(superMarket, "dairy", 5);
             //bakery
-            Category bakery = BusinessLogicsTests.CreateCategory(superMarket, "bakery", 9);
+            Category bakery = SmartShopLogicsTests.CreateCategory(superMarket, "bakery", 9);
 
             categories = new List<Category> { vegetables, dairy, bakery };
             #endregion
@@ -202,10 +204,11 @@ namespace Tests
             //creating the category
             Category cat = new Category() { Name = catName };
             //creating the sort
-            CategorySort catSort = new CategorySort() { Category = cat, Supermarket = supermarket, SortValue = sortValue,SupermarketId = supermarket.Id };
+            CategorySort catSort = new CategorySort() { Category = cat, Supermarket = supermarket, SortValue = sortValue, SupermarketId = supermarket.Id };
             //assigning the sort
             cat.CategorySorts.Add(catSort);
             return cat;
-        }
+        } 
+        #endregion
     }
 }
