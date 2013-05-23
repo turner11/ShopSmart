@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientForm));
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpShoppingList = new System.Windows.Forms.TabPage();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
@@ -43,6 +44,10 @@
             this.tlbSettings = new System.Windows.Forms.TableLayoutPanel();
             this.lblSuperMarkets = new System.Windows.Forms.Label();
             this.cmbSuperMarkets = new System.Windows.Forms.ComboBox();
+            this._toolStrip = new System.Windows.Forms.ToolStrip();
+            this.tsOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsLogin = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsRegister = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMain.SuspendLayout();
             this.tpShoppingList.SuspendLayout();
             this.tlpMain.SuspendLayout();
@@ -50,6 +55,7 @@
             this.tlpCategories.SuspendLayout();
             this.tpSettings.SuspendLayout();
             this.tlbSettings.SuspendLayout();
+            this._toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMain
@@ -234,13 +240,50 @@
             this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
             this.cmbSuperMarkets.TabIndex = 1;
             // 
+            // _toolStrip
+            // 
+            this._toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsOptions});
+            this._toolStrip.Location = new System.Drawing.Point(0, 0);
+            this._toolStrip.Name = "_toolStrip";
+            this._toolStrip.Size = new System.Drawing.Size(691, 27);
+            this._toolStrip.TabIndex = 1;
+            this._toolStrip.Text = "toolStrip1";
+            // 
+            // tsOptions
+            // 
+            this.tsOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsLogin,
+            this.tsRegister});
+            this.tsOptions.Image = ((System.Drawing.Image)(resources.GetObject("tsOptions.Image")));
+            this.tsOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsOptions.Name = "tsOptions";
+            this.tsOptions.Size = new System.Drawing.Size(145, 24);
+            this.tsOptions.Text = "משתמשים רשומים";
+            // 
+            // tsLogin
+            // 
+            this.tsLogin.Name = "tsLogin";
+            this.tsLogin.Size = new System.Drawing.Size(152, 24);
+            this.tsLogin.Text = "כניסה";
+            this.tsLogin.Click += new System.EventHandler(this.tsLogin_Click);
+            // 
+            // tsRegister
+            // 
+            this.tsRegister.Name = "tsRegister";
+            this.tsRegister.Size = new System.Drawing.Size(152, 24);
+            this.tsRegister.Text = "יצירה";
+            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(691, 479);
+            this.Controls.Add(this._toolStrip);
             this.Controls.Add(this.tcMain);
             this.Name = "ClientForm";
+            this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.Text = "Shop-Smart";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.tcMain.ResumeLayout(false);
@@ -252,7 +295,10 @@
             this.tpSettings.ResumeLayout(false);
             this.tlbSettings.ResumeLayout(false);
             this.tlbSettings.PerformLayout();
+            this._toolStrip.ResumeLayout(false);
+            this._toolStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -273,6 +319,10 @@
         private System.Windows.Forms.ComboBox cmbSuperMarkets;
         private System.Windows.Forms.DataGridViewCheckBoxColumn clmToBuy;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmQuantity;
+        private System.Windows.Forms.ToolStrip _toolStrip;
+        private System.Windows.Forms.ToolStripDropDownButton tsOptions;
+        private System.Windows.Forms.ToolStripMenuItem tsLogin;
+        private System.Windows.Forms.ToolStripMenuItem tsRegister;
     }
 }
 

@@ -40,7 +40,7 @@ namespace ShopSmart.Client
         /// </summary>
         List<Supermarket> _superMarkets;
 
-
+        
 
         #endregion
 
@@ -354,6 +354,22 @@ namespace ShopSmart.Client
 
         }
         #endregion
+
+        /// <summary>
+        /// Handles the Click event of the tsLogin control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void tsLogin_Click(object sender, EventArgs e)
+        {
+            LoginForm frmLogin = new LoginForm();
+            if (frmLogin.ShowDialog() == DialogResult.OK)
+            {
+                //this.User
+            }
+        }
+
+      
 
         
 
