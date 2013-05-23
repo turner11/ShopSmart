@@ -70,9 +70,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogics\BusinessLogics.csproj">
+    <ProjectReference Include="..\BusinessLogics\SmartShopLogics.csproj">
       <Project>{b3a8eb56-47e3-4134-a05b-d11a7b9990a3}</Project>
-      <Name>BusinessLogics</Name>
+      <Name>SmartShopLogics</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataBase\DataBase.csproj">
       <Project>{3992a9a9-715a-4bd2-899d-e32835674316}</Project>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartShopClient", "ShopSmart\SmartShopClient.csproj", "{0CB6B70F-7FA1-4719-9E44-ACBB563C43DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogics", "BusinessLogics\BusinessLogics.csproj", "{B3A8EB56-47E3-4134-A05B-D11A7B9990A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartShopLogics", "BusinessLogics\SmartShopLogics.csproj", "{B3A8EB56-47E3-4134-A05B-D11A7B9990A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{81ACC0EB-38FA-478F-AADF-5BAE79DC00D7}"
 EndProject
