@@ -74,5 +74,39 @@ namespace ShopSmart.Dal
         {
             return this._db.Supermarkets;
         }
+
+
+        /// <summary>
+        /// Gets the customers filtered by user name and password.
+        /// If you do not want to filter by those items use null or <see cref="String.Empty"/>
+        /// </summary>
+        /// <param name="userName">the username (null or <see cref="String.Empty"/> for not filtering by username).</param>
+        /// <param name="password">The password (null or <see cref="String.Empty"/> for not filtering by password).</param>
+        /// <param name="userType">Type of the user (null for not filtering by user type).</param>
+        /// <returns>
+        /// The <see cref="ShopSmart.Dal.User[]"/> object that represents the users
+        /// That qualify filter.
+        /// </returns>
+        public List<Customer> GetCustomers(string userName, string password, UserTypes? userType)
+        {
+            List<Customer> users = this._db.Customers.ToList();
+            /* Filter by username */
+            if (!String.IsNullOrWhiteSpace(userName))
+            {
+                users = users.Where(customer => customer.UserName == userName).ToList();
+            }
+            /* Filter by password */
+            if (!String.IsNullOrWhiteSpace(password))
+            {
+                users = users.Where(customer => customer.Password == password).ToList();
+            }
+            /* Filter by usertype */
+            if (userType.HasValue)
+            {
+                users = users.Where(customer => customer.UserType == userType).ToList();
+            }
+
+            return users;
+        }
     }
 }

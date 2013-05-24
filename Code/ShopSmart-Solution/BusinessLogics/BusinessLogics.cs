@@ -123,5 +123,28 @@ namespace ShopSmart.Bl
         } 
         #endregion
 
+
+        /// <summary>
+        /// Authenticates a user by username and password.
+        /// </summary>
+        /// <param name="userName">the username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>The <see cref="ShopSmart.Dal.User"/> object that represents the authenticated user
+        /// null if authentication failse</returns>
+        public Customer AuthenticateUser(string userName, string password)
+        {
+            List<Customer> users = this._db.GetCustomers(userName, password, null);
+            #region Assert single value
+            System.Diagnostics.Debug.Assert(users.Count <= 1,
+                                               String.Format("Unexpectedly got {0} users when filtering by:\n"
+                                               + "Username: {1}\n"
+                                               + "Password: {2}"
+                                               , users.Count
+                                               , userName
+                                               , password)); 
+            #endregion
+            //we can return a value only if we get a sinle result
+            return users.Count == 1? users[0] : null;
+        }
     }
 }

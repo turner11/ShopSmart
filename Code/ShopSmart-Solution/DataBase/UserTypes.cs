@@ -10,18 +10,11 @@
 namespace ShopSmart.Dal
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UserType
+    public enum UserTypes : int
     {
-        public UserType()
-        {
-            this.Customers = new HashSet<Customer>();
-        }
-    
-        public int Id { get; set; }
-        public string Type { get; set; }
-    
-        public virtual ICollection<Customer> Customers { get; set; }
+        Admininstrator = 1,
+        Editor = 2,
+        User = 3
     }
 }

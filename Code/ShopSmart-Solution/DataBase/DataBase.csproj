@@ -110,7 +110,7 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Types.cs" />
-    <Compile Include="UserType.cs">
+    <Compile Include="UserTypes.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

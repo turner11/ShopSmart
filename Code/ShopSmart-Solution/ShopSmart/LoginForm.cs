@@ -15,6 +15,24 @@ namespace ShopSmart.Client
     /// </summary>
     public partial class LoginForm : Form
     {
+        #region Data members
+        /// <summary>
+        /// Gets the user name typed by user.
+        /// </summary>       
+        public string UserName
+        {
+            get { return this.txbUserName.Text; }
+        }
+
+        /// <summary>
+        /// Gets the password typed by user
+        /// </summary>       
+        public string Password
+        {
+            get { return this.txbPassword.Text; }
+        } 
+        #endregion
+        
         #region C'tor
         public LoginForm()
         {

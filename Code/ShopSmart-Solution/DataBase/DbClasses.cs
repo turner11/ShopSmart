@@ -96,4 +96,49 @@ namespace ShopSmart.Dal
             return mySort.CompareTo(otherSort);
         }
     }
+
+    /// <summary>
+    /// An extension for the Customer ef entity
+    /// </summary>
+    public partial class Customer
+    {
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            Customer other = obj as Customer;
+            if (other == null)
+            {
+                throw new ArgumentException("Customer cannot be compared to non Customer object");
+            }
+            return this.UserName.Equals(other.UserName);
+        }
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return String.Format("UserName: '{0}'; Type: '{1}'",this.UserName,this.UserType);
+        }
+    }
 }

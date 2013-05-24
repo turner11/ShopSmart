@@ -26,7 +26,7 @@ namespace ShopSmart.Client
         /// <summary>
         /// The logics handler object
         /// </summary>
-        SmartShopLogics _logics;
+        SmartShopLogics _logicsService;
         /// <summary>
         /// The products that are in database
         /// </summary>
@@ -40,6 +40,39 @@ namespace ShopSmart.Client
         /// </summary>
         List<Supermarket> _superMarkets;
 
+        Customer _currentUser;
+        /// <summary>
+        /// The current user that is logged in. null if none
+        /// </summary>
+        Customer CurrentUser
+        {
+            get { return this._currentUser; }
+            set
+            {
+                this._currentUser = value;
+                this.Log(String.Format("User was set to {0}", this._currentUser != null?this._currentUser.ToString() : "null"));
+                this.MatchGuiToUserType(this.CurrentUserType);
+
+            }
+        }
+
+        /// <summary>
+        /// Gets the type of the current user, null if there is no current user.
+        /// </summary>
+        UserTypes? CurrentUserType
+        {
+            get
+            {
+                UserTypes? type = null;
+                if (this.CurrentUser != null)
+                {
+                    type = this.CurrentUser.UserType;
+                }
+                return type;
+            }
+        }
+
+        
         
 
         #endregion
@@ -48,7 +81,7 @@ namespace ShopSmart.Client
         public ClientForm()
         {
             InitializeComponent();
-            this._logics = new SmartShopLogics();
+            this._logicsService = new SmartShopLogics();
             this.GetDbItems();
             this.BindProducts();
             this.BindCategories();
@@ -71,11 +104,11 @@ namespace ShopSmart.Client
         /// <exception cref="System.NotImplementedException"></exception>
         private void GetDbItems()
         {
-            this._products = this._logics.GetAllProducts();
+            this._products = this._logicsService.GetAllProducts();
             this.Log(String.Format("Got {0} products from logics", this._products.Count));
-            this._categories = this._logics.GetAllCategories();
+            this._categories = this._logicsService.GetAllCategories();
             this.Log(String.Format("Got {0} categories from logics", this._categories.Count));
-            this._superMarkets = this._logics.GetAllSuperMarkets();
+            this._superMarkets = this._logicsService.GetAllSuperMarkets();
             this.Log(String.Format("Got {0} supermarkets from logics", this._superMarkets.Count));
 
         }
@@ -162,6 +195,32 @@ namespace ShopSmart.Client
             return list;
         }
 
+        /// <summary>
+        /// Matches the GUI to specified user type.
+        /// </summary>
+        /// <param name="nullable">The nullable.</param>
+        private void MatchGuiToUserType(UserTypes? userType)
+        {
+            if (userType.HasValue)
+            {
+                switch (userType.Value)
+                {
+                    case UserTypes.Admininstrator:
+                        break;
+                    case UserTypes.Editor:
+                        break;
+                    case UserTypes.User:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Logs a message.
+        /// </summary>
+        /// <param name="message">The message.</param>
         private void Log(string message)
         {
             //untill we have a logger, write to output
@@ -225,9 +284,9 @@ namespace ShopSmart.Client
         private void btnSend_Click(object sender, EventArgs e)
         {
             ShopList shoppingList = this.GetShoppingListFromGui();
-            SmartShopLogics sorter = new SmartShopLogics();
 
-            ShopList soretd = sorter.GetSortedList(shoppingList);
+
+            ShopList soretd = this._logicsService.GetSortedList(shoppingList);
 
             ClientForm.ExportListToExcel(soretd);
         }
@@ -348,12 +407,6 @@ namespace ShopSmart.Client
             }
 
         }
-        
-        private void txbFilter_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        #endregion
 
         /// <summary>
         /// Handles the Click event of the tsLogin control.
@@ -365,13 +418,21 @@ namespace ShopSmart.Client
             LoginForm frmLogin = new LoginForm();
             if (frmLogin.ShowDialog() == DialogResult.OK)
             {
-                //this.User
+                /*Getting user by user name / password */
+                this.CurrentUser = this._logicsService.AuthenticateUser(frmLogin.UserName, frmLogin.Password);
             }
         }
 
-      
+        /// <summary>
+        /// Handles the TextChanged event of the txbFilter control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void txbFilter_TextChanged(object sender, EventArgs e)
+        {
 
-        
+        }
+        #endregion
 
     }
 }

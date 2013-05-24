@@ -14,7 +14,6 @@
           <EntitySet Name="ShopLists" EntityType="ShopSmartModel.Store.ShopLists" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Supermarkets" EntityType="ShopSmartModel.Store.Supermarkets" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="sysdiagrams" EntityType="ShopSmartModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="UserTypes" EntityType="ShopSmartModel.Store.UserTypes" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FullyJoinedProducts" EntityType="ShopSmartModel.Store.FullyJoinedProducts" store:Type="Views" store:Schema="dbo" store:Name="FullyJoinedProducts">
             <DefiningQuery>SELECT 
       [FullyJoinedProducts].[Id] AS [Id], 
@@ -55,10 +54,6 @@
           <AssociationSet Name="FK_CategorySorts_Supermarkets" Association="ShopSmartModel.Store.FK_CategorySorts_Supermarkets">
             <End Role="Supermarkets" EntitySet="Supermarkets" />
             <End Role="CategorySorts" EntitySet="CategorySorts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customers_UserTypes" Association="ShopSmartModel.Store.FK_Customers_UserTypes">
-            <End Role="UserTypes" EntitySet="UserTypes" />
-            <End Role="Customers" EntitySet="Customers" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemsToBuy_Products" Association="ShopSmartModel.Store.FK_ItemsToBuy_Products">
             <End Role="Products" EntitySet="Products" />
@@ -158,13 +153,6 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <EntityType Name="UserTypes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="50" />
-        </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'ShopSmart.dbo.FullyJoinedProducts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
@@ -244,18 +232,6 @@
             </Principal>
             <Dependent Role="CategorySorts">
               <PropertyRef Name="SupermarketId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Customers_UserTypes">
-          <End Role="UserTypes" Type="ShopSmartModel.Store.UserTypes" Multiplicity="1" />
-          <End Role="Customers" Type="ShopSmartModel.Store.Customers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Customers">
-              <PropertyRef Name="UserTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -381,7 +357,6 @@
           <EntitySet Name="ShopLists" EntityType="ShopSmartModel.ShopList" />
           <EntitySet Name="Supermarkets" EntityType="ShopSmartModel.Supermarket" />
           <EntitySet Name="sysdiagrams" EntityType="ShopSmartModel.sysdiagram" />
-          <EntitySet Name="UserTypes" EntityType="ShopSmartModel.UserType" />
           <EntitySet Name="FullyJoinedProducts" EntityType="ShopSmartModel.FullyJoinedProduct" />
           <EntitySet Name="FullyJoinedShoppingLists" EntityType="ShopSmartModel.FullyJoinedShoppingList" />
           <AssociationSet Name="FK_CategorySorts_Categories" Association="ShopSmartModel.FK_CategorySorts_Categories">
@@ -395,10 +370,6 @@
           <AssociationSet Name="FK_CategorySorts_Supermarkets" Association="ShopSmartModel.FK_CategorySorts_Supermarkets">
             <End Role="Supermarkets" EntitySet="Supermarkets" />
             <End Role="CategorySorts" EntitySet="CategorySorts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customers_UserTypes" Association="ShopSmartModel.FK_Customers_UserTypes">
-            <End Role="UserTypes" EntitySet="UserTypes" />
-            <End Role="Customers" EntitySet="Customers" />
           </AssociationSet>
           <AssociationSet Name="FK_ShopLists_Customers" Association="ShopSmartModel.FK_ShopLists_Customers">
             <End Role="Customers" EntitySet="Customers" />
@@ -491,8 +462,7 @@
           <Property Name="CustomerId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
-          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserType" Relationship="ShopSmartModel.FK_Customers_UserTypes" FromRole="Customers" ToRole="UserTypes" />
+          <Property Name="UserType" Type="ShopSmartModel.UserTypes" Nullable="false" />
           <NavigationProperty Name="ShopLists" Relationship="ShopSmartModel.FK_ShopLists_Customers" FromRole="Customers" ToRole="ShopLists" />
         </EntityType>
         <EntityType Name="Product">
@@ -552,14 +522,6 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="UserType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Customers" Relationship="ShopSmartModel.FK_Customers_UserTypes" FromRole="UserTypes" ToRole="Customers" />
         </EntityType>
         <EntityType Name="FullyJoinedProduct">
           <Key>
@@ -649,18 +611,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Customers_UserTypes">
-          <End Role="UserTypes" Type="ShopSmartModel.UserType" Multiplicity="1" />
-          <End Role="Customers" Type="ShopSmartModel.Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Customers">
-              <PropertyRef Name="UserTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ShopLists_Customers">
           <End Role="Customers" Type="ShopSmartModel.Customer" Multiplicity="0..1" />
           <End Role="ShopLists" Type="ShopSmartModel.ShopList" Multiplicity="*" />
@@ -720,6 +670,11 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EnumType Name="UserTypes">
+          <Member Name="Admininstrator" Value="1" />
+          <Member Name="Editor" Value="2" />
+          <Member Name="User" Value="3" />
+        </EnumType>        
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -752,7 +707,7 @@
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="UserType" ColumnName="UserTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -807,14 +762,6 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserTypes">
-            <EntityTypeMapping TypeName="ShopSmartModel.UserType">
-              <MappingFragment StoreEntitySet="UserTypes">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
