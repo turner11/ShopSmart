@@ -235,7 +235,7 @@
             // 
             this.cmbSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbSuperMarkets.FormattingEnabled = true;
-            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 7);
+            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 8);
             this.cmbSuperMarkets.Name = "cmbSuperMarkets";
             this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
             this.cmbSuperMarkets.TabIndex = 1;
@@ -274,6 +274,7 @@
             this.tsRegister.Name = "tsRegister";
             this.tsRegister.Size = new System.Drawing.Size(152, 24);
             this.tsRegister.Text = "יצירה";
+            this.tsRegister.Click += new System.EventHandler(this.tsRegister_Click);
             // 
             // ClientForm
             // 

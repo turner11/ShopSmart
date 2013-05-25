@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartShopLogics", "Business
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{81ACC0EB-38FA-478F-AADF-5BAE79DC00D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartShopServer", "SmartShopServer\SmartShopServer.csproj", "{52AEE804-5F24-413C-99F6-81B3F44B14C9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{7309A32A-2E2D-477C-84D2-67267EBB4ABE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{06E94ED1-7F61-4774-9604-731DEF9D2756}"
@@ -28,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D100B9
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExporter", "FileExporter\FileExporter.csproj", "{C2BF559A-4D36-429F-A54D-CE9D190F12A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Logger\Log.csproj", "{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -72,16 +72,6 @@ Global
 		{81ACC0EB-38FA-478F-AADF-5BAE79DC00D7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{81ACC0EB-38FA-478F-AADF-5BAE79DC00D7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{81ACC0EB-38FA-478F-AADF-5BAE79DC00D7}.Release|x86.ActiveCfg = Release|Any CPU
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Debug|x86.ActiveCfg = Debug|x86
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Debug|x86.Build.0 = Debug|x86
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Release|Any CPU.ActiveCfg = Release|x86
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Release|Mixed Platforms.Build.0 = Release|x86
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Release|x86.ActiveCfg = Release|x86
-		{52AEE804-5F24-413C-99F6-81B3F44B14C9}.Release|x86.Build.0 = Release|x86
 		{7309A32A-2E2D-477C-84D2-67267EBB4ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7309A32A-2E2D-477C-84D2-67267EBB4ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7309A32A-2E2D-477C-84D2-67267EBB4ABE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -112,6 +102,16 @@ Global
 		{C2BF559A-4D36-429F-A54D-CE9D190F12A3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C2BF559A-4D36-429F-A54D-CE9D190F12A3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C2BF559A-4D36-429F-A54D-CE9D190F12A3}.Release|x86.ActiveCfg = Release|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

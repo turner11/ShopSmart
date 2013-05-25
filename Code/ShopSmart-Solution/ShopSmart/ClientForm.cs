@@ -12,6 +12,7 @@ using ShopSmart.Dal; //TODO: Find way to remove this reference!
 using ShopSmart.Common;
 using System.Diagnostics;
 using System.IO;
+using Log;
 
 namespace ShopSmart.Client
 {
@@ -50,7 +51,7 @@ namespace ShopSmart.Client
             set
             {
                 this._currentUser = value;
-                this.Log(String.Format("User was set to {0}", this._currentUser != null?this._currentUser.ToString() : "null"));
+                Logger.Log(String.Format("User was set to {0}", this._currentUser != null?this._currentUser.ToString() : "null"));
                 this.MatchGuiToUserType(this.CurrentUserType);
 
             }
@@ -105,11 +106,11 @@ namespace ShopSmart.Client
         private void GetDbItems()
         {
             this._products = this._logicsService.GetAllProducts();
-            this.Log(String.Format("Got {0} products from logics", this._products.Count));
+            Logger.Log(String.Format("Got {0} products from logics", this._products.Count));
             this._categories = this._logicsService.GetAllCategories();
-            this.Log(String.Format("Got {0} categories from logics", this._categories.Count));
+            Logger.Log(String.Format("Got {0} categories from logics", this._categories.Count));
             this._superMarkets = this._logicsService.GetAllSuperMarkets();
-            this.Log(String.Format("Got {0} supermarkets from logics", this._superMarkets.Count));
+            Logger.Log(String.Format("Got {0} supermarkets from logics", this._superMarkets.Count));
 
         }
 
@@ -118,10 +119,10 @@ namespace ShopSmart.Client
         /// </summary>
         private void BindProducts()
         {
-            this.Log("Binding products grid view");
+            Logger.Log("Binding products grid view");
             // this.CreateShoppingData();
             this.gvProducts.DataSource = this._products;
-            this.Log("Binded products grid view");
+            Logger.Log("Binded products grid view");
         }
 
         /// <summary>
@@ -129,21 +130,21 @@ namespace ShopSmart.Client
         /// </summary>
         private void BindCategories()
         {
-            this.Log("Binding categories");
+            Logger.Log("Binding categories");
             this.cblCategories.DataSource = this._categories;
-            this.Log("Binded categories");
+            Logger.Log("Binded categories");
         }
         /// <summary>
         /// Binds the supermarkets to combobox.
         /// </summary>
         private void BindSuperMarkets()
         {
-            this.Log("Binding supermarkets");
+            Logger.Log("Binding supermarkets");
             this.cmbSuperMarkets.DataSource = this._superMarkets;
             this.cmbSuperMarkets.DisplayMember = "Name";
             //HACK: this is just for having by default a value that i got data for
             this.cmbSuperMarkets.SelectedItem = this.cmbSuperMarkets.Items[this.cmbSuperMarkets.Items.Count - 1];
-            this.Log("Binded supermarkets");
+            Logger.Log("Binded supermarkets");
         }
 
         /// <summary>
@@ -153,7 +154,7 @@ namespace ShopSmart.Client
         /// otherwise, will uncheck.</param>
         private void SetAllCategoriesdCheckState(bool isChecked)
         {
-            this.Log(String.Format("Setting all categories to be {0}", isChecked ? "Checked" : "UnChecked"));
+            Logger.Log(String.Format("Setting all categories to be {0}", isChecked ? "Checked" : "UnChecked"));
             for (int i = 0; i < this.cblCategories.Items.Count; i++)
             {
                 this.cblCategories.SetItemChecked(i, isChecked);
@@ -168,7 +169,7 @@ namespace ShopSmart.Client
         /// <exception cref="System.NotImplementedException"></exception>
         private ShopList GetShoppingListFromGui()
         {
-            this.Log("Getting shopping list from gui");
+            Logger.Log("Getting shopping list from gui");
             ShopList list = new ShopList();
             
 
@@ -191,7 +192,7 @@ namespace ShopSmart.Client
             Supermarket market = this.cmbSuperMarkets.SelectedItem as Supermarket;
             list.Supermarket = market;
             list.SuperMarketId = market.Id;
-            this.Log(String.Format("got shopping list from gui: {0}", list.ToString()));
+            Logger.Log(String.Format("got shopping list from gui: {0}", list.ToString()));
             return list;
         }
 
@@ -217,17 +218,7 @@ namespace ShopSmart.Client
             }
         }
 
-        /// <summary>
-        /// Logs a message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        private void Log(string message)
-        {
-            //untill we have a logger, write to output
-            Debug.WriteLine(">======================");
-            Debug.WriteLine(message);
-            Debug.WriteLine("======================<");
-        }
+        
 
         #endregion
 
@@ -352,7 +343,7 @@ namespace ShopSmart.Client
                     }
                     else
                     {
-                        this.Log("Could not find to-buy cell");
+                        Logger.Log("Could not find to-buy cell");
                     }
                 } 
                 #endregion
@@ -415,11 +406,25 @@ namespace ShopSmart.Client
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void tsLogin_Click(object sender, EventArgs e)
         {
-            LoginForm frmLogin = new LoginForm();
-            if (frmLogin.ShowDialog() == DialogResult.OK)
+            bool isCurrentUserAdmin = this.CurrentUserType.HasValue && this.CurrentUserType.Value == UserTypes.Admininstrator;
+            LoginForm frmLogin = new LoginForm(LoginForm.LoginType.Login, isCurrentUserAdmin);
+            if (frmLogin.ShowDialog(this) == DialogResult.OK)
             {
                 /*Getting user by user name / password */
                 this.CurrentUser = this._logicsService.AuthenticateUser(frmLogin.UserName, frmLogin.Password);
+            }
+        }
+
+        private void tsRegister_Click(object sender, EventArgs e)
+        {
+            bool isCurrentUserAdmin = this.CurrentUserType.HasValue && this.CurrentUserType.Value == UserTypes.Admininstrator;
+            LoginForm frmLogin = new LoginForm(LoginForm.LoginType.CreateNewUser, isCurrentUserAdmin);
+            if (frmLogin.ShowDialog(this) == DialogResult.OK)
+            {
+                /*Creating user*/
+                string message;
+                this.CurrentUser = 
+                    this._logicsService.CreateCustomer(frmLogin.UserName, frmLogin.Password, UserTypes.User,frmLogin.UserId, out message);
             }
         }
 
@@ -433,6 +438,8 @@ namespace ShopSmart.Client
 
         }
         #endregion
+
+       
 
     }
 }

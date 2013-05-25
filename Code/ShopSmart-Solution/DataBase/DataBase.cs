@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Log;
 
 namespace ShopSmart.Dal
 {
@@ -107,6 +109,66 @@ namespace ShopSmart.Dal
             }
 
             return users;
+        }
+
+
+        /// <summary>
+        /// Creates a new customer.
+        /// </summary>
+        /// <param name="userName">userName.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="userType">Type of the user.</param>
+        /// <param name="customerId">The customer id.</param>
+        /// <param name="errorMessage">The out errorMessage in case of an error.</param>
+        /// <returns>
+        /// the user if created; null if failed to create
+        /// </returns>
+        public Customer CreateCustomer(string userName, string password, UserTypes userType, string customerId, out string errorMessage)
+        {
+            errorMessage = String.Empty ;
+
+            Customer customer = new Customer();
+            customer.UserName = userName;
+            customer.UserType = userType;
+            customer.Password = password;
+            customer.CustomerId = customerId;
+
+            
+            try
+            {
+                this._db.Customers.Add(customer);
+                this._db.SaveChanges();
+
+            }
+            catch (SystemException ex)
+            {
+                //if we can get more specific details, do it...
+                if (ex is DbEntityValidationException)
+                {
+
+                    List<DbEntityValidationResult> validationErrors = this._db.GetValidationErrors().ToList();
+                    foreach (DbEntityValidationResult currResult in validationErrors)
+                    {
+                        //get the error message
+                        List<DbValidationError> errors= currResult.ValidationErrors.ToList();
+                        List<String> errorString = errors.Select(error => error.ErrorMessage).ToList();
+                        errorMessage += String.Join(Environment.NewLine, errorString);
+                    }
+
+                    //errorMessage = String.Join(Environment.NewLine,this._db.GetValidationErrors().ToList());
+                }
+                else
+                {
+                    errorMessage = ex.Message;
+                }
+
+                Logger.Log(String.Format("Failed to create user:{0}"
+                                        +"{1}",
+                                        Environment.NewLine,
+                                        errorMessage));
+            }
+
+            return customer;
         }
     }
 }

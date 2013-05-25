@@ -146,5 +146,21 @@ namespace ShopSmart.Bl
             //we can return a value only if we get a sinle result
             return users.Count == 1? users[0] : null;
         }
+
+        /// <summary>
+        /// Creates a new user.
+        /// </summary>
+        /// <param name="userName">userName.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="userType">Type of the user.</param>
+        /// <param name="customerId">The customer id.</param>
+        /// <param name="errorMessage">The out errorMessage in case of an error.</param>
+        /// <returns>
+        /// the user if created; null if failed to create
+        /// </returns>
+        public Customer CreateCustomer(string userName, string password, UserTypes userType, string customerId, out string errorMessage)
+        {
+            return this._db.CreateCustomer(userName, password, userType, customerId,out errorMessage);
+        }
     }
 }
