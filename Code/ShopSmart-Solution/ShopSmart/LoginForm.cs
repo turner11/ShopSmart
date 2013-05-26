@@ -85,7 +85,7 @@ namespace ShopSmart.Client
             {
                 string retVal = null;
                 //the cases when it is relevant
-                if (!this._isAdmin && this._loginMode == LoginType.CreateNewUser)
+                if (this._isAdmin && this._loginMode == LoginType.CreateNewUser)
                 {
                     retVal = this.txbUserId.Text;
                 }
