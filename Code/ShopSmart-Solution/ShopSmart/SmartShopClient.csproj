@@ -27,7 +27,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -80,6 +80,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -157,6 +158,10 @@
     <ProjectReference Include="..\DataBase\DataBase.csproj">
       <Project>{3992a9a9-715a-4bd2-899d-e32835674316}</Project>
       <Name>DataBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EFWinForms\EFWinforms.csproj">
+      <Project>{BC070117-CAD0-4B62-AB0E-5F6B4955F164}</Project>
+      <Name>EFWinforms</Name>
     </ProjectReference>
     <ProjectReference Include="..\FileExporter\FileExporter.csproj">
       <Project>{c2bf559a-4d36-429f-a54d-ce9d190f12a3}</Project>

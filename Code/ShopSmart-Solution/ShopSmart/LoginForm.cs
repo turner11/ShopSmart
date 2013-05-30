@@ -295,9 +295,5 @@ namespace ShopSmart.Client
         } 
         #endregion
 
-
-
-        
-
     }
 }

@@ -53,6 +53,14 @@ namespace ShopSmart.Client
                 this._currentUser = value;
                 Logger.Log(String.Format("User was set to {0}", this._currentUser != null?this._currentUser.ToString() : "null"));
                 this.MatchGuiToUserType(this.CurrentUserType);
+                if (this.CurrentUser != null)
+                {
+                    this.Text = this.CurrentUser.UserName;
+                }
+                else
+                {
+                    this.Text = "משתמש לא רשום";
+                }
 
             }
         }
@@ -248,7 +256,6 @@ namespace ShopSmart.Client
 
                 bindingContext.SuspendBinding();
                 this.gvProducts.SuspendLayout();
-                
                 relevantRows.ForEach(row => row.Visible = showRows);
 
                 this.gvProducts.ResumeLayout(true);
@@ -412,6 +419,7 @@ namespace ShopSmart.Client
             {
                 /*Getting user by user name / password */
                 this.CurrentUser = this._logicsService.AuthenticateUser(frmLogin.UserName, frmLogin.Password);
+                this.ShowUserChangedMessage(this.CurrentUser,String.Empty);
             }
         }
 
@@ -425,7 +433,28 @@ namespace ShopSmart.Client
                 string message;
                 this.CurrentUser = 
                     this._logicsService.CreateCustomer(frmLogin.UserName, frmLogin.Password, UserTypes.User,frmLogin.UserId, out message);
+                this.ShowUserChangedMessage(this.CurrentUser, message);
             }
+        }
+
+        /// <summary>
+        /// Shows a message about who is current user.
+        /// </summary>
+        /// <param name="customer">The customer.</param>
+        /// <param name="message">The message.</param>
+        private void ShowUserChangedMessage(Customer customer, string message)
+        {
+            string msg;
+            if (customer == null)
+            {
+
+                msg = String.Format("כניסת משתמש רשום נכשלה:{0}{1}", Environment.NewLine, message);
+            }
+            else
+            {
+                msg = String.Format("כניסת משתמש רשום הצליחה עבור {0}", customer.UserName);
+            }
+            MessageBox.Show(msg);
         }
 
         /// <summary>
@@ -438,8 +467,6 @@ namespace ShopSmart.Client
 
         }
         #endregion
-
-       
 
     }
 }

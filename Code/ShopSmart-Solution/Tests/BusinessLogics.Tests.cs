@@ -54,7 +54,7 @@ namespace Tests
                 List<ShoplistItem> items = sorted.ShoplistItems.ToList();
                 int currCategory = items[i].Product.Category.CategorySorts.Where(cat => cat.Supermarket == sm).SingleOrDefault().SortValue;
                 //If list is sorted, the sort value should always increase
-                Assert.IsTrue(currCategory >= lastCategoryId, "Shopping list was not sorted properly");
+                Assert.IsTrue(currCategory >= lastCategoryId, "Shopping list was not sorted properly ({0} sort value came before {1})",lastCategoryId, currCategory);
                 lastCategoryId = currCategory;
 
             }
@@ -81,7 +81,7 @@ namespace Tests
             int actualNumberOfProducts = bs.GetAllProducts().Count;
 
             //assert
-            Assert.IsTrue(expectedProducts == actualNumberOfProducts, "Got unexpected number of products");
+            Assert.IsTrue(expectedProducts == actualNumberOfProducts, String.Format("Got unexpected number of products ({0} instead of {1})",actualNumberOfProducts,expectedProducts));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Tests
             int actual = bs.GetAllCategories().Count;
 
             //assert
-            Assert.IsTrue(expected == actual, "Got unexpected number of categories");
+            Assert.IsTrue(expected == actual, "Got unexpected number of categories ({0} instead of {1})",actual,expected);
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Tests
             int actual = bs.GetAllSuperMarkets().Count;
 
             //assert
-            Assert.IsTrue(expected == actual, "Got unexpected number of superMarkets");
+            Assert.IsTrue(expected == actual, String.Format("Got unexpected number of superMarkets ({0} instead of {1}",actual,expected));
         } 
         #endregion
         

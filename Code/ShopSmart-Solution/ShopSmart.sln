@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExporter", "FileExporte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Logger\Log.csproj", "{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFWinforms", "EFWinForms\EFWinforms.csproj", "{BC070117-CAD0-4B62-AB0E-5F6B4955F164}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = ShopSmart.vsmdi
@@ -43,6 +45,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0CB6B70F-7FA1-4719-9E44-ACBB563C43DE}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0CB6B70F-7FA1-4719-9E44-ACBB563C43DE}.Debug|Any CPU.Build.0 = Debug|x86
 		{0CB6B70F-7FA1-4719-9E44-ACBB563C43DE}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{0CB6B70F-7FA1-4719-9E44-ACBB563C43DE}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{0CB6B70F-7FA1-4719-9E44-ACBB563C43DE}.Debug|x86.ActiveCfg = Debug|x86
@@ -112,6 +115,16 @@ Global
 		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6CD02D01-C4DE-4EB8-9FA4-7BB0716C11A1}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BC070117-CAD0-4B62-AB0E-5F6B4955F164}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
