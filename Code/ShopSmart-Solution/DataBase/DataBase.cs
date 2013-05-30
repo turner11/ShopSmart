@@ -142,6 +142,8 @@ namespace ShopSmart.Dal
             }
             catch (SystemException ex)
             {
+
+                customer = null;
                 //if we can get more specific details, do it...
                 if (ex is DbEntityValidationException)
                 {
