@@ -38,8 +38,11 @@
             this.txbFilter = new System.Windows.Forms.TextBox();
             this.chbCheckAll = new System.Windows.Forms.CheckBox();
             this.tlpCategories = new System.Windows.Forms.TableLayoutPanel();
+            this.rdbShowEditorControls = new System.Windows.Forms.RadioButton();
+            this.rdbShowUserControls = new System.Windows.Forms.RadioButton();
             this.cblCategories = new System.Windows.Forms.CheckedListBox();
             this.btnSend = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.tpSettings = new System.Windows.Forms.TabPage();
             this.tlbSettings = new System.Windows.Forms.TableLayoutPanel();
             this.lblSuperMarkets = new System.Windows.Forms.Label();
@@ -60,15 +63,17 @@
             // 
             // tcMain
             // 
+            this.tcMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tcMain.Controls.Add(this.tpShoppingList);
             this.tcMain.Controls.Add(this.tpSettings);
-            this.tcMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcMain.Location = new System.Drawing.Point(0, 0);
+            this.tcMain.Location = new System.Drawing.Point(0, 30);
             this.tcMain.Name = "tcMain";
             this.tcMain.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tcMain.RightToLeftLayout = true;
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(691, 479);
+            this.tcMain.Size = new System.Drawing.Size(691, 478);
             this.tcMain.TabIndex = 0;
             // 
             // tpShoppingList
@@ -77,7 +82,7 @@
             this.tpShoppingList.Location = new System.Drawing.Point(4, 25);
             this.tpShoppingList.Name = "tpShoppingList";
             this.tpShoppingList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpShoppingList.Size = new System.Drawing.Size(683, 450);
+            this.tpShoppingList.Size = new System.Drawing.Size(683, 449);
             this.tpShoppingList.TabIndex = 0;
             this.tpShoppingList.Text = "רשימת קניות";
             this.tpShoppingList.UseVisualStyleBackColor = true;
@@ -97,7 +102,7 @@
             this.tlpMain.RowCount = 2;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpMain.Size = new System.Drawing.Size(677, 444);
+            this.tlpMain.Size = new System.Drawing.Size(677, 443);
             this.tlpMain.TabIndex = 0;
             // 
             // gvProducts
@@ -162,16 +167,46 @@
             // 
             this.tlpCategories.ColumnCount = 1;
             this.tlpCategories.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCategories.Controls.Add(this.rdbShowEditorControls, 0, 2);
+            this.tlpCategories.Controls.Add(this.rdbShowUserControls, 0, 1);
             this.tlpCategories.Controls.Add(this.cblCategories, 0, 0);
-            this.tlpCategories.Controls.Add(this.btnSend, 0, 1);
+            this.tlpCategories.Controls.Add(this.btnSend, 0, 4);
+            this.tlpCategories.Controls.Add(this.btnUpdate, 0, 3);
             this.tlpCategories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpCategories.Location = new System.Drawing.Point(477, 33);
             this.tlpCategories.Name = "tlpCategories";
-            this.tlpCategories.RowCount = 2;
+            this.tlpCategories.RowCount = 5;
             this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCategories.Size = new System.Drawing.Size(197, 408);
             this.tlpCategories.TabIndex = 4;
+            // 
+            // rdbShowEditorControls
+            // 
+            this.rdbShowEditorControls.AutoSize = true;
+            this.rdbShowEditorControls.Location = new System.Drawing.Point(67, 324);
+            this.rdbShowEditorControls.Name = "rdbShowEditorControls";
+            this.rdbShowEditorControls.Size = new System.Drawing.Size(127, 21);
+            this.rdbShowEditorControls.TabIndex = 8;
+            this.rdbShowEditorControls.TabStop = true;
+            this.rdbShowEditorControls.Text = "הראה ממשק עורך";
+            this.rdbShowEditorControls.UseVisualStyleBackColor = true;
+            this.rdbShowEditorControls.CheckedChanged += new System.EventHandler(this.rdbControls_CheckedChanged);
+            // 
+            // rdbShowUserControls
+            // 
+            this.rdbShowUserControls.AutoSize = true;
+            this.rdbShowUserControls.Location = new System.Drawing.Point(51, 297);
+            this.rdbShowUserControls.Name = "rdbShowUserControls";
+            this.rdbShowUserControls.Size = new System.Drawing.Size(143, 21);
+            this.rdbShowUserControls.TabIndex = 7;
+            this.rdbShowUserControls.TabStop = true;
+            this.rdbShowUserControls.Text = "הראה ממשק משתמש";
+            this.rdbShowUserControls.UseVisualStyleBackColor = true;
+            this.rdbShowUserControls.CheckedChanged += new System.EventHandler(this.rdbControls_CheckedChanged);
             // 
             // cblCategories
             // 
@@ -179,7 +214,7 @@
             this.cblCategories.FormattingEnabled = true;
             this.cblCategories.Location = new System.Drawing.Point(3, 3);
             this.cblCategories.Name = "cblCategories";
-            this.cblCategories.Size = new System.Drawing.Size(191, 372);
+            this.cblCategories.Size = new System.Drawing.Size(191, 288);
             this.cblCategories.TabIndex = 2;
             this.cblCategories.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.cblCategories_ItemCheck);
             // 
@@ -194,13 +229,25 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnUpdate.Location = new System.Drawing.Point(3, 351);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(191, 24);
+            this.btnUpdate.TabIndex = 4;
+            this.btnUpdate.Text = "עדכן";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Visible = false;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
             // tpSettings
             // 
             this.tpSettings.Controls.Add(this.tlbSettings);
             this.tpSettings.Location = new System.Drawing.Point(4, 25);
             this.tpSettings.Name = "tpSettings";
             this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSettings.Size = new System.Drawing.Size(683, 450);
+            this.tpSettings.Size = new System.Drawing.Size(683, 449);
             this.tpSettings.TabIndex = 1;
             this.tpSettings.Text = "הגדרות";
             this.tpSettings.UseVisualStyleBackColor = true;
@@ -218,7 +265,7 @@
             this.tlbSettings.RowCount = 2;
             this.tlbSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlbSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlbSettings.Size = new System.Drawing.Size(677, 444);
+            this.tlbSettings.Size = new System.Drawing.Size(677, 443);
             this.tlbSettings.TabIndex = 0;
             // 
             // lblSuperMarkets
@@ -235,10 +282,11 @@
             // 
             this.cmbSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbSuperMarkets.FormattingEnabled = true;
-            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 8);
+            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 7);
             this.cmbSuperMarkets.Name = "cmbSuperMarkets";
             this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
             this.cmbSuperMarkets.TabIndex = 1;
+            this.cmbSuperMarkets.SelectedIndexChanged += new System.EventHandler(this.cmbSuperMarkets_SelectedIndexChanged);
             // 
             // _toolStrip
             // 
@@ -265,14 +313,14 @@
             // tsLogin
             // 
             this.tsLogin.Name = "tsLogin";
-            this.tsLogin.Size = new System.Drawing.Size(152, 24);
+            this.tsLogin.Size = new System.Drawing.Size(118, 24);
             this.tsLogin.Text = "כניסה";
             this.tsLogin.Click += new System.EventHandler(this.tsLogin_Click);
             // 
             // tsRegister
             // 
             this.tsRegister.Name = "tsRegister";
-            this.tsRegister.Size = new System.Drawing.Size(152, 24);
+            this.tsRegister.Size = new System.Drawing.Size(118, 24);
             this.tsRegister.Text = "יצירה";
             this.tsRegister.Click += new System.EventHandler(this.tsRegister_Click);
             // 
@@ -280,11 +328,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(691, 479);
+            this.ClientSize = new System.Drawing.Size(691, 509);
             this.Controls.Add(this._toolStrip);
             this.Controls.Add(this.tcMain);
             this.Name = "ClientForm";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.RightToLeftLayout = true;
             this.Text = "Shop-Smart";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.tcMain.ResumeLayout(false);
@@ -293,6 +342,7 @@
             this.tlpMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvProducts)).EndInit();
             this.tlpCategories.ResumeLayout(false);
+            this.tlpCategories.PerformLayout();
             this.tpSettings.ResumeLayout(false);
             this.tlbSettings.ResumeLayout(false);
             this.tlbSettings.PerformLayout();
@@ -324,6 +374,9 @@
         private System.Windows.Forms.ToolStripDropDownButton tsOptions;
         private System.Windows.Forms.ToolStripMenuItem tsLogin;
         private System.Windows.Forms.ToolStripMenuItem tsRegister;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.RadioButton rdbShowEditorControls;
+        private System.Windows.Forms.RadioButton rdbShowUserControls;
     }
 }
 

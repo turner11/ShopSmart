@@ -13,6 +13,7 @@ using ShopSmart.Common;
 using System.Diagnostics;
 using System.IO;
 using Log;
+using System.Collections.ObjectModel;
 
 namespace ShopSmart.Client
 {
@@ -27,7 +28,7 @@ namespace ShopSmart.Client
         /// <summary>
         /// The logics handler object
         /// </summary>
-        SmartShopLogics _logicsService;
+        readonly SmartShopLogics _logicsService;
         /// <summary>
         /// The products that are in database
         /// </summary>
@@ -52,15 +53,17 @@ namespace ShopSmart.Client
             {
                 this._currentUser = value;
                 Logger.Log(String.Format("User was set to {0}", this._currentUser != null?this._currentUser.ToString() : "null"));
-                this.MatchGuiToUserType(this.CurrentUserType);
-                if (this.CurrentUser != null)
+                if (this._currentUser != null)
                 {
                     this.Text = this.CurrentUser.UserName;
+                    
                 }
                 else
                 {
                     this.Text = "משתמש לא רשום";
                 }
+
+                this.MatchGuiToUserType();
 
             }
         }
@@ -81,29 +84,42 @@ namespace ShopSmart.Client
             }
         }
 
-        
-        
+        /// <summary>
+        /// Gets the _selected super market in the super market conmbo box.
+        /// </summary>
+        /// <value>
+        /// The _selected super market.
+        /// </value>
+        private Supermarket _selectedSuperMarket
+        {
+            get { return this.cmbSuperMarkets.SelectedItem as Supermarket; }
+
+        }
+
+
+
 
         #endregion
 
         #region C'tors
+        
         public ClientForm()
         {
             InitializeComponent();
             this._logicsService = new SmartShopLogics();
             this.GetDbItems();
-            this.BindProducts();
-            this.BindCategories();
             this.BindSuperMarkets();
+            this.BindCategories();
+            this.BindProducts();
             this.SetAllCategoriesdCheckState(true);
+            this.MatchGuiToUserType();
+            
 
 
 
             //this.SetIcon();
         }
-
-
-
+        
         #endregion
 
         #region Private functions
@@ -128,9 +144,129 @@ namespace ShopSmart.Client
         private void BindProducts()
         {
             Logger.Log("Binding products grid view");
-            // this.CreateShoppingData();
-            this.gvProducts.DataSource = this._products;
+
+            DataTable dtProducts = this.GetTableFromProductsList(this._products);
+
+            this.gvProducts.DataSource = dtProducts;
+
+            // setting headers and column visibility
+            foreach (DataGridViewColumn col in this.gvProducts.Columns)
+            {
+                DataColumn dataCol = dtProducts.Columns[col.Name];
+                //we need to check because we have some unbound columns
+                if (dataCol != null)
+                {
+                    col.HeaderText = dataCol.Caption;
+                }
+                
+            }
+
+           
             Logger.Log("Binded products grid view");
+        }
+
+        /// <summary>
+        /// Gets the table from products list.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        /// <returns>a datatable containg information in list</returns>
+        private DataTable GetTableFromProductsList(IEnumerable<Product> list)
+        {
+            DataTable dt = ClientForm.BuildProductsTableStructure();
+            dt.TableName = "Products";
+            this.PopulateFormattedTable(dt, list);
+
+
+            return dt;
+        }
+
+        /// <summary>
+        /// Populates the formatted table.
+        /// </summary>
+        /// <param name="dt">The structured table.</param>
+        /// <param name="list">The list.</param>
+        private void PopulateFormattedTable(DataTable dt, IEnumerable<Product> list)
+        {
+            foreach (Product product in list)
+            {
+                DataRow currRow = dt.NewRow();
+                currRow[DataTableConstans.COL_NAME_ID] =product.Id ;
+                currRow[DataTableConstans.COL_NAME_PRODUCTNAME] =product.ProductName ;
+                currRow[DataTableConstans.COL_NAME_NOTES] ="" ;//this is not product notes, but notes for shopping item
+                currRow[DataTableConstans.COL_NAME_PRICE] =product.Price ;
+                currRow[DataTableConstans.COL_NAME_CATEGORY] =product.Category.Name ;
+                currRow[DataTableConstans.COL_NAME_CATEGORYID] =product.CategoryID ;
+                currRow[DataTableConstans.COL_NAME_CATEGORYOBJECT] = product.Category;
+                currRow[DataTableConstans.COL_NAME_PRODUCT] = product;
+
+                CategorySort catSort = product.Category.CategorySorts.FirstOrDefault(cs => this._selectedSuperMarket != null
+                                                                        && cs.SupermarketId == this._selectedSuperMarket.Id);
+                currRow[DataTableConstans.COL_NAME_CATEGORY_SORT_VALUE] = catSort != null? catSort.SortValue : 0;
+                    
+
+                dt.Rows.Add(currRow);
+            }
+        }
+
+        /// <summary>
+        /// Builds the products table structure.
+        /// </summary>
+        /// <returns></returns>
+        private static DataTable BuildProductsTableStructure()
+        {
+            DataTable dt = new DataTable();
+
+            /*Id*/
+            DataColumn colId = new DataColumn(DataTableConstans.COL_NAME_ID, typeof (int));
+            dt.Columns.Add(colId);
+
+            /*Product name*/
+            DataColumn colProductName = new DataColumn(DataTableConstans.COL_NAME_PRODUCTNAME, typeof (string));
+            dt.Columns.Add(colProductName);
+            
+
+            /*notes*/
+            DataColumn colNotes = new DataColumn(DataTableConstans.COL_NAME_NOTES, typeof (string));
+            dt.Columns.Add(colNotes);
+
+            /*Price*/
+            DataColumn colPrice = new DataColumn(DataTableConstans.COL_NAME_PRICE, typeof (double));
+            dt.Columns.Add(colPrice);
+
+
+            /*Category (name)*/
+            DataColumn colCategory = new DataColumn(DataTableConstans.COL_NAME_CATEGORY, typeof (string));
+            dt.Columns.Add(colCategory);
+
+
+            /*Category Id*/
+            DataColumn colCategoryId = new DataColumn(DataTableConstans.COL_NAME_CATEGORYID, typeof (int));
+            dt.Columns.Add(colCategoryId);
+
+            /*Category Id*/
+            DataColumn colCategorySortValue = new DataColumn(DataTableConstans.COL_NAME_CATEGORY_SORT_VALUE, typeof(int));
+            dt.Columns.Add(colCategorySortValue);
+            
+
+            /*Product*/
+            DataColumn colCategoryObject = new DataColumn(DataTableConstans.COL_NAME_CATEGORYOBJECT, typeof(Category));
+            dt.Columns.Add(colCategoryObject);
+
+            /*Product*/
+            DataColumn colProduct = new DataColumn(DataTableConstans.COL_NAME_PRODUCT, typeof(Product));
+            dt.Columns.Add(colProduct);
+
+            /*Setting headers*/
+            foreach (DataColumn column in dt.Columns)
+            {
+                if (DataTableConstans.ColHeaderByName.ContainsKey(column.ColumnName))
+                {
+                    column.Caption = DataTableConstans.ColHeaderByName[column.ColumnName];
+                }
+            }
+
+
+            return dt;
         }
 
         /// <summary>
@@ -207,26 +343,70 @@ namespace ShopSmart.Client
         /// <summary>
         /// Matches the GUI to specified user type.
         /// </summary>
-        /// <param name="nullable">The nullable.</param>
-        private void MatchGuiToUserType(UserTypes? userType)
+        /// <param name="userType">Type of the user.</param>
+        private void MatchGuiToUserType()
         {
-            if (userType.HasValue)
+            //if user is not logged in, we will treat him as lowest level of permissions
+            var userType = this.CurrentUserType ?? UserTypes.User;
+            bool showEditControls = false;
+            switch (userType)
             {
-                switch (userType.Value)
-                {
-                    case UserTypes.Admininstrator:
-                        break;
-                    case UserTypes.Editor:
-                        break;
-                    case UserTypes.User:
-                        break;
-                    default:
-                        break;
-                }
+                case UserTypes.Admininstrator:
+                    showEditControls = true;
+                    break;
+                case UserTypes.Editor:
+                    showEditControls = true;
+                    break;
+                case UserTypes.User:
+                    showEditControls = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+
+            if (showEditControls)
+            {
+               this.rdbShowEditorControls.Show();
+               this.rdbShowUserControls.Show();
+            }
+            else
+            {
+                this.rdbShowEditorControls.Hide();
+                this.rdbShowUserControls.Hide();
+
+            }
+
+            #region Set column visibility and editibility
+            //if products are bound, setting column visibility
+            var dtProducts = this.gvProducts.DataSource as DataTable;
+            if (dtProducts != null)
+            {
+
+                foreach (DataGridViewColumn col in this.gvProducts.Columns)
+                {
+                    DataColumn dataCol = dtProducts.Columns[col.Name];
+                    //we need to check because we have some unbound columns
+                    if (dataCol != null)
+                    {
+                        if (DataTableConstans.ColAvailabilityForUserType.ContainsKey(dataCol.ColumnName))
+                        {
+                            /*Visibility*/
+                            bool visibilityState =
+                                DataTableConstans.ColAvailabilityForUserType[dataCol.ColumnName].Contains(userType);
+                            col.Visible = visibilityState;
+                            
+                            /*Editabillity*/
+                            bool setEditable = DataTableConstans.ColEditebilityForUserType[dataCol.ColumnName].Contains(userType);
+                            col.ReadOnly = !setEditable;
+
+                        }
+                    }
+                }
+            } 
+            #endregion
         }
 
-        
+
 
         #endregion
 
@@ -241,13 +421,15 @@ namespace ShopSmart.Client
             //finding out which category we are talking about
             Category category = this.cblCategories.Items[e.Index] as Category;
             BindingManagerBase bindingContext = this.gvProducts.BindingContext[this.gvProducts.DataSource];
-            if (category != null && bindingContext != null)
+            if (category != null )
             {
                 //getting all rows that contains products with the category weare dealing with   
-                //TODO: use a parameter and not fixed "9"
+
+                string categoryColName = DataTableConstans.COL_NAME_CATEGORYOBJECT;
+                
                 IEnumerable<DataGridViewRow> enumeratedRows =
-                    this.gvProducts.Rows.Cast<DataGridViewRow>().Where(row => (row.Cells[9].Value as Category) != null
-                                                                     && (row.Cells[9].Value as Category).guid == category.guid);
+                    this.gvProducts.Rows.Cast<DataGridViewRow>().Where(row => (row.Cells[categoryColName].Value as Category) != null
+                                                                     && (row.Cells[categoryColName].Value as Category).guid == category.guid);
 
                 List<DataGridViewRow> relevantRows = enumeratedRows.ToList();
 
@@ -256,7 +438,12 @@ namespace ShopSmart.Client
 
                 bindingContext.SuspendBinding();
                 this.gvProducts.SuspendLayout();
-                relevantRows.ForEach(row => row.Visible = showRows);
+
+                //relevantRows.ForEach(row => row.Visible = showRows);
+                foreach (DataGridViewRow currRow in relevantRows)
+                {
+                    currRow.Visible = showRows;
+                }
 
                 this.gvProducts.ResumeLayout(true);
                 bindingContext.ResumeBinding();
@@ -423,6 +610,11 @@ namespace ShopSmart.Client
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the tsRegister control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void tsRegister_Click(object sender, EventArgs e)
         {
             bool isCurrentUserAdmin = this.CurrentUserType.HasValue && this.CurrentUserType.Value == UserTypes.Admininstrator;
@@ -466,7 +658,185 @@ namespace ShopSmart.Client
         {
 
         }
+
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the cmbSuperMarkets control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void cmbSuperMarkets_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //if supermarket has changed, we need to re bind the products because thier sort depends on supermarkert
+            this.BindProducts();
+        }
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the rdbControls control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void rdbControls_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rdb = sender as RadioButton;
+            if (rdb != null && rdb.Checked)
+            {
+                if (rdb.Name == this.rdbShowEditorControls.Name)
+                {
+                    this.btnUpdate.Show();
+                    this.btnSend.Hide();
+                }
+                else if (rdb.Name == this.rdbShowUserControls.Name)
+                {
+                    this.btnUpdate.Hide();
+                    this.btnSend.Show();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the btnUpdate control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            List<Product> products = this.GetEditedProducts();
+        }
+
+        /// <summary>
+        /// Gets the products that where edited .
+        /// </summary>
+        /// <returns>the list of edited products</returns>
+        private List<Product> GetEditedProducts()
+        {
+            List<Product> products = new List<Product>();
+
+            DataTable data = this.gvProducts.DataSource as DataTable;
+            if (data != null)
+            {
+                DataTable changes = data.GetChanges();
+                foreach (DataRow row in changes.Rows)
+                {
+                    Product currProd = row[DataTableConstans.COL_NAME_PRODUCT] as Product;
+                    
+                }
+            }
+
+            foreach (DataGridViewRow row in this.gvProducts.rows)
+            {
+                Product currProd = row[DataTableConstans.COL_NAME_PRODUCT] as Product;
+
+            }
+            
+
+            return products;
+        }
         #endregion
 
+        #region Sub classes
+        /// <summary>
+        /// holds constants for column names and header text
+        /// </summary>
+        private static class DataTableConstans
+        {
+            #region "By column names" Dictionaries
+
+            /// <summary>
+            /// A dictionary that holds columns header text by their name
+            /// </summary>
+            public static readonly Dictionary<string, string> ColHeaderByName;
+            /// <summary>
+            /// A dictionary that holds a key for column name, and a value for the users this column should be available for
+            /// </summary>
+            public static readonly Dictionary<string, IReadOnlyCollection<UserTypes>> ColAvailabilityForUserType;
+
+            /// <summary>
+            /// A dictionary that holds a key for column name, and a value for the users That are allowed to edit the key column
+            /// </summary>
+            public static readonly Dictionary<string, IReadOnlyCollection<UserTypes>> ColEditebilityForUserType;
+ 
+	        #endregion
+
+            #region Constants
+            public const string COL_NAME_ID = "Id";
+
+            public const string COL_NAME_PRODUCTNAME = "ProductName";
+
+            public const string COL_NAME_NOTES = "Notes";
+
+            public const string COL_NAME_PRICE = "Price";
+
+            public const string COL_NAME_CATEGORY = "Category";
+
+            public const string COL_NAME_CATEGORYID = "CategoryId";
+
+            public const string COL_NAME_CATEGORYOBJECT = "CategoryObject";
+
+            public const string COL_NAME_CATEGORY_SORT_VALUE = "CategorySortValue"; 
+
+            public const string COL_NAME_PRODUCT = "ProductObject"; 
+            #endregion
+
+            static DataTableConstans()
+            {
+                DataTableConstans.ColHeaderByName = new Dictionary<string, string>
+                    {
+                       #region Populate
+		                 {DataTableConstans.COL_NAME_ID, "Id"},
+                        {DataTableConstans.COL_NAME_PRODUCTNAME, "מוצר"},
+                        {DataTableConstans.COL_NAME_NOTES, "הערות"},
+                        {DataTableConstans.COL_NAME_PRICE, "מחיר"},
+                        {DataTableConstans.COL_NAME_CATEGORY, "קטגוריה"},
+                        {DataTableConstans.COL_NAME_CATEGORYID, "CategoryId"},
+                        {DataTableConstans.COL_NAME_CATEGORYOBJECT, "Category Object"},
+                        {DataTableConstans.COL_NAME_CATEGORY_SORT_VALUE, "Catgory Sort Value"},
+                        {DataTableConstans.COL_NAME_PRODUCT, "Product Object"} 
+	                    #endregion
+                    };
+
+                ReadOnlyCollection<UserTypes> allUsers = Enum.GetValues(typeof(UserTypes)).Cast<UserTypes>().ToList().AsReadOnly();
+                    //allUsers.AddRange(Enum.GetValues(typeof(UserTypes)).Cast<UserTypes>().ToList().AsReadOnly());
+                ReadOnlyCollection<UserTypes> noUsers = new List<UserTypes>(0).AsReadOnly();
+                ReadOnlyCollection<UserTypes> editros = new List<UserTypes>() { UserTypes.Admininstrator, UserTypes.Editor }.AsReadOnly();
+                ReadOnlyCollection<UserTypes> admin = new List<UserTypes>() { UserTypes.Admininstrator }.AsReadOnly();
+
+                DataTableConstans.ColAvailabilityForUserType = new Dictionary<string, IReadOnlyCollection<UserTypes>>
+                    {
+                       #region Populate
+		                {DataTableConstans.COL_NAME_ID,  noUsers},
+                        {DataTableConstans.COL_NAME_PRODUCTNAME, allUsers},
+                        {DataTableConstans.COL_NAME_NOTES, allUsers},
+                        {DataTableConstans.COL_NAME_PRICE, allUsers},
+                        {DataTableConstans.COL_NAME_CATEGORY, allUsers},
+                        {DataTableConstans.COL_NAME_CATEGORYID, noUsers},
+                        {DataTableConstans.COL_NAME_CATEGORYOBJECT, noUsers},
+                        {DataTableConstans.COL_NAME_CATEGORY_SORT_VALUE, admin} ,
+                        {DataTableConstans.COL_NAME_PRODUCT, noUsers} 
+	                    #endregion
+                    };
+
+                DataTableConstans.ColEditebilityForUserType = new Dictionary<string, IReadOnlyCollection<UserTypes>>
+                    {
+                       #region Populate
+		                {DataTableConstans.COL_NAME_ID,  noUsers},
+                        {DataTableConstans.COL_NAME_PRODUCTNAME, admin},
+                        {DataTableConstans.COL_NAME_NOTES, allUsers},
+                        {DataTableConstans.COL_NAME_PRICE, editros},
+                        {DataTableConstans.COL_NAME_CATEGORY, editros},
+                        {DataTableConstans.COL_NAME_CATEGORYID, noUsers},
+                        {DataTableConstans.COL_NAME_CATEGORYOBJECT, noUsers},
+                        {DataTableConstans.COL_NAME_CATEGORY_SORT_VALUE, editros} ,
+                        {DataTableConstans.COL_NAME_PRODUCT, noUsers} 
+	                    #endregion
+                    };
+            }
+
+        }
+        #endregion
+
+       
+
     }
+
+  
 }
