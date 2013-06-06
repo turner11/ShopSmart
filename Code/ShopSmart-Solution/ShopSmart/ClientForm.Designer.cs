@@ -51,6 +51,7 @@
             this.tsOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsLogin = new System.Windows.Forms.ToolStripMenuItem();
             this.tsRegister = new System.Windows.Forms.ToolStripMenuItem();
+            this.clmDirty = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tcMain.SuspendLayout();
             this.tpShoppingList.SuspendLayout();
             this.tlpMain.SuspendLayout();
@@ -117,7 +118,8 @@
             this.gvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clmToBuy,
-            this.clmQuantity});
+            this.clmQuantity,
+            this.clmDirty});
             this.gvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvProducts.Location = new System.Drawing.Point(3, 33);
             this.gvProducts.MultiSelect = false;
@@ -324,6 +326,13 @@
             this.tsRegister.Text = "יצירה";
             this.tsRegister.Click += new System.EventHandler(this.tsRegister_Click);
             // 
+            // clmDirty
+            // 
+            this.clmDirty.HeaderText = "IsDirty";
+            this.clmDirty.Name = "clmDirty";
+            this.clmDirty.Visible = false;
+            this.clmDirty.Width = 53;
+            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -377,6 +386,7 @@
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.RadioButton rdbShowEditorControls;
         private System.Windows.Forms.RadioButton rdbShowUserControls;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn clmDirty;
     }
 }
 

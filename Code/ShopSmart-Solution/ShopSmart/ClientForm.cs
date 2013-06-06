@@ -63,7 +63,7 @@ namespace ShopSmart.Client
                     this.Text = "משתמש לא רשום";
                 }
 
-                this.MatchGuiToUserType();
+                this.MatchGuiToUserType(this.CurrentUserType);
 
             }
         }
@@ -96,9 +96,6 @@ namespace ShopSmart.Client
 
         }
 
-
-
-
         #endregion
 
         #region C'tors
@@ -106,13 +103,14 @@ namespace ShopSmart.Client
         public ClientForm()
         {
             InitializeComponent();
+            this.cblCategories.CheckOnClick = true;
             this._logicsService = new SmartShopLogics();
             this.GetDbItems();
             this.BindSuperMarkets();
             this.BindCategories();
             this.BindProducts();
             this.SetAllCategoriesdCheckState(true);
-            this.MatchGuiToUserType();
+            this.MatchGuiToUserType(this.CurrentUserType);
             
 
 
@@ -298,12 +296,22 @@ namespace ShopSmart.Client
         /// otherwise, will uncheck.</param>
         private void SetAllCategoriesdCheckState(bool isChecked)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
+            //we are unbinding and rebinding for avoiding massive unwanted calls.
+            //In case we see this is no good, just use a flag in the event handler
+            this.cblCategories.ItemCheck -= this.cblCategories_ItemCheck;
+
             Logger.Log(String.Format("Setting all categories to be {0}", isChecked ? "Checked" : "UnChecked"));
             for (int i = 0; i < this.cblCategories.Items.Count; i++)
             {
                 this.cblCategories.SetItemChecked(i, isChecked);
 
             }
+            this.FilterProductsByCheckedCateories();
+            this.cblCategories.ItemCheck += this.cblCategories_ItemCheck;
+            sw.Stop();
+            Logger.Log(String.Format(">>>>>>Changing All rows took: {0}ms.", sw.Elapsed.TotalMilliseconds));
         }
 
         /// <summary>
@@ -344,12 +352,12 @@ namespace ShopSmart.Client
         /// Matches the GUI to specified user type.
         /// </summary>
         /// <param name="userType">Type of the user.</param>
-        private void MatchGuiToUserType()
+        private void MatchGuiToUserType(UserTypes? userType)
         {
             //if user is not logged in, we will treat him as lowest level of permissions
-            var userType = this.CurrentUserType ?? UserTypes.User;
+            var affectiveUserType = this.CurrentUserType ?? UserTypes.User;
             bool showEditControls = false;
-            switch (userType)
+            switch (affectiveUserType)
             {
                 case UserTypes.Admininstrator:
                     showEditControls = true;
@@ -392,11 +400,11 @@ namespace ShopSmart.Client
                         {
                             /*Visibility*/
                             bool visibilityState =
-                                DataTableConstans.ColAvailabilityForUserType[dataCol.ColumnName].Contains(userType);
+                                DataTableConstans.ColAvailabilityForUserType[dataCol.ColumnName].Contains(affectiveUserType);
                             col.Visible = visibilityState;
                             
                             /*Editabillity*/
-                            bool setEditable = DataTableConstans.ColEditebilityForUserType[dataCol.ColumnName].Contains(userType);
+                            bool setEditable = DataTableConstans.ColEditebilityForUserType[dataCol.ColumnName].Contains(affectiveUserType);
                             col.ReadOnly = !setEditable;
 
                         }
@@ -406,7 +414,44 @@ namespace ShopSmart.Client
             #endregion
         }
 
+        /// <summary>
+        /// Filters the products by the checked cateories.
+        /// </summary>
+        private void FilterProductsByCheckedCateories()
+        {
+            DataTable dtProducts = this.gvProducts.DataSource as DataTable;
+            if (dtProducts != null)
+            {
+                dtProducts.DefaultView.RowFilter = this.GetFilterExpressionFromCategories();
+            }
+        }
 
+        /// <summary>
+        /// Gets the filter expression from categories checkboxlist.
+        /// </summary>
+        /// <returns></returns>
+        private string GetFilterExpressionFromCategories()
+        {
+            string fltrExp = String.Empty;
+            int filteredCount = 0;
+            for (int i = 0; i < this.cblCategories.Items.Count; i++)
+            {
+                Category category = this.cblCategories.Items[i] as Category;
+                Debug.Assert(category != null, "Checkboxlist had an item which was not a category!");
+                if (!this.cblCategories.GetItemChecked(i))
+                {
+                    if (filteredCount > 0)
+                    {
+                        fltrExp += "AND ";
+                    }
+                    fltrExp += String.Format("{0} <> '{1}' ", DataTableConstans.COL_NAME_CATEGORY, category.Name);
+                    filteredCount++;
+                }
+            }
+
+            this.cblCategories.Items.ToString();
+            return fltrExp.Trim();
+        }
 
         #endregion
 
@@ -415,41 +460,14 @@ namespace ShopSmart.Client
         /// Handles the ItemCheck event of the cblCategories control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ItemCheckEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="ItemCheckEventArgs" /> instance containing the event data.</param>
         void cblCategories_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            //finding out which category we are talking about
-            Category category = this.cblCategories.Items[e.Index] as Category;
-            BindingManagerBase bindingContext = this.gvProducts.BindingContext[this.gvProducts.DataSource];
-            if (category != null )
-            {
-                //getting all rows that contains products with the category weare dealing with   
-
-                string categoryColName = DataTableConstans.COL_NAME_CATEGORYOBJECT;
-                
-                IEnumerable<DataGridViewRow> enumeratedRows =
-                    this.gvProducts.Rows.Cast<DataGridViewRow>().Where(row => (row.Cells[categoryColName].Value as Category) != null
-                                                                     && (row.Cells[categoryColName].Value as Category).guid == category.guid);
-
-                List<DataGridViewRow> relevantRows = enumeratedRows.ToList();
-
-                //setting visibility
-                bool showRows = e.NewValue == CheckState.Checked;
-
-                bindingContext.SuspendBinding();
-                this.gvProducts.SuspendLayout();
-
-                //relevantRows.ForEach(row => row.Visible = showRows);
-                foreach (DataGridViewRow currRow in relevantRows)
-                {
-                    currRow.Visible = showRows;
-                }
-
-                this.gvProducts.ResumeLayout(true);
-                bindingContext.ResumeBinding();
-
-            }
+            //running the method after the event has completed, and new value took place
+            this.BeginInvoke(new MethodInvoker(FilterProductsByCheckedCateories), null);                      
         }
+
+        
 
         /// <summary>
         /// Handles the CheckedChanged event of the chbCheckAll control.
@@ -520,7 +538,8 @@ namespace ShopSmart.Client
         {
             DataGridViewRow row = this.gvProducts.Rows[e.RowIndex];
             DataGridViewCell cllQuant = row.Cells[this.clmQuantity.Index];
-            DataGridViewCheckBoxCell cllToBuy = row.Cells[this.clmToBuy.Index] as DataGridViewCheckBoxCell;
+            var cllToBuy = row.Cells[this.clmToBuy.Index] as DataGridViewCheckBoxCell;
+
 
             if (e.ColumnIndex == this.clmQuantity.Index)
             {
@@ -544,7 +563,7 @@ namespace ShopSmart.Client
             }
             else if (e.ColumnIndex == this.clmToBuy.Index)
             {
-                bool toBuy = Convert.ToBoolean(cllToBuy.Value) ;
+                bool toBuy = cllToBuy != null && Convert.ToBoolean(cllToBuy.Value);
                 if (!toBuy)
                 {
                     cllQuant.Value = String.Empty;
@@ -554,6 +573,10 @@ namespace ShopSmart.Client
                     //if was marked to buy, make sure there is a quantity
                     cllQuant.Value = 1;
                 }
+            }
+            else if (this.gvProducts.Columns[e.ColumnIndex].IsDataBound) //If we left a bound row, it meanse the row is dirty, should be marked as such
+            {
+                row.Cells[this.clmDirty.Index].Value = true;
             }
 
         }
@@ -711,24 +734,19 @@ namespace ShopSmart.Client
         {
             List<Product> products = new List<Product>();
 
-            DataTable data = this.gvProducts.DataSource as DataTable;
-            if (data != null)
+            //Adding products from rows that are marked as edited
+            foreach (DataGridViewRow row in this.gvProducts.Rows)
             {
-                DataTable changes = data.GetChanges();
-                foreach (DataRow row in changes.Rows)
+                object objEdited = row.Cells[this.clmDirty.Index].Value;
+                bool isEdited = objEdited is bool && (bool) objEdited;
+                if (isEdited)
                 {
-                    Product currProd = row[DataTableConstans.COL_NAME_PRODUCT] as Product;
+                    Product currProd = row.Cells[DataTableConstans.COL_NAME_PRODUCT].Value as Product;
+                    Debug.Assert(currProd != null, "Could not get product from gridview row!");
+                    products.Add(currProd);
                     
                 }
             }
-
-            foreach (DataGridViewRow row in this.gvProducts.rows)
-            {
-                Product currProd = row[DataTableConstans.COL_NAME_PRODUCT] as Product;
-
-            }
-            
-
             return products;
         }
         #endregion
@@ -833,6 +851,7 @@ namespace ShopSmart.Client
 
         }
         #endregion
+
 
        
 
