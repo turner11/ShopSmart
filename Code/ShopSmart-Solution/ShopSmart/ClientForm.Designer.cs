@@ -35,6 +35,7 @@
             this.gvProducts = new System.Windows.Forms.DataGridView();
             this.clmToBuy = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.clmQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmDirty = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.txbFilter = new System.Windows.Forms.TextBox();
             this.chbCheckAll = new System.Windows.Forms.CheckBox();
             this.tlpCategories = new System.Windows.Forms.TableLayoutPanel();
@@ -51,7 +52,6 @@
             this.tsOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsLogin = new System.Windows.Forms.ToolStripMenuItem();
             this.tsRegister = new System.Windows.Forms.ToolStripMenuItem();
-            this.clmDirty = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tcMain.SuspendLayout();
             this.tpShoppingList.SuspendLayout();
             this.tlpMain.SuspendLayout();
@@ -144,8 +144,16 @@
             this.clmQuantity.Name = "clmQuantity";
             this.clmQuantity.Width = 60;
             // 
+            // clmDirty
+            // 
+            this.clmDirty.HeaderText = "IsDirty";
+            this.clmDirty.Name = "clmDirty";
+            this.clmDirty.Visible = false;
+            this.clmDirty.Width = 53;
+            // 
             // txbFilter
             // 
+            this.txbFilter.BackColor = System.Drawing.SystemColors.Info;
             this.txbFilter.Location = new System.Drawing.Point(265, 3);
             this.txbFilter.Name = "txbFilter";
             this.txbFilter.Size = new System.Drawing.Size(206, 22);
@@ -284,7 +292,7 @@
             // 
             this.cmbSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbSuperMarkets.FormattingEnabled = true;
-            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 7);
+            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 8);
             this.cmbSuperMarkets.Name = "cmbSuperMarkets";
             this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
             this.cmbSuperMarkets.TabIndex = 1;
@@ -326,13 +334,6 @@
             this.tsRegister.Text = "יצירה";
             this.tsRegister.Click += new System.EventHandler(this.tsRegister_Click);
             // 
-            // clmDirty
-            // 
-            this.clmDirty.HeaderText = "IsDirty";
-            this.clmDirty.Name = "clmDirty";
-            this.clmDirty.Visible = false;
-            this.clmDirty.Width = 53;
-            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -340,6 +341,7 @@
             this.ClientSize = new System.Drawing.Size(691, 509);
             this.Controls.Add(this._toolStrip);
             this.Controls.Add(this.tcMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ClientForm";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.RightToLeftLayout = true;

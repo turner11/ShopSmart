@@ -111,6 +111,7 @@ namespace ShopSmart.Client
             this.BindProducts();
             this.SetAllCategoriesdCheckState(true);
             this.MatchGuiToUserType(this.CurrentUserType);
+            this.rdbShowUserControls.Checked = true;
             
 
 
@@ -308,7 +309,7 @@ namespace ShopSmart.Client
                 this.cblCategories.SetItemChecked(i, isChecked);
 
             }
-            this.FilterProductsByCheckedCateories();
+            this.FilterProducts();
             this.cblCategories.ItemCheck += this.cblCategories_ItemCheck;
             sw.Stop();
             Logger.Log(String.Format(">>>>>>Changing All rows took: {0}ms.", sw.Elapsed.TotalMilliseconds));
@@ -360,16 +361,15 @@ namespace ShopSmart.Client
             switch (affectiveUserType)
             {
                 case UserTypes.Admininstrator:
-                    showEditControls = true;
-                    break;
                 case UserTypes.Editor:
                     showEditControls = true;
+                    this.rdbShowEditorControls.Checked = true;
                     break;
                 case UserTypes.User:
                     showEditControls = false;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException("Got an unknown user type");
             }
 
             if (showEditControls)
@@ -384,7 +384,16 @@ namespace ShopSmart.Client
 
             }
 
-            #region Set column visibility and editibility
+            //Set column visibility and editibility
+            this.SetColumnStateByUserType(affectiveUserType);
+        }
+
+        /// <summary>
+        /// Sets the column visibility andEditability state by user type.
+        /// </summary>
+        /// <param name="userType">Type of the user.</param>
+        private void SetColumnStateByUserType(UserTypes userType)
+        {
             //if products are bound, setting column visibility
             var dtProducts = this.gvProducts.DataSource as DataTable;
             if (dtProducts != null)
@@ -400,29 +409,41 @@ namespace ShopSmart.Client
                         {
                             /*Visibility*/
                             bool visibilityState =
-                                DataTableConstans.ColAvailabilityForUserType[dataCol.ColumnName].Contains(affectiveUserType);
+                                DataTableConstans.ColAvailabilityForUserType[dataCol.ColumnName].Contains(userType);
                             col.Visible = visibilityState;
-                            
+
                             /*Editabillity*/
-                            bool setEditable = DataTableConstans.ColEditebilityForUserType[dataCol.ColumnName].Contains(affectiveUserType);
+                            bool setEditable = DataTableConstans.ColEditebilityForUserType[dataCol.ColumnName].Contains(userType);
                             col.ReadOnly = !setEditable;
 
                         }
                     }
                 }
-            } 
-            #endregion
+            }
         }
 
         /// <summary>
-        /// Filters the products by the checked cateories.
+        /// Filters the products by the checked cateories and filter text box.
         /// </summary>
-        private void FilterProductsByCheckedCateories()
+        private void FilterProducts()
         {
             DataTable dtProducts = this.gvProducts.DataSource as DataTable;
             if (dtProducts != null)
             {
-                dtProducts.DefaultView.RowFilter = this.GetFilterExpressionFromCategories();
+                List<string> filters = new List<string>();
+                string categoriesFilter = this.GetFilterExpressionFromCategories();
+
+                string nameFilter = String.Empty;
+                if (!String.IsNullOrWhiteSpace(this.txbFilter.Text))
+                {
+                    nameFilter = String.Format("ProductName Like '%{0}%' ", txbFilter.Text);
+                }
+                filters.Add(categoriesFilter);
+                filters.Add(nameFilter);
+
+                filters = filters.Where(s => !String.IsNullOrWhiteSpace(s)).ToList();
+                string fullFilter = String.Join(" AND ", filters);
+                dtProducts.DefaultView.RowFilter = fullFilter;
             }
         }
 
@@ -464,7 +485,7 @@ namespace ShopSmart.Client
         void cblCategories_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             //running the method after the event has completed, and new value took place
-            this.BeginInvoke(new MethodInvoker(FilterProductsByCheckedCateories), null);                      
+            this.BeginInvoke(new MethodInvoker(FilterProducts), null);                      
         }
 
         
@@ -679,7 +700,7 @@ namespace ShopSmart.Client
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void txbFilter_TextChanged(object sender, EventArgs e)
         {
-
+            this.FilterProducts();
         }
 
         /// <summary>
@@ -703,16 +724,22 @@ namespace ShopSmart.Client
             RadioButton rdb = sender as RadioButton;
             if (rdb != null && rdb.Checked)
             {
+                this.tlpMain.SuspendLayout();
+
                 if (rdb.Name == this.rdbShowEditorControls.Name)
                 {
                     this.btnUpdate.Show();
                     this.btnSend.Hide();
+                    this.SetColumnStateByUserType(this.CurrentUserType ?? UserTypes.User);
                 }
                 else if (rdb.Name == this.rdbShowUserControls.Name)
                 {
                     this.btnUpdate.Hide();
                     this.btnSend.Show();
+                    this.SetColumnStateByUserType(UserTypes.User);
                 }
+
+                this.tlpMain.ResumeLayout(true);
             }
         }
 
