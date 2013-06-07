@@ -292,7 +292,7 @@
             // 
             this.cmbSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbSuperMarkets.FormattingEnabled = true;
-            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 8);
+            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 7);
             this.cmbSuperMarkets.Name = "cmbSuperMarkets";
             this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
             this.cmbSuperMarkets.TabIndex = 1;
@@ -323,14 +323,16 @@
             // tsLogin
             // 
             this.tsLogin.Name = "tsLogin";
-            this.tsLogin.Size = new System.Drawing.Size(118, 24);
+            this.tsLogin.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.tsLogin.Size = new System.Drawing.Size(167, 24);
             this.tsLogin.Text = "כניסה";
             this.tsLogin.Click += new System.EventHandler(this.tsLogin_Click);
             // 
             // tsRegister
             // 
             this.tsRegister.Name = "tsRegister";
-            this.tsRegister.Size = new System.Drawing.Size(118, 24);
+            this.tsRegister.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.tsRegister.Size = new System.Drawing.Size(167, 24);
             this.tsRegister.Text = "יצירה";
             this.tsRegister.Click += new System.EventHandler(this.tsRegister_Click);
             // 

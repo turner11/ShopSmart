@@ -162,5 +162,27 @@ namespace ShopSmart.Bl
         {
             return this._db.CreateCustomer(userName, password, userType, customerId,out errorMessage);
         }
+
+        /// <summary>
+        /// Saves the specified products to database.
+        /// </summary>
+        /// <param name="products">The products.</param>
+        /// <param name="errorMessage">The error message in case an error occures.</param>
+        /// <returns>true upon success, false otherwise</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public bool Save(List<Product> products, out string errorMessage)
+        {
+            return this._db.Save(products, out errorMessage);
+        }
+
+        /// <summary>
+        /// Saves the changes to database.
+        /// </summary>
+        /// <param name="errorMessage">The error message, in case an error has occured.</param>
+        /// <returns>true upon success, false otherwise</returns>
+        private bool SaveChanges(out string errorMessage)
+        {
+            return this._db.SaveChanges(out errorMessage);
+        }
     }
 }

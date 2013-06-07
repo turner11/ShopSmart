@@ -144,25 +144,7 @@ namespace ShopSmart.Dal
             {
 
                 customer = null;
-                //if we can get more specific details, do it...
-                if (ex is DbEntityValidationException)
-                {
-
-                    List<DbEntityValidationResult> validationErrors = this._db.GetValidationErrors().ToList();
-                    foreach (DbEntityValidationResult currResult in validationErrors)
-                    {
-                        //get the error message
-                        List<DbValidationError> errors= currResult.ValidationErrors.ToList();
-                        List<String> errorString = errors.Select(error => error.ErrorMessage).ToList();
-                        errorMessage += String.Join(Environment.NewLine, errorString);
-                    }
-
-                    //errorMessage = String.Join(Environment.NewLine,this._db.GetValidationErrors().ToList());
-                }
-                else
-                {
-                    errorMessage = ex.Message;
-                }
+                errorMessage = this.GetDetaildMessage(ex);
 
                 Logger.Log(String.Format("Failed to create user:{0}"
                                         +"{1}",
@@ -171,6 +153,78 @@ namespace ShopSmart.Dal
             }
 
             return customer;
+        }
+
+        /// <summary>
+        /// Gets the detaild message from a System Exception.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns></returns>
+        private string GetDetaildMessage(SystemException ex)
+        {
+            string errorMessage = String.Empty;
+            //if we can get more specific details, do it...
+            if (ex is DbEntityValidationException)
+            {
+
+                List<DbEntityValidationResult> validationErrors = this._db.GetValidationErrors().ToList();
+                foreach (DbEntityValidationResult currResult in validationErrors)
+                {
+                    //get the error message
+                    List<DbValidationError> errors = currResult.ValidationErrors.ToList();
+                    List<String> errorString = errors.Select(error => error.ErrorMessage).ToList();
+                    errorMessage += String.Join(Environment.NewLine, errorString);
+                }
+
+                //errorMessage = String.Join(Environment.NewLine,this._db.GetValidationErrors().ToList());
+            }
+            else
+            {
+                errorMessage = ex.Message;
+            }
+            return errorMessage;
+        }
+
+        /// <summary>
+        /// Saves the specified products to database.
+        /// </summary>
+        /// <param name="products">The products.</param>
+        /// <param name="errorMessage">The error message in case an error occures.</param>
+        /// <returns>true upon success, false otherwise</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public bool Save(List<Product> products, out string errorMessage)
+        {
+            //foreach (Product prod in products)
+            //{
+
+            //}
+            //this._db.SaveChanges(products, out errorMessage);
+            return this.SaveChanges(out errorMessage);
+        }
+
+        /// <summary>
+        /// Saves the changes to database.
+        /// </summary>
+        /// <param name="errorMessage">The error message, in case an error has occured.</param>
+        /// <returns>true upon success, false otherwise</returns>
+        public bool SaveChanges(out string errorMessage)
+        {
+            errorMessage = String.Empty;
+            bool success = true;
+            try
+            {
+                this._db.ChangeTracker.DetectChanges();
+
+                this._db.SaveChanges();
+            }
+            catch (SystemException ex)
+            {
+
+                errorMessage = this.GetDetaildMessage(ex);
+                success = false;
+            }
+           
+            return success;
         }
     }
 }

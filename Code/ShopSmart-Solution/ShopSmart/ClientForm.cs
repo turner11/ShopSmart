@@ -247,7 +247,7 @@ namespace ShopSmart.Client
             dt.Columns.Add(colCategorySortValue);
             
 
-            /*Product*/
+            /*Category object*/
             DataColumn colCategoryObject = new DataColumn(DataTableConstans.COL_NAME_CATEGORYOBJECT, typeof(Category));
             dt.Columns.Add(colCategoryObject);
 
@@ -395,7 +395,7 @@ namespace ShopSmart.Client
         private void SetColumnStateByUserType(UserTypes userType)
         {
             //if products are bound, setting column visibility
-            var dtProducts = this.gvProducts.DataSource as DataTable;
+            DataTable dtProducts = this.GetProductsTableFromDataSource();
             if (dtProducts != null)
             {
 
@@ -427,7 +427,7 @@ namespace ShopSmart.Client
         /// </summary>
         private void FilterProducts()
         {
-            DataTable dtProducts = this.gvProducts.DataSource as DataTable;
+            DataTable dtProducts = this.GetProductsTableFromDataSource();
             if (dtProducts != null)
             {
                 List<string> filters = new List<string>();
@@ -472,6 +472,86 @@ namespace ShopSmart.Client
 
             this.cblCategories.Items.ToString();
             return fltrExp.Trim();
+        }
+
+        /// <summary>
+        /// Applies the updates from GUI to object that is held in the dta column.
+        /// </summary>
+        /// <param name="products">The products.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        private void ApplyUpdates(List<Product> products)
+        {
+            DataTable dtProducts =  this.GetProductsTableFromDataSource();
+
+            
+            List<string> ids = new List<string>();
+            foreach (Product product in products)
+            {
+                ids.Add("'"+product.Id.ToString()+"'");
+            }
+
+            
+            
+            string filter = String.Format("Id IN ({0})",String.Join(", ",ids) );
+            DataRow[] changedRows = dtProducts.Select(filter);
+
+            foreach (DataRow row in changedRows)
+            {
+                Product prod = row[DataTableConstans.COL_NAME_PRODUCT] as Product;
+                prod.ProductName = row[DataTableConstans.COL_NAME_PRODUCTNAME] as String;
+
+                decimal price;
+                bool priceparsed = decimal.TryParse(row[DataTableConstans.COL_NAME_PRICE].ToString(), out price);
+                prod.Price = priceparsed ? price : prod.Price;
+                    
+               
+            }
+
+        }
+
+        /// <summary>
+        /// Gets the products table from data source.
+        /// </summary>
+        private DataTable GetProductsTableFromDataSource()
+        {
+            DataTable dtProducts = this.gvProducts.DataSource as DataTable;
+            Debug.Assert(dtProducts != null, "Products datatabble was null!");
+            return dtProducts;
+        }
+
+        /// <summary>
+        /// Gets the products that where edited .
+        /// </summary>
+        /// <returns>the list of edited products</returns>
+        private List<Product> GetEditedProducts()
+        {
+            List<Product> products = new List<Product>();
+
+            //Adding products from rows that are marked as edited
+            foreach (DataGridViewRow row in this.gvProducts.Rows)
+            {
+                object objEdited = row.Cells[this.clmDirty.Index].Value;
+                bool isEdited = objEdited is bool && (bool)objEdited;
+                if (isEdited)
+                {
+                    Product currProd = row.Cells[DataTableConstans.COL_NAME_PRODUCT].Value as Product;
+                    Debug.Assert(currProd != null, "Could not get product from gridview row!");
+                    products.Add(currProd);
+
+                }
+            }
+            return products;
+        }
+
+        /// <summary>
+        /// Saves the changes to database.
+        /// </summary>
+        /// <param name="errorMessage">The error message, in case an error has occured.</param>
+        /// <returns>true upon success, false otherwise</returns>
+        private bool SaveChanges()
+        {
+            string errorMessage;
+            return this._logicsService.SaveChanges(out errorMessage);
         }
 
         #endregion
@@ -609,7 +689,8 @@ namespace ShopSmart.Client
         /// <param name="e">The <see cref="DataGridViewEditingControlShowingEventArgs"/> instance containing the event data.</param>
         private void gvProducts_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if (this.gvProducts.CurrentCell.ColumnIndex == this.clmQuantity.Index)
+            int colIdx = this.gvProducts.CurrentCell.ColumnIndex;
+            if (colIdx == this.clmQuantity.Index)
             {
                 //bind to the text box...
                 TextBox cellTb = e.Control as TextBox;
@@ -619,8 +700,65 @@ namespace ShopSmart.Client
                 }
 
             }
+            else if(colIdx == this.gvProducts.Columns[DataTableConstans.COL_NAME_CATEGORY].Index)
+            {
+                /*Editing category*/
+                //bind to the text box...
+                TextBox cellTb = e.Control as TextBox;
+                cellTb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                string[] categoryNames = this._categories.Select(c => c.Name).ToArray();
+                cellTb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                cellTb.AutoCompleteCustomSource.AddRange(categoryNames);
+                
+                if (cellTb != null)
+                {
+                    cellTb.Leave += this.CategoryNameTextBox_Leave;
+                }
+
+            }
         }
 
+        /// <summary>
+        /// Handles the Leave event of the CategoryNameTextBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void CategoryNameTextBox_Leave(object sender, EventArgs e)
+        {
+            TextBox txb = sender as TextBox;
+            if (txb != null)
+            {
+                string[] existingCategories = new string[txb.AutoCompleteCustomSource.Count];
+                txb.AutoCompleteCustomSource.CopyTo(existingCategories, 0);
+
+                bool isCreatingNewCategory = existingCategories.Contains(txb.Name);
+                if (isCreatingNewCategory)
+                {
+                    Category newCategory = new Category();
+                    
+                    //TODO: force to insert a sort value
+                    //newCategory.CategorySorts
+                    newCategory.Name = txb.Text;
+
+                    Product product = this.gvProducts.CurrentRow.Cells[DataTableConstans.COL_NAME_PRODUCT].Value as Product;
+                    product.Category = newCategory;
+
+                   
+                    
+                    
+                }
+                else
+                {
+                    Category category = this.gvProducts.CurrentRow.Cells[DataTableConstans.COL_NAME_CATEGORYOBJECT].Value as Category;
+                }
+            }
+             this.SaveChanges();
+            //TODO: Save to DB and refresh
+        }
+
+      
+
+        
         /// <summary>
         /// Handles the TextChanged event of the QuntityTextBox control.
         /// </summary>
@@ -751,31 +889,13 @@ namespace ShopSmart.Client
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             List<Product> products = this.GetEditedProducts();
+            this.ApplyUpdates(products);
+
+            string errorMessage;
+            bool success = this._logicsService.Save(products, out errorMessage);
         }
 
-        /// <summary>
-        /// Gets the products that where edited .
-        /// </summary>
-        /// <returns>the list of edited products</returns>
-        private List<Product> GetEditedProducts()
-        {
-            List<Product> products = new List<Product>();
-
-            //Adding products from rows that are marked as edited
-            foreach (DataGridViewRow row in this.gvProducts.Rows)
-            {
-                object objEdited = row.Cells[this.clmDirty.Index].Value;
-                bool isEdited = objEdited is bool && (bool) objEdited;
-                if (isEdited)
-                {
-                    Product currProd = row.Cells[DataTableConstans.COL_NAME_PRODUCT].Value as Product;
-                    Debug.Assert(currProd != null, "Could not get product from gridview row!");
-                    products.Add(currProd);
-                    
-                }
-            }
-            return products;
-        }
+    
         #endregion
 
         #region Sub classes
