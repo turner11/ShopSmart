@@ -551,7 +551,12 @@ namespace ShopSmart.Client
         private bool SaveChanges()
         {
             string errorMessage;
-            return this._logicsService.SaveChanges(out errorMessage);
+            bool success= this._logicsService.SaveChanges(out errorMessage);
+            if (!success)
+            {
+                this.ShowDialog
+            }
+            return success;
         }
 
         #endregion
@@ -998,9 +1003,6 @@ namespace ShopSmart.Client
 
         }
         #endregion
-
-
-       
 
     }
 
