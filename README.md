@@ -29,6 +29,7 @@ This is part of the Software engineering project. [cours page](https://github.co
 * [Iteration 1](https://github.com/turner11/ShopSmart/wiki/Iteration1)
 * [Iteration 2](https://github.com/turner11/ShopSmart/wiki/Iteration2)
 * [Iteration 3](https://github.com/turner11/ShopSmart/wiki/Iteration3)
+* [Iteration 4](https://github.com/turner11/ShopSmart/wiki/Iteration4)
  
 ## Developers documentation - תיעוד למפתחים
 
