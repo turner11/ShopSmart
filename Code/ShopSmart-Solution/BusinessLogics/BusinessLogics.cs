@@ -29,7 +29,7 @@ namespace ShopSmart.Bl
         /// Initializes a new instance of the <see cref="SmartShopLogics"/> class.
         /// </summary>
         public SmartShopLogics()
-            : this(new DataBase())
+            : this(new DataBase()) // new is a DIP violation
         {
            
             
