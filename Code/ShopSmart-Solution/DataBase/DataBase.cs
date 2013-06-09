@@ -30,7 +30,7 @@ namespace ShopSmart.Dal
             //we will have to detect and save changes manually
             this._db.Configuration.AutoDetectChangesEnabled = false;
             this._db.Configuration.LazyLoadingEnabled = true;
-            this._db.Configuration.ProxyCreationEnabled= true;
+            this._db.Configuration.ProxyCreationEnabled = true;
             this._db.Configuration.ValidateOnSaveEnabled= true;
         }
 
@@ -216,6 +216,7 @@ namespace ShopSmart.Dal
                 this._db.ChangeTracker.DetectChanges();
 
                 this._db.SaveChanges();
+                
             }
             catch (SystemException ex)
             {
@@ -225,6 +226,49 @@ namespace ShopSmart.Dal
             }
            
             return success;
+        }
+
+
+        /// <summary>
+        /// Saves the product to DB.
+        /// </summary>
+        /// <param name="newProduct">The new product.</param>
+        /// <param name="errorMsg">The error MSG.</param>
+        /// <returns>true upon succes, false otherwise</returns>
+        public bool SaveProduct(Product newProduct, out string errorMsg)
+        {
+            this._db.Products.Add(newProduct);
+            bool success = this.SaveChanges(out errorMsg);
+            if (!success)
+            {
+                this._db.Products.Remove(newProduct);
+            }
+            return success;
+        }
+
+
+        /// <summary>
+        /// Deletes the product from database.
+        /// </summary>
+        /// <param name="product">The product.</param>
+        /// <param name="errorMsg">The error MSG.</param>
+        /// <returns>true upon succes, false otherwise</returns>
+        public bool DeleteProduct(Product product, out string errorMsg)
+        {
+            bool success = true;
+            bool isExists = this._db.Products.Where(p => p.guid == product.guid).ToList().Count >0;
+            if (isExists)
+            {
+                this._db.Products.Remove(product);
+                success = this.SaveChanges(out errorMsg);
+            }
+            else
+            {
+                success = false;
+                errorMsg = "המוצר לא נמצא במסד הנתונים.";
+            }
+            return success;
+            
         }
     }
 }

@@ -108,7 +108,7 @@ namespace ShopSmart.Client
             this.GetDbItems();
             this.BindSuperMarkets();
             this.BindCategories();
-            this.BindProducts();
+            this.BindProducts(false);
             this.SetAllCategoriesdCheckState(true);
             this.MatchGuiToUserType(this.CurrentUserType);
             this.rdbShowUserControls.Checked = true;
@@ -140,8 +140,12 @@ namespace ShopSmart.Client
         /// <summary>
         /// Binds the products to grid view.
         /// </summary>
-        private void BindProducts()
+        private void BindProducts(bool getFreshListFromDB)
         {
+            if (getFreshListFromDB)
+            {
+                this._products = this._logicsService.GetAllProducts();
+            }
             Logger.Log("Binding products grid view");
 
             DataTable dtProducts = this.GetTableFromProductsList(this._products);
@@ -335,7 +339,7 @@ namespace ShopSmart.Client
                 if (toBuy && cllQuant.Value != null && int.TryParse(cllQuant.Value.ToString(),out quantity))
                 {
                     ShoplistItem item = new ShoplistItem();
-                    item.Product = (Product)currRow.DataBoundItem;
+                    item.Product = (Product)currRow.Cells[DataTableConstans.COL_NAME_PRODUCT].Value;
                     item.Quantity = quantity;
                     item.ShopList = list;
                     list.ShoplistItems.Add(item);
@@ -558,6 +562,23 @@ namespace ShopSmart.Client
                            MessageBoxButtons.OK,
                            success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
             return success;
+        }
+
+        /// <summary>
+        /// Gets the current row product.
+        /// </summary>
+        /// <returns></returns>
+        private Product GetCurrentRowProduct()
+        {
+            Product retProd = null;
+
+            if (this.gvProducts.CurrentCell != null && this.gvProducts.Rows .Count > this.gvProducts.CurrentCell.RowIndex)
+            {
+                DataGridViewRow row = this.gvProducts.Rows[this.gvProducts.CurrentCell.RowIndex];
+                retProd = row.Cells[DataTableConstans.COL_NAME_PRODUCT].Value as Product;
+            }
+
+            return retProd;
         }
 
         #endregion
@@ -855,7 +876,7 @@ namespace ShopSmart.Client
         private void cmbSuperMarkets_SelectedIndexChanged(object sender, EventArgs e)
         {
             //if supermarket has changed, we need to re bind the products because thier sort depends on supermarkert
-            this.BindProducts();
+            this.BindProducts(false);
         }
 
         /// <summary>
@@ -872,13 +893,17 @@ namespace ShopSmart.Client
 
                 if (rdb.Name == this.rdbShowEditorControls.Name)
                 {
-                    this.btnUpdate.Show();
+                    this.btnEditProduct.Show();
+                    this.btnDeleteProduct.Show();
+                    this.btnNewProduct.Show();
                     this.btnSend.Hide();
                     this.SetColumnStateByUserType(this.CurrentUserType ?? UserTypes.User);
                 }
                 else if (rdb.Name == this.rdbShowUserControls.Name)
                 {
-                    this.btnUpdate.Hide();
+                    this.btnEditProduct.Hide();
+                    this.btnDeleteProduct.Hide();
+                    this.btnNewProduct.Hide();
                     this.btnSend.Show();
                     this.SetColumnStateByUserType(UserTypes.User);
                 }
@@ -888,17 +913,121 @@ namespace ShopSmart.Client
         }
 
         /// <summary>
-        /// Handles the Click event of the btnUpdate control.
+        /// Handles the SelectionChanged event of the gvProducts control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private void gvProducts_SelectionChanged(object sender, EventArgs e)
         {
-            List<Product> products = this.GetEditedProducts();
-            this.ApplyUpdates(products);
+            bool enableEditButtons = this.gvProducts.CurrentCell != null;
+            this.btnEditProduct.Enabled = enableEditButtons;
+            this.btnDeleteProduct.Enabled = enableEditButtons;
+        }
 
-            string errorMessage;
-            bool success = this._logicsService.Save(products, out errorMessage);
+        /// <summary>
+        /// Handles the Click event of the btnNewProduct control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void btnNewProduct_Click(object sender, EventArgs e)
+        {
+            ProductForm frmPrdct = ProductForm.GetCreateProductInstance(this._categories);
+            if (frmPrdct.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Product newProduct = frmPrdct.Product;
+                if (newProduct != null)
+                {
+                    string errorMsg;
+                    bool success = this._logicsService.SaveProduct(newProduct, out errorMsg);
+                    if (!success)
+                    {
+                        MessageBox.Show(String.Format("Error Adding product:{0}{1}", Environment.NewLine, errorMsg));
+                    }
+                    else
+                    {
+                        //refreshing
+                        this.BindProducts(true);
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the btnEditProduct control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void btnEditProduct_Click(object sender, EventArgs e)
+        {
+            Product currentProduct = this.GetCurrentRowProduct();
+            if (currentProduct != null)
+            {
+                ProductForm frmPrdct = ProductForm.GetEditProductInstance(currentProduct, this._categories);
+
+                if (frmPrdct.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+
+                    string errorMsg;
+                    bool success = this._logicsService.SaveChanges(out errorMsg);
+                    if (!success)
+                    {
+                        MessageBox.Show(String.Format("Error Editing product:{0}{1}", Environment.NewLine, errorMsg));
+                    }
+                    else
+                    {
+                        //refreshing
+                        this.BindProducts(true);
+                    }
+
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("אנא בחר מוצר לעריכה");
+            }
+        }
+
+
+
+        /// <summary>
+        /// Handles the Click event of the btnDeleteProduct control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void btnDeleteProduct_Click(object sender, EventArgs e)
+        {
+
+            Product currentProduct = this.GetCurrentRowProduct();
+            if (currentProduct != null)
+            {
+                DialogResult rslt = MessageBox.Show(this,
+                                                    String.Format("האם אתה בטוח שברצונך למחוק את {0}?", currentProduct.ProductName),
+                                                    "",
+                                                    MessageBoxButtons.OKCancel);
+                if (rslt == System.Windows.Forms.DialogResult.OK)
+                {
+
+                    string errorMsg;
+                    bool success = this._logicsService.DeleteProduct(currentProduct, out errorMsg);
+                    if (!success)
+                    {
+                        MessageBox.Show(String.Format("Error deleting product:{0}{1}", Environment.NewLine, errorMsg));
+                    }
+                    else
+                    {
+                        //refreshing
+                        this.BindProducts(true);
+                    }
+
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("אנא בחר מוצר למחיקה");
+            }
         }
 
     
@@ -1004,6 +1133,8 @@ namespace ShopSmart.Client
 
         }
         #endregion
+
+        
 
     }
 

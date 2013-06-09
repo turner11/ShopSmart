@@ -184,5 +184,27 @@ namespace ShopSmart.Bl
         {
             return this._db.SaveChanges(out errorMessage);
         }
+
+        /// <summary>
+        /// Saves the product to DB.
+        /// </summary>
+        /// <param name="newProduct">The new product.</param>
+        /// <param name="errorMsg">The error MSG.</param>
+        /// <returns>true upon succes, false otherwise</returns>
+        public bool SaveProduct(Product newProduct, out string errorMsg)
+        {
+            return this._db.SaveProduct(newProduct, out errorMsg);
+        }
+
+        /// <summary>
+        /// Deletes the product from database.
+        /// </summary>
+        /// <param name="product">The product.</param>
+        /// <param name="errorMsg">The error MSG.</param>
+        /// <returns>true upon succes, false otherwise</returns>
+        public bool DeleteProduct(Product product, out string errorMsg)
+        {
+            return this._db.DeleteProduct(product, out errorMsg);
+        }
     }
 }
