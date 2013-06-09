@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientForm));
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpShoppingList = new System.Windows.Forms.TabPage();
@@ -90,9 +93,11 @@
             // 
             // tlpMain
             // 
+            this.tlpMain.AutoSize = true;
+            this.tlpMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tlpMain.ColumnCount = 2;
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.29247F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.70753F));
             this.tlpMain.Controls.Add(this.gvProducts, 1, 1);
             this.tlpMain.Controls.Add(this.txbFilter, 1, 0);
             this.tlpMain.Controls.Add(this.chbCheckAll, 0, 0);
@@ -111,21 +116,42 @@
             this.gvProducts.AllowUserToAddRows = false;
             this.gvProducts.AllowUserToDeleteRows = false;
             this.gvProducts.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.SkyBlue;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.gvProducts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.gvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.gvProducts.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.gvProducts.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gvProducts.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            this.gvProducts.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightCyan;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gvProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.gvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clmToBuy,
             this.clmQuantity,
             this.clmDirty});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gvProducts.DefaultCellStyle = dataGridViewCellStyle3;
             this.gvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvProducts.Location = new System.Drawing.Point(3, 33);
             this.gvProducts.MultiSelect = false;
             this.gvProducts.Name = "gvProducts";
             this.gvProducts.RowTemplate.Height = 24;
-            this.gvProducts.Size = new System.Drawing.Size(468, 408);
+            this.gvProducts.Size = new System.Drawing.Size(493, 408);
             this.gvProducts.TabIndex = 0;
             this.gvProducts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvProducts_CellEndEdit);
             this.gvProducts.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gvProducts_EditingControlShowing);
@@ -154,7 +180,7 @@
             // txbFilter
             // 
             this.txbFilter.BackColor = System.Drawing.SystemColors.Info;
-            this.txbFilter.Location = new System.Drawing.Point(265, 3);
+            this.txbFilter.Location = new System.Drawing.Point(290, 3);
             this.txbFilter.Name = "txbFilter";
             this.txbFilter.Size = new System.Drawing.Size(206, 22);
             this.txbFilter.TabIndex = 1;
@@ -183,7 +209,7 @@
             this.tlpCategories.Controls.Add(this.btnSend, 0, 4);
             this.tlpCategories.Controls.Add(this.btnUpdate, 0, 3);
             this.tlpCategories.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpCategories.Location = new System.Drawing.Point(477, 33);
+            this.tlpCategories.Location = new System.Drawing.Point(502, 33);
             this.tlpCategories.Name = "tlpCategories";
             this.tlpCategories.RowCount = 5;
             this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -191,13 +217,13 @@
             this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpCategories.Size = new System.Drawing.Size(197, 408);
+            this.tlpCategories.Size = new System.Drawing.Size(172, 408);
             this.tlpCategories.TabIndex = 4;
             // 
             // rdbShowEditorControls
             // 
             this.rdbShowEditorControls.AutoSize = true;
-            this.rdbShowEditorControls.Location = new System.Drawing.Point(67, 324);
+            this.rdbShowEditorControls.Location = new System.Drawing.Point(42, 324);
             this.rdbShowEditorControls.Name = "rdbShowEditorControls";
             this.rdbShowEditorControls.Size = new System.Drawing.Size(127, 21);
             this.rdbShowEditorControls.TabIndex = 8;
@@ -209,7 +235,7 @@
             // rdbShowUserControls
             // 
             this.rdbShowUserControls.AutoSize = true;
-            this.rdbShowUserControls.Location = new System.Drawing.Point(51, 297);
+            this.rdbShowUserControls.Location = new System.Drawing.Point(26, 297);
             this.rdbShowUserControls.Name = "rdbShowUserControls";
             this.rdbShowUserControls.Size = new System.Drawing.Size(143, 21);
             this.rdbShowUserControls.TabIndex = 7;
@@ -224,7 +250,7 @@
             this.cblCategories.FormattingEnabled = true;
             this.cblCategories.Location = new System.Drawing.Point(3, 3);
             this.cblCategories.Name = "cblCategories";
-            this.cblCategories.Size = new System.Drawing.Size(191, 288);
+            this.cblCategories.Size = new System.Drawing.Size(166, 288);
             this.cblCategories.TabIndex = 2;
             this.cblCategories.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.cblCategories_ItemCheck);
             // 
@@ -233,7 +259,7 @@
             this.btnSend.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSend.Location = new System.Drawing.Point(3, 381);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(191, 24);
+            this.btnSend.Size = new System.Drawing.Size(166, 24);
             this.btnSend.TabIndex = 3;
             this.btnSend.Text = "שלח";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -244,7 +270,7 @@
             this.btnUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnUpdate.Location = new System.Drawing.Point(3, 351);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(191, 24);
+            this.btnUpdate.Size = new System.Drawing.Size(166, 24);
             this.btnUpdate.TabIndex = 4;
             this.btnUpdate.Text = "עדכן";
             this.btnUpdate.UseVisualStyleBackColor = true;
@@ -292,7 +318,7 @@
             // 
             this.cmbSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbSuperMarkets.FormattingEnabled = true;
-            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 7);
+            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 8);
             this.cmbSuperMarkets.Name = "cmbSuperMarkets";
             this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
             this.cmbSuperMarkets.TabIndex = 1;
@@ -351,6 +377,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.tcMain.ResumeLayout(false);
             this.tpShoppingList.ResumeLayout(false);
+            this.tpShoppingList.PerformLayout();
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvProducts)).EndInit();

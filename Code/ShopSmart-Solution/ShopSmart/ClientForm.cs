@@ -277,6 +277,7 @@ namespace ShopSmart.Client
             this.cblCategories.DataSource = this._categories;
             Logger.Log("Binded categories");
         }
+       
         /// <summary>
         /// Binds the supermarkets to combobox.
         /// </summary>
@@ -552,10 +553,10 @@ namespace ShopSmart.Client
         {
             string errorMessage;
             bool success= this._logicsService.SaveChanges(out errorMessage);
-            if (!success)
-            {
-                this.ShowDialog
-            }
+            MessageBox.Show(this, success ? "Changes saved" : "Failed to save changes.",
+                           "Saving result",
+                           MessageBoxButtons.OK,
+                           success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
             return success;
         }
 

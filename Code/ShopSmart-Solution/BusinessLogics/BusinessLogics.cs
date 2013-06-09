@@ -180,7 +180,7 @@ namespace ShopSmart.Bl
         /// </summary>
         /// <param name="errorMessage">The error message, in case an error has occured.</param>
         /// <returns>true upon success, false otherwise</returns>
-        private bool SaveChanges(out string errorMessage)
+        public bool SaveChanges(out string errorMessage)
         {
             return this._db.SaveChanges(out errorMessage);
         }
