@@ -105,6 +105,19 @@ namespace ShopSmart.Dal
         {
             return base.GetHashCode();
         }
+
+        /// <summary>
+        /// Gets the sort by super market.
+        /// </summary>
+        /// <param name="superMarket">The super market.</param>
+        /// <returns>the sort</returns>
+        public CategorySort GetSortBySuperMarket(Supermarket superMarket)
+        {
+            return this.CategorySorts.FirstOrDefault(cs => cs.SupermarketId == superMarket.Id) ?? new CategorySortNullObject();
+        }
+
+
+
     }
 
     /// <summary>
@@ -213,4 +226,31 @@ namespace ShopSmart.Dal
             return String.Format("UserName: '{0}'; Type: '{1}'",this.UserName,this.UserType);
         }
     }
+
+    /// <summary>
+    /// A null object for category sorts
+    /// </summary>
+    public class CategorySortNullObject : CategorySort
+    {
+        public CategorySortNullObject()
+        {
+            this.SortValue = 0;            
+        }
+    }
+
+    /// <summary>
+    /// A null object for category 
+    /// </summary>
+    public class CategoryNullObject : Category
+    {
+        public CategoryNullObject()
+        {
+            this.Name = String.Empty;
+            this.Products = new List<Product>();
+            this.Id = -1;
+            this.CategorySorts = new List<CategorySort>();
+
+        }
+    }
+
 }

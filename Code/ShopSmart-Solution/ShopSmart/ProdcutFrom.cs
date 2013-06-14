@@ -18,9 +18,15 @@ namespace ShopSmart.Client
     {
         #region Data members
 
+        /// <summary>
+        /// Gets the super market of the category.
+        /// </summary>
+        /// <value>
+        /// The super market.
+        /// </value>
+        Supermarket _superMarket;
         
         Product _product;
-
         /// <summary>
         /// The product this instance is for
         /// </summary>
@@ -62,9 +68,9 @@ namespace ShopSmart.Client
         /// </summary>
         /// <param name="categories">The categories.</param>
         /// <returns></returns>
-        internal static ProductForm GetCreateProductInstance(IEnumerable<Category> categories)
+        internal static ProductForm GetCreateProductInstance(IEnumerable<Category> categories, Supermarket superMarket)
         {
-            return new ProductForm(null, categories);
+            return new ProductForm(null, categories, superMarket);
         }
 
         /// <summary>
@@ -73,18 +79,21 @@ namespace ShopSmart.Client
         /// <param name="product">The product.</param>
         /// <param name="categories">The categories.</param>
         /// <returns></returns>
-        internal static ProductForm GetEditProductInstance(Product product, IEnumerable<Category> categories)
+        internal static ProductForm GetEditProductInstance(Product product, IEnumerable<Category> categories,  Supermarket superMarket)
         {
-            return new ProductForm(product, categories);
+            return new ProductForm(product, categories, superMarket);
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="ProdcutForm"/> class.
         /// </summary>
-        private ProductForm(Product product, IEnumerable<Category> categories)
+        private ProductForm(Product product, IEnumerable<Category> categories, Supermarket superMarket)
         {
             InitializeComponent();
+            
+            this._superMarket = superMarket;
             this.Categories = categories;
             this.Product = product;
+            
            
 
         } 
@@ -118,9 +127,16 @@ namespace ShopSmart.Client
         /// <param name="categoris">The categoris.</param>
         private void BindCategories(IEnumerable<Category> categoris)
         {
+           
             if (categoris != null)
             {
-                this.cmbCategory.Items.AddRange(categoris.ToArray());
+                BindingList<Category> bindedCategories = new BindingList<Category>();
+                foreach (Category category in categoris)
+                {
+                    bindedCategories.Add(category);
+                }
+
+                this.cmbCategory.DataSource = bindedCategories;
             }
         }
 
@@ -178,5 +194,24 @@ namespace ShopSmart.Client
             this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
         } 
         #endregion
+
+        /// <summary>
+        /// Handles the Click event of the btnEditCategory control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void btnEditCategory_Click(object sender, EventArgs e)
+        {
+            CategoryForm frmCategories = CategoryForm.GetEditCategoryInstance(this.cmbCategory.SelectedItem as Category, this._superMarket);
+            frmCategories.ShowDialog(this);
+            this.DialogResult = DialogResult.None; //this is for preventing form from closing unexpectedly
+            
+            if (frmCategories.DialogResult == DialogResult.OK)
+            {
+                //refreshing...
+                this.BindCategories(this._categories);
+            }
+
+        }
     }
 }

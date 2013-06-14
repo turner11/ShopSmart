@@ -28,7 +28,7 @@ namespace ShopSmart.Dal
             //Initializing the DAL
             this._db = new ShopSmartEntities();
             //we will have to detect and save changes manually
-            this._db.Configuration.AutoDetectChangesEnabled = false;
+            this._db.Configuration.AutoDetectChangesEnabled = true;
             this._db.Configuration.LazyLoadingEnabled = true;
             this._db.Configuration.ProxyCreationEnabled = true;
             this._db.Configuration.ValidateOnSaveEnabled= true;

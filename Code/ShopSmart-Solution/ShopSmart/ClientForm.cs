@@ -22,6 +22,12 @@ namespace ShopSmart.Client
     /// </summary>
     public partial class ClientForm : Form
     {
+        /*Keys for keyboard shortcuts*/
+        const Keys NEW_KEY = Keys.Control | Keys.N;
+        const Keys EDIT_KEY = Keys.Control | Keys.E;
+        const Keys DELETE_KEY = Keys.Control | Keys.D;
+        const Keys SORT_KEY = Keys.Control | Keys.S;
+
         #region Data Members
 
         //TODO: Replace with web service
@@ -105,18 +111,21 @@ namespace ShopSmart.Client
             InitializeComponent();
             this.cblCategories.CheckOnClick = true;
             this._logicsService = new SmartShopLogics();
-            this.GetDbItems();
-            this.BindSuperMarkets();
-            this.BindCategories();
-            this.BindProducts(false);
+            this.RefreshData();
             this.SetAllCategoriesdCheckState(true);
             this.MatchGuiToUserType(this.CurrentUserType);
             this.rdbShowUserControls.Checked = true;
-            
+        }
 
-
-
-            //this.SetIcon();
+        /// <summary>
+        /// Refreshes the data.
+        /// </summary>
+        private void RefreshData()
+        {
+            this.GetDbItems();
+            this.BindSuperMarkets();
+            this.BindCategories();
+            this.BindProducts();
         }
         
         #endregion
@@ -140,12 +149,9 @@ namespace ShopSmart.Client
         /// <summary>
         /// Binds the products to grid view.
         /// </summary>
-        private void BindProducts(bool getFreshListFromDB)
+        private void BindProducts()
         {
-            if (getFreshListFromDB)
-            {
-                this._products = this._logicsService.GetAllProducts();
-            }
+            
             Logger.Log("Binding products grid view");
 
             DataTable dtProducts = this.GetTableFromProductsList(this._products);
@@ -166,6 +172,30 @@ namespace ShopSmart.Client
 
            
             Logger.Log("Binded products grid view");
+        }
+
+
+        /// <summary>
+        /// Binds the categories to list box.
+        /// </summary>
+        private void BindCategories()
+        {            
+            Logger.Log("Binding categories");
+            this.cblCategories.DataSource = this._categories;
+            Logger.Log("Binded categories");
+        }
+
+        /// <summary>
+        /// Binds the supermarkets to combobox.
+        /// </summary>
+        private void BindSuperMarkets()
+        {
+            Logger.Log("Binding supermarkets");
+            this.cmbSuperMarkets.DataSource = this._superMarkets;
+            this.cmbSuperMarkets.DisplayMember = "Name";
+            //HACK: this is just for having by default a value that i got data for
+            this.cmbSuperMarkets.SelectedItem = this.cmbSuperMarkets.Items[this.cmbSuperMarkets.Items.Count - 1];
+            Logger.Log("Binded supermarkets");
         }
 
         /// <summary>
@@ -272,28 +302,6 @@ namespace ShopSmart.Client
             return dt;
         }
 
-        /// <summary>
-        /// Binds the categories to list box.
-        /// </summary>
-        private void BindCategories()
-        {
-            Logger.Log("Binding categories");
-            this.cblCategories.DataSource = this._categories;
-            Logger.Log("Binded categories");
-        }
-       
-        /// <summary>
-        /// Binds the supermarkets to combobox.
-        /// </summary>
-        private void BindSuperMarkets()
-        {
-            Logger.Log("Binding supermarkets");
-            this.cmbSuperMarkets.DataSource = this._superMarkets;
-            this.cmbSuperMarkets.DisplayMember = "Name";
-            //HACK: this is just for having by default a value that i got data for
-            this.cmbSuperMarkets.SelectedItem = this.cmbSuperMarkets.Items[this.cmbSuperMarkets.Items.Count - 1];
-            Logger.Log("Binded supermarkets");
-        }
 
         /// <summary>
         /// Checks / un Checks the check boxes for all categories.
@@ -581,6 +589,149 @@ namespace ShopSmart.Client
             return retProd;
         }
 
+
+        /// <summary>
+        /// Processes a command key.
+        /// </summary>
+        /// <param name="msg">A <see cref="T:System.Windows.Forms.Message" />, passed by reference, that represents the Win32 message to process.</param>
+        /// <param name="keyData">One of the <see cref="T:System.Windows.Forms.Keys" /> values that represents the key to process.</param>
+        /// <returns>
+        /// true if the keystroke was processed and consumed by the control; otherwise, false to allow further processing.
+        /// </returns>
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == ClientForm.EDIT_KEY)
+            {
+                this.EditProduct();
+            }
+            else if (keyData == ClientForm.DELETE_KEY)
+            {
+                this.DeleteProduct();
+            }
+            else if (keyData == ClientForm.NEW_KEY)
+            {
+                this.CreateNewProduct();
+            }
+            else if (keyData == ClientForm.SORT_KEY)
+            {
+                this.ExportSortedList();
+            }
+
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        /// <summary>
+        /// Edits a product (using product form).
+        /// </summary>
+        private void EditProduct()
+        {
+            Product currentProduct = this.GetCurrentRowProduct();
+            if (currentProduct != null)
+            {
+                ProductForm frmPrdct = ProductForm.GetEditProductInstance(currentProduct, this._categories, this._selectedSuperMarket);
+
+                if (frmPrdct.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+
+                    string errorMsg;
+                    bool success = this._logicsService.SaveChanges(out errorMsg);
+                    if (!success)
+                    {
+                        MessageBox.Show(String.Format("Error Editing product:{0}{1}", Environment.NewLine, errorMsg));
+                    }
+                    else
+                    {
+                        //refreshing
+                        this.RefreshData();
+
+                    }
+
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("אנא בחר מוצר לעריכה");
+            }
+        }
+
+        /// <summary>
+        /// Deletes the product (using delete form).
+        /// </summary>
+        private void DeleteProduct()
+        {
+            Product currentProduct = this.GetCurrentRowProduct();
+            if (currentProduct != null)
+            {
+                DialogResult rslt = MessageBox.Show(this,
+                                                    String.Format("האם אתה בטוח שברצונך למחוק את {0}?", currentProduct.ProductName),
+                                                    "",
+                                                    MessageBoxButtons.OKCancel);
+                if (rslt == System.Windows.Forms.DialogResult.OK)
+                {
+
+                    string errorMsg;
+                    bool success = this._logicsService.DeleteProduct(currentProduct, out errorMsg);
+                    if (!success)
+                    {
+                        MessageBox.Show(String.Format("Error deleting product:{0}{1}", Environment.NewLine, errorMsg));
+                    }
+                    else
+                    {
+                        //refreshing
+                        this.RefreshData();
+                    }
+
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("אנא בחר מוצר למחיקה");
+            }
+        }
+
+        /// <summary>
+        /// Creates the new product (using new product form).
+        /// </summary>
+        private void CreateNewProduct()
+        {
+            ProductForm frmPrdct = ProductForm.GetCreateProductInstance(this._categories, this._selectedSuperMarket);
+            if (frmPrdct.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Product newProduct = frmPrdct.Product;
+                if (newProduct != null)
+                {
+                    string errorMsg;
+                    bool success = this._logicsService.SaveProduct(newProduct, out errorMsg);
+                    if (!success)
+                    {
+                        MessageBox.Show(String.Format("Error Adding product:{0}{1}", Environment.NewLine, errorMsg));
+                    }
+                    else
+                    {
+                        //refreshing
+                        this.RefreshData();
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// Exports the sorted list.
+        /// </summary>
+        private void ExportSortedList()
+        {
+            ShopList shoppingList = this.GetShoppingListFromGui();
+
+
+            ShopList soretd = this._logicsService.GetSortedList(shoppingList);
+
+            ClientForm.ExportListToExcel(soretd);
+        }
+
         #endregion
 
         #region Event Handlers
@@ -612,15 +763,12 @@ namespace ShopSmart.Client
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void btnSend_Click(object sender, EventArgs e)
+        private void btnSort_Click(object sender, EventArgs e)
         {
-            ShopList shoppingList = this.GetShoppingListFromGui();
-
-
-            ShopList soretd = this._logicsService.GetSortedList(shoppingList);
-
-            ClientForm.ExportListToExcel(soretd);
+            this.ExportSortedList();
         }
+
+        
 
         /// <summary>
         /// Exports the list to excel.
@@ -876,7 +1024,7 @@ namespace ShopSmart.Client
         private void cmbSuperMarkets_SelectedIndexChanged(object sender, EventArgs e)
         {
             //if supermarket has changed, we need to re bind the products because thier sort depends on supermarkert
-            this.BindProducts(false);
+            this.BindProducts();
         }
 
         /// <summary>
@@ -896,7 +1044,7 @@ namespace ShopSmart.Client
                     this.btnEditProduct.Show();
                     this.btnDeleteProduct.Show();
                     this.btnNewProduct.Show();
-                    this.btnSend.Hide();
+                    this.btnSort.Hide();
                     this.SetColumnStateByUserType(this.CurrentUserType ?? UserTypes.User);
                 }
                 else if (rdb.Name == this.rdbShowUserControls.Name)
@@ -904,7 +1052,7 @@ namespace ShopSmart.Client
                     this.btnEditProduct.Hide();
                     this.btnDeleteProduct.Hide();
                     this.btnNewProduct.Hide();
-                    this.btnSend.Show();
+                    this.btnSort.Show();
                     this.SetColumnStateByUserType(UserTypes.User);
                 }
 
@@ -931,27 +1079,10 @@ namespace ShopSmart.Client
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void btnNewProduct_Click(object sender, EventArgs e)
         {
-            ProductForm frmPrdct = ProductForm.GetCreateProductInstance(this._categories);
-            if (frmPrdct.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Product newProduct = frmPrdct.Product;
-                if (newProduct != null)
-                {
-                    string errorMsg;
-                    bool success = this._logicsService.SaveProduct(newProduct, out errorMsg);
-                    if (!success)
-                    {
-                        MessageBox.Show(String.Format("Error Adding product:{0}{1}", Environment.NewLine, errorMsg));
-                    }
-                    else
-                    {
-                        //refreshing
-                        this.BindProducts(true);
-                    }
-
-                }
-            }
+            this.CreateNewProduct();
         }
+
+       
 
         /// <summary>
         /// Handles the Click event of the btnEditProduct control.
@@ -960,36 +1091,8 @@ namespace ShopSmart.Client
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void btnEditProduct_Click(object sender, EventArgs e)
         {
-            Product currentProduct = this.GetCurrentRowProduct();
-            if (currentProduct != null)
-            {
-                ProductForm frmPrdct = ProductForm.GetEditProductInstance(currentProduct, this._categories);
-
-                if (frmPrdct.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-
-                    string errorMsg;
-                    bool success = this._logicsService.SaveChanges(out errorMsg);
-                    if (!success)
-                    {
-                        MessageBox.Show(String.Format("Error Editing product:{0}{1}", Environment.NewLine, errorMsg));
-                    }
-                    else
-                    {
-                        //refreshing
-                        this.BindProducts(true);
-                    }
-
-
-                }
-            }
-            else
-            {
-                MessageBox.Show("אנא בחר מוצר לעריכה");
-            }
+            this.EditProduct();
         }
-
-
 
         /// <summary>
         /// Handles the Click event of the btnDeleteProduct control.
@@ -999,37 +1102,10 @@ namespace ShopSmart.Client
         private void btnDeleteProduct_Click(object sender, EventArgs e)
         {
 
-            Product currentProduct = this.GetCurrentRowProduct();
-            if (currentProduct != null)
-            {
-                DialogResult rslt = MessageBox.Show(this,
-                                                    String.Format("האם אתה בטוח שברצונך למחוק את {0}?", currentProduct.ProductName),
-                                                    "",
-                                                    MessageBoxButtons.OKCancel);
-                if (rslt == System.Windows.Forms.DialogResult.OK)
-                {
-
-                    string errorMsg;
-                    bool success = this._logicsService.DeleteProduct(currentProduct, out errorMsg);
-                    if (!success)
-                    {
-                        MessageBox.Show(String.Format("Error deleting product:{0}{1}", Environment.NewLine, errorMsg));
-                    }
-                    else
-                    {
-                        //refreshing
-                        this.BindProducts(true);
-                    }
-
-
-                }
-            }
-            else
-            {
-                MessageBox.Show("אנא בחר מוצר למחיקה");
-            }
+            this.DeleteProduct();
         }
 
+        
     
         #endregion
 
@@ -1134,7 +1210,8 @@ namespace ShopSmart.Client
         }
         #endregion
 
-        
+       
+
 
     }
 
