@@ -250,6 +250,9 @@ namespace FileExporter
         {
             Worksheet sheet = sheets.Add("ShopList");
             sheet.Names.Add(new WorksheetNamedRange("Print_Area", "=Sheet1!R1C1:R24C6", false));
+            
+            //TODO:Add RTL
+            //sheet.Table.Options.
             sheet.Table.DefaultRowHeight = 14.25F;
             sheet.Table.DefaultColumnWidth = 54F;
             //sheet.Table.ExpandedColumnCount = 6;

@@ -794,7 +794,10 @@ namespace ShopSmart.Client
                 {
                     book.Save(filename);
 
-                    //File.Open(filename, FileMode.OpenOrCreate);
+                    using (Process prc = new Process())
+                    {
+                        Process.Start(filename);
+                    }
                 }
                 catch (Exception ex)
                 {
