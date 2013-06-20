@@ -6,6 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="ShopSmartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="ShopSmartModelStoreContainer">
+          <EntitySet Name="ArchivedShoppingLists" EntityType="ShopSmartModel.Store.ArchivedShoppingLists" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Categories" EntityType="ShopSmartModel.Store.Categories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CategorySorts" EntityType="ShopSmartModel.Store.CategorySorts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Customers" EntityType="ShopSmartModel.Store.Customers" store:Type="Tables" Schema="dbo" />
@@ -47,6 +48,10 @@
       [FullyJoinedShoppingLists].[CustomerId] AS [CustomerId]
       FROM [dbo].[FullyJoinedShoppingLists] AS [FullyJoinedShoppingLists]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_ArchivedShoppingLists_ArchivedShoppingLists" Association="ShopSmartModel.Store.FK_ArchivedShoppingLists_ArchivedShoppingLists">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="ArchivedShoppingLists" EntitySet="ArchivedShoppingLists" />
+          </AssociationSet>
           <AssociationSet Name="FK_CategorySorts_Categories" Association="ShopSmartModel.Store.FK_CategorySorts_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="CategorySorts" EntitySet="CategorySorts" />
@@ -76,6 +81,14 @@
             <End Role="ShopLists" EntitySet="ShopLists" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ArchivedShoppingLists">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="SerilizedObject" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
@@ -211,6 +224,20 @@
           <Property Name="CustomerUserName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ArchivedShoppingLists_ArchivedShoppingLists">
+          <End Role="Customers" Type="ShopSmartModel.Store.Customers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ArchivedShoppingLists" Type="ShopSmartModel.Store.ArchivedShoppingLists" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArchivedShoppingLists">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CategorySorts_Categories">
           <End Role="Categories" Type="ShopSmartModel.Store.Categories" Multiplicity="1" />
           <End Role="CategorySorts" Type="ShopSmartModel.Store.CategorySorts" Multiplicity="*" />
@@ -420,6 +447,11 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="ArchivedShoppingLists" EntityType="ShopSmartModel.ArchivedShoppingList" />
+          <AssociationSet Name="FK_ArchivedShoppingLists_ArchivedShoppingLists" Association="ShopSmartModel.FK_ArchivedShoppingLists_ArchivedShoppingLists">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="ArchivedShoppingList" EntitySet="ArchivedShoppingLists" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetProductsBySupermarkrt_Result">
           <Property Name="Id" Type="Int32" Nullable="false" />
@@ -464,6 +496,7 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
           <Property Name="UserType" Type="ShopSmartModel.UserTypes" Nullable="false" />
           <NavigationProperty Name="ShopLists" Relationship="ShopSmartModel.FK_ShopLists_Customers" FromRole="Customers" ToRole="ShopLists" />
+          <NavigationProperty Name="ArchivedShoppingList" Relationship="ShopSmartModel.FK_ArchivedShoppingLists_ArchivedShoppingLists" FromRole="Customer" ToRole="ArchivedShoppingList" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -674,7 +707,30 @@
           <Member Name="Admininstrator" Value="1" />
           <Member Name="Editor" Value="2" />
           <Member Name="User" Value="3" />
-        </EnumType>        
+        </EnumType>
+        <EntityType Name="ArchivedShoppingList">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="SerilizedObject" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="ShopSmartModel.FK_ArchivedShoppingLists_ArchivedShoppingLists" FromRole="ArchivedShoppingList" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_ArchivedShoppingLists_ArchivedShoppingLists">
+          <End Type="ShopSmartModel.Customer" Role="Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShopSmartModel.ArchivedShoppingList" Role="ArchivedShoppingList" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArchivedShoppingList">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>        
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -841,6 +897,15 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ShopSmartModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ShopSmartModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="ArchivedShoppingLists">
+            <EntityTypeMapping TypeName="ShopSmartModel.ArchivedShoppingList">
+              <MappingFragment StoreEntitySet="ArchivedShoppingLists">
+                <ScalarProperty Name="SerilizedObject" ColumnName="SerilizedObject" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

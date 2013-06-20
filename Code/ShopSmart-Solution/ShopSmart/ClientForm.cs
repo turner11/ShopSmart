@@ -1211,9 +1211,7 @@ namespace ShopSmart.Client
             }
 
         }
-        #endregion
-
-       
+        #endregion      
 
 
     }

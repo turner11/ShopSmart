@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Web.Services;
 using ShopSmart.Dal;
@@ -51,11 +54,32 @@ namespace ShopSmart.Bl
         /// <param name="list">The list.</param>
         /// <returns>a sorted list</returns>
         [WebMethod]
-        public ShopList GetSortedList(ShopList list)
+        public ShopList GetSortedList(ShopList list, Customer customer)
         {
             this.SortShopList(list);
+
+            this.AddListToHistory(list, customer);
+
             return list;
         }
+
+        private void AddListToHistory(ShopList list, Customer customer)
+        {
+            if (customer != null)
+            {
+
+                ArchivedShoppingList archivedList = this._db.GetShoppingListsByCustomer(customer);
+                ArchivedShoplistObject[] deserialized = SmartShopLogics.DeserializeFromString(archivedList.SerilizedObject) as ArchivedShoplistObject[];
+               /* deserialized.Contains(list);
+
+                this.AddListToArchive(dbList, list);
+                this._db.UpdateShoppinhList(dbList);*/
+            }
+        }
+
+        
+
+        
 
         /// <summary>
         /// Sorts the specified shop list.
@@ -205,6 +229,45 @@ namespace ShopSmart.Bl
         public bool DeleteProduct(Product product, out string errorMsg)
         {
             return this._db.DeleteProduct(product, out errorMsg);
+        }
+
+        /// <summary>
+        /// Serializes to stream.
+        /// </summary>
+        /// <param name="o">The object.</param>
+        /// <returns>memory stream of serilized object</returns>
+        public static MemoryStream SerializeToStream(object o)
+        {
+            MemoryStream stream = new MemoryStream();
+            IFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, o);
+            return stream;
+        }
+
+
+        /// <summary>
+        /// Deserializes from string.
+        /// </summary>
+        /// <param name="stream">The string.</param>
+        /// <returns>Deserialized object</returns>
+        private static object DeserializeFromString(string str)
+        {
+            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(str));
+            return SmartShopLogics.DeserializeFromStream(stream);
+        }
+
+
+        /// <summary>
+        /// Deserializes from stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns>Deserialized object</returns>
+        public static object DeserializeFromStream(MemoryStream stream)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            stream.Seek(0, SeekOrigin.Begin);
+            object o = formatter.Deserialize(stream);
+            return o;
         }
     }
 }
