@@ -280,7 +280,7 @@
             this.btnEditProduct.Name = "btnEditProduct";
             this.btnEditProduct.Size = new System.Drawing.Size(166, 24);
             this.btnEditProduct.TabIndex = 4;
-            this.btnEditProduct.Text = "ערוך";
+            this.btnEditProduct.Text = "ערוך...";
             this.btnEditProduct.UseVisualStyleBackColor = true;
             this.btnEditProduct.Visible = false;
             this.btnEditProduct.Click += new System.EventHandler(this.btnEditProduct_Click);
@@ -304,7 +304,7 @@
             this.btnNewProduct.Name = "btnNewProduct";
             this.btnNewProduct.Size = new System.Drawing.Size(166, 29);
             this.btnNewProduct.TabIndex = 4;
-            this.btnNewProduct.Text = "חדש";
+            this.btnNewProduct.Text = "חדש...";
             this.btnNewProduct.UseVisualStyleBackColor = true;
             this.btnNewProduct.Visible = false;
             this.btnNewProduct.Click += new System.EventHandler(this.btnNewProduct_Click);
@@ -350,7 +350,7 @@
             // 
             this.cmbSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbSuperMarkets.FormattingEnabled = true;
-            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 7);
+            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 8);
             this.cmbSuperMarkets.Name = "cmbSuperMarkets";
             this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
             this.cmbSuperMarkets.TabIndex = 1;
@@ -382,16 +382,16 @@
             // 
             this.tsLogin.Name = "tsLogin";
             this.tsLogin.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.tsLogin.Size = new System.Drawing.Size(167, 24);
-            this.tsLogin.Text = "כניסה";
+            this.tsLogin.Size = new System.Drawing.Size(176, 24);
+            this.tsLogin.Text = "כניסה...";
             this.tsLogin.Click += new System.EventHandler(this.tsLogin_Click);
             // 
             // tsRegister
             // 
             this.tsRegister.Name = "tsRegister";
             this.tsRegister.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.tsRegister.Size = new System.Drawing.Size(167, 24);
-            this.tsRegister.Text = "יצירה";
+            this.tsRegister.Size = new System.Drawing.Size(176, 24);
+            this.tsRegister.Text = "יצירה...";
             this.tsRegister.Click += new System.EventHandler(this.tsRegister_Click);
             // 
             // ClientForm
