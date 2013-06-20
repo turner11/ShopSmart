@@ -123,7 +123,6 @@ namespace ShopSmart.Dal
     /// <summary>
     /// An extension for the ShopList ef entity
     /// </summary>
-    [Serializable]
     public partial class ShopList
     {
         /// <summary>
@@ -148,21 +147,6 @@ namespace ShopSmart.Dal
         public override string ToString()
         {
             return string.Format("Items: '{0}', Total Price: '{1}'.", this.ShoplistItems.Count, this.TotalPrice);
-        }
-
-        public override bool Equals(object obj)
-        {
-            ShopList other = obj as ShopList;
-            if (other == null)
-            {
-                throw new ArgumentNullException("Cannot compare a Shoplist to non Shoplist Item");
-            }
-            return this.Id == other.Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 
@@ -267,90 +251,6 @@ namespace ShopSmart.Dal
             this.CategorySorts = new List<CategorySort>();
 
         }
-    }
-
-    /// <summary>
-    /// A wrapper for a shoplist with Extra information for archiving
-    /// </summary>
-    [Serializable]
-    public class ArchivedShoplistObject
-    {
-        
-        private DateTime _date;
-        /// <summary>
-        /// Gets the date that lsit was created at.
-        /// </summary>
-        /// <value>
-        /// The date.
-        /// </value>
-        public DateTime Date
-        {
-            get { return _date; }
-        }
-
-        private ShopList _shoppingList;
-
-        /// <summary>
-        /// Gets the shopping list.
-        /// </summary>
-        /// <value>
-        /// The shopping list.
-        /// </value>
-        public ShopList ShoppingList
-        {
-            get { return _shoppingList; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArchivedShoplistObject"/> class.
-        /// </summary>
-        /// <param name="shoppingList">The shopping list.</param>
-        public ArchivedShoplistObject(ShopList shoppingList)
-        {
-            this._date = DateTime.Now;
-            this._shoppingList = new ShopList();
-        }
-
-        /// <summary>
-        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
-        /// </summary>
-        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
-        /// </returns>
-        /// <exception cref="System.ArgumentNullException">Cannot compare non ArchivedShoplist objet to ArchivedShoplist</exception>
-        public override bool Equals(object obj)
-        {
-            ArchivedShoplistObject other = obj as ArchivedShoplistObject;
-            if (other == null)
-            {
-                throw new ArgumentNullException("Cannot compare non ArchivedShoplist objet to ArchivedShoplist");
-            }
-            return this._shoppingList.Id.Equals(other.ShoppingList.Id);
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
-        public override string ToString()
-        {
-            return String.Format("'{0}': '{1}'", this.Date,this.ShoppingList.ToString());
-        }
-
-        /// <summary>
-        /// Returns a hash code for this instance.
-        /// </summary>
-        /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
-        /// </returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
     }
 
 }

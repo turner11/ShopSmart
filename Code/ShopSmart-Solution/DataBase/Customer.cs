@@ -26,6 +26,5 @@ namespace ShopSmart.Dal
         public UserTypes UserType { get; set; }
     
         public virtual ICollection<ShopList> ShopLists { get; set; }
-        public virtual ArchivedShoppingList ArchivedShoppingList { get; set; }
     }
 }

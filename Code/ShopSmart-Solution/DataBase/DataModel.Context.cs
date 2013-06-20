@@ -39,7 +39,6 @@ namespace ShopSmart.Dal
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<FullyJoinedProduct> FullyJoinedProducts { get; set; }
         public DbSet<FullyJoinedShoppingList> FullyJoinedShoppingLists { get; set; }
-        public DbSet<ArchivedShoppingList> ArchivedShoppingLists { get; set; }
     
         [EdmFunction("ShopSmartEntities", "GetProductsBySupermarkrt")]
         public virtual IQueryable<GetProductsBySupermarkrt_Result> GetProductsBySupermarkrt(Nullable<int> superMarketId)

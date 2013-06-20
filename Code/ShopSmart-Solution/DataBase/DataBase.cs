@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -271,21 +270,5 @@ namespace ShopSmart.Dal
             return success;
             
         }
-
-        /// <summary>
-        /// Gets the shopping lists by customer.
-        /// </summary>
-        /// <param name="customer">The customer.</param>
-        /// <returns></returns>
-        public ArchivedShoppingList GetShoppingListsByCustomer(Customer customer)
-        {
-            List <ArchivedShoppingList> retList =  this._db.ArchivedShoppingLists.Where(asl => asl.Customer.CustomerId == customer.CustomerId).ToList();
-            Debug.Assert(retList.Count <= 1, "Got more than 1 list of archived items. customer is the primary key");
-            return retList.Count == 1? retList[0]: new ArchivedShoppingList();
-            
-
-        }
-
-        
     }
 }

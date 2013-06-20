@@ -22,8 +22,6 @@
         <AssociationConnector Association="ShopSmartModel.FK_ItemsToBuy_Products" ManuallyRouted="false" />
         <AssociationConnector Association="ShopSmartModel.FK_ItemsToBuy_ShopLists" ManuallyRouted="false" />
         <AssociationConnector Association="ShopSmartModel.FK_ShopLists_Supermarkets" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ShopSmartModel.ArchivedShoppingList" Width="1.5" PointX="7.3574507252115051" PointY="30.420975565175048" />
-        <AssociationConnector Association="ShopSmartModel.FK_ArchivedShoppingLists_ArchivedShoppingLists" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
