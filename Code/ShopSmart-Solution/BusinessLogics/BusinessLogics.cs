@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Web.Services;
+using Log;
 using ShopSmart.Dal;
 
 
@@ -51,10 +52,31 @@ namespace ShopSmart.Bl
         /// <param name="list">The list.</param>
         /// <returns>a sorted list</returns>
         [WebMethod]
-        public ShopList GetSortedList(ShopList list)
+        public ShopList GetSortedList(ShopList list,Customer customer)
         {
             this.SortShopList(list);
+
+            if (customer != null)
+            {
+                this.SaveShopList(list, customer);
+            }
+           
+
             return list;
+        }
+
+        /// <summary>
+        /// Saves the shop listto DB.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        /// <param name="customer">The customer.</param>
+        private bool SaveShopList(ShopList list, Customer customer)
+        {
+            list.Customer = customer;
+            list.CustomerId = customer.Id;
+
+            string errorMessage;
+            return this._db.SaveShoplist(list, out errorMessage);
         }
 
         /// <summary>
@@ -95,7 +117,16 @@ namespace ShopSmart.Bl
         public List<Product> GetAllProducts()
         {
             IEnumerable<Product> dbProducts = this._db.GetAllProducts() ?? (IEnumerable<Product>)new List<Product>();
-            List<Product> products = dbProducts.OrderBy(p=>p.ProductName).ToList<Product>();
+            List<Product> products = new List<Product>() ;
+            try
+            {
+               products = dbProducts.OrderBy(p => p.ProductName).ToList<Product>();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+            }
+            
             return products;
         }
 

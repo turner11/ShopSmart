@@ -14,6 +14,7 @@
           <EntitySet Name="ShopLists" EntityType="ShopSmartModel.Store.ShopLists" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Supermarkets" EntityType="ShopSmartModel.Store.Supermarkets" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="sysdiagrams" EntityType="ShopSmartModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserTypes" EntityType="ShopSmartModel.Store.UserTypes" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FullyJoinedProducts" EntityType="ShopSmartModel.Store.FullyJoinedProducts" store:Type="Views" store:Schema="dbo" store:Name="FullyJoinedProducts">
             <DefiningQuery>SELECT 
       [FullyJoinedProducts].[Id] AS [Id], 
@@ -54,6 +55,10 @@
           <AssociationSet Name="FK_CategorySorts_Supermarkets" Association="ShopSmartModel.Store.FK_CategorySorts_Supermarkets">
             <End Role="Supermarkets" EntitySet="Supermarkets" />
             <End Role="CategorySorts" EntitySet="CategorySorts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customers_UserTypes" Association="ShopSmartModel.Store.FK_Customers_UserTypes">
+            <End Role="UserTypes" EntitySet="UserTypes" />
+            <End Role="Customers" EntitySet="Customers" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemsToBuy_Products" Association="ShopSmartModel.Store.FK_ItemsToBuy_Products">
             <End Role="Products" EntitySet="Products" />
@@ -118,9 +123,10 @@
         </EntityType>
         <EntityType Name="ShoplistItems">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ShopListId" />
+            <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ShopListId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
@@ -129,7 +135,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="CustomerId" Type="int" />
@@ -152,6 +158,13 @@
           <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="UserTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'ShopSmart.dbo.FullyJoinedProducts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -232,6 +245,18 @@
             </Principal>
             <Dependent Role="CategorySorts">
               <PropertyRef Name="SupermarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customers_UserTypes">
+          <End Role="UserTypes" Type="ShopSmartModel.Store.UserTypes" Multiplicity="1" />
+          <End Role="Customers" Type="ShopSmartModel.Store.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="UserTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -420,6 +445,11 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="UserTypes" EntityType="ShopSmartModel.UserType" />
+          <AssociationSet Name="FK_Customers_UserTypes" Association="ShopSmartModel.FK_Customers_UserTypes">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetProductsBySupermarkrt_Result">
           <Property Name="Id" Type="Int32" Nullable="false" />
@@ -481,7 +511,8 @@
         </EntityType>
         <EntityType Name="ShoplistItem">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ShopListId" />
+            <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="ShopListId" Type="Int32" Nullable="false" />
@@ -674,7 +705,27 @@
           <Member Name="Admininstrator" Value="1" />
           <Member Name="Editor" Value="2" />
           <Member Name="User" Value="3" />
-        </EnumType>        
+        </EnumType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="ShopSmartModel.UserTypes" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="ShopSmartModel.FK_Customers_UserTypes" FromRole="UserType" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_Customers_UserTypes">
+          <End Type="ShopSmartModel.UserType" Role="UserType" Multiplicity="1" />
+          <End Type="ShopSmartModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="UserType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>        
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -841,6 +892,14 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ShopSmartModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ShopSmartModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="ShopSmartModel.UserType">
+              <MappingFragment StoreEntitySet="UserTypes">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

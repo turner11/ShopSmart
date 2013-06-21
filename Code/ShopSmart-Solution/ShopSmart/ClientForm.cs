@@ -348,6 +348,7 @@ namespace ShopSmart.Client
                 {
                     ShoplistItem item = new ShoplistItem();
                     item.Product = (Product)currRow.Cells[DataTableConstans.COL_NAME_PRODUCT].Value;
+                    item.ProductId = item.Product.Id;
                     item.Quantity = quantity;
                     item.ShopList = list;
                     list.ShoplistItems.Add(item);
@@ -727,7 +728,7 @@ namespace ShopSmart.Client
             ShopList shoppingList = this.GetShoppingListFromGui();
 
 
-            ShopList soretd = this._logicsService.GetSortedList(shoppingList);
+            ShopList soretd = this._logicsService.GetSortedList(shoppingList, this.CurrentUser);
 
             ClientForm.ExportListToExcel(soretd);
         }
@@ -1154,6 +1155,7 @@ namespace ShopSmart.Client
             public const string COL_NAME_CATEGORY_SORT_VALUE = "CategorySortValue"; 
 
             public const string COL_NAME_PRODUCT = "ProductObject"; 
+
             #endregion
 
             static DataTableConstans()

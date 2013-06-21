@@ -105,7 +105,7 @@ namespace ShopSmart.Dal
             /* Filter by usertype */
             if (userType.HasValue)
             {
-                users = users.Where(customer => customer.UserType == userType).ToList();
+                users = users.Where(customer => customer.UserType == userType.Value).ToList();
             }
 
             return users;
@@ -270,5 +270,42 @@ namespace ShopSmart.Dal
             return success;
             
         }
+
+        /// <summary>
+        /// Saves the shoplist to db.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        public bool SaveShoplist(ShopList list, out string errorMsg)
+        {
+            errorMsg = String.Empty;
+            bool isInDb = this._db.ShopLists.Any(sl => sl.Id == list.Id);
+            if (isInDb)
+            {
+                ShopList inDb = this._db.ShopLists.Where(sl => sl.Id == list.Id).FirstOrDefault();
+                inDb.ShoplistItems = list.ShoplistItems;
+                inDb.Supermarket = list.Supermarket;
+                inDb.Customer = list.Customer;
+                inDb.Date = list.Date;
+
+                inDb.Title = list.Title ?? String.Empty;
+            }
+            else
+            {
+                list.Title = list.Title ?? String.Format("{0}: {1}", list.Supermarket.Name, DateTime.Now.ToShortDateString());
+                this._db.ShopLists.Add(list);
+            }
+
+            
+           
+
+            string saveErrors;
+            bool success = this.SaveChanges(out saveErrors);
+
+            errorMsg = saveErrors ;
+            return success;
+
+        }
+
+       
     }
 }

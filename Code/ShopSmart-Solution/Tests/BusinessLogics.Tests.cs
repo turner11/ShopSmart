@@ -45,7 +45,7 @@ namespace Tests
             //act
             DataBase dataBase = Substitute.For<DataBase>();
             SmartShopLogics bs = new SmartShopLogics(dataBase);
-            ShopList sorted = bs.GetSortedList(list);
+            ShopList sorted = bs.GetSortedList(list,null);
 
             //assert
             int lastCategoryId = -1;
