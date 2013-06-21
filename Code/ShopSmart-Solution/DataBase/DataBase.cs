@@ -306,6 +306,17 @@ namespace ShopSmart.Dal
 
         }
 
-       
+
+
+        /// <summary>
+        /// Gets the archived lists of specifrid customer.
+        /// </summary>
+        /// <param name="customer">The customer.</param>
+        /// <returns>the lists saved for customer</returns>
+        public List<ShopList> GetArchivedLists(Customer customer)
+        {
+            List<ShopList> savedLists = this._db.ShopLists.Where(sl => sl.Customer.Id == customer.Id).ToList();
+            return savedLists;
+        }
     }
 }

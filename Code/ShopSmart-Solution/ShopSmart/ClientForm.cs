@@ -566,7 +566,7 @@ namespace ShopSmart.Client
         {
             string errorMessage;
             bool success= this._logicsService.SaveChanges(out errorMessage);
-            MessageBox.Show(this, success ? "Changes saved" : "Failed to save changes.",
+            this.ShowMessage(this, success ? "Changes saved" : "Failed to save changes.",
                            "Saving result",
                            MessageBoxButtons.OK,
                            success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
@@ -639,7 +639,7 @@ namespace ShopSmart.Client
                     bool success = this._logicsService.SaveChanges(out errorMsg);
                     if (!success)
                     {
-                        MessageBox.Show(String.Format("Error Editing product:{0}{1}", Environment.NewLine, errorMsg));
+                        this.ShowMessage(String.Format("Error Editing product:{0}{1}", Environment.NewLine, errorMsg));
                     }
                     else
                     {
@@ -653,7 +653,7 @@ namespace ShopSmart.Client
             }
             else
             {
-                MessageBox.Show("אנא בחר מוצר לעריכה");
+                this.ShowMessage("אנא בחר מוצר לעריכה");
             }
         }
 
@@ -665,10 +665,11 @@ namespace ShopSmart.Client
             Product currentProduct = this.GetCurrentRowProduct();
             if (currentProduct != null)
             {
-                DialogResult rslt = MessageBox.Show(this,
+                DialogResult rslt = this.ShowMessage(this,
                                                     String.Format("האם אתה בטוח שברצונך למחוק את {0}?", currentProduct.ProductName),
                                                     "",
-                                                    MessageBoxButtons.OKCancel);
+                                                    MessageBoxButtons.OKCancel,
+                                                    MessageBoxIcon.Question);
                 if (rslt == System.Windows.Forms.DialogResult.OK)
                 {
 
@@ -676,7 +677,7 @@ namespace ShopSmart.Client
                     bool success = this._logicsService.DeleteProduct(currentProduct, out errorMsg);
                     if (!success)
                     {
-                        MessageBox.Show(String.Format("Error deleting product:{0}{1}", Environment.NewLine, errorMsg));
+                        this.ShowMessage(String.Format("Error deleting product:{0}{1}", Environment.NewLine, errorMsg));
                     }
                     else
                     {
@@ -689,7 +690,7 @@ namespace ShopSmart.Client
             }
             else
             {
-                MessageBox.Show("אנא בחר מוצר למחיקה");
+                this.ShowMessage("אנא בחר מוצר למחיקה");
             }
         }
 
@@ -708,7 +709,7 @@ namespace ShopSmart.Client
                     bool success = this._logicsService.SaveProduct(newProduct, out errorMsg);
                     if (!success)
                     {
-                        MessageBox.Show(String.Format("Error Adding product:{0}{1}", Environment.NewLine, errorMsg));
+                        this.ShowMessage(String.Format("Error Adding product:{0}{1}", Environment.NewLine, errorMsg));
                     }
                     else
                     {
@@ -730,7 +731,7 @@ namespace ShopSmart.Client
 
             ShopList soretd = this._logicsService.GetSortedList(shoppingList, this.CurrentUser);
 
-            ClientForm.ExportListToExcel(soretd);
+            this.ExportListToExcel(soretd);
         }
 
         #endregion
@@ -775,7 +776,7 @@ namespace ShopSmart.Client
         /// Exports the list to excel.
         /// </summary>
         /// <param name="shopList">The shop list.</param>
-        private static void ExportListToExcel(ShopList shopList)
+        private void ExportListToExcel(ShopList shopList)
         {
             FileExporter.ExcelExporter exporter = new FileExporter.ExcelExporter();
             CarlosAg.ExcelXmlWriter.Workbook book = exporter.Generate(shopList);
@@ -803,7 +804,7 @@ namespace ShopSmart.Client
                 catch (Exception ex)
                 {
 
-                    MessageBox.Show(ex.Message);
+                    this.ShowMessage(ex.Message);
                 }
 
             }
@@ -1007,7 +1008,7 @@ namespace ShopSmart.Client
             {
                 msg = String.Format("כניסת משתמש רשום הצליחה עבור {0}", customer.UserName);
             }
-            MessageBox.Show(msg);
+            this.ShowMessage(msg);
         }
 
         /// <summary>
@@ -1214,6 +1215,67 @@ namespace ShopSmart.Client
 
         }
         #endregion
+
+        private void tsGetArchivedLists_Click(object sender, EventArgs e)
+        {
+            if (this.CurrentUser == null)
+            {
+                this.ShowMessage("יש להתחבר כמשתמש רשום על מנת לטעון רשימות");
+                return;
+            }
+             List<ShopList> savedLists = this._logicsService.GetArchivedLists(this.CurrentUser);
+             if (savedLists.Count == 0)
+             {
+                 this.ShowMessage("לא נמצאו רשימות שמורות עבור משתמש נוכחי.");
+             }
+             else
+             {
+                 SelectShoppingList frmGetShoplist = new SelectShoppingList(savedLists);
+                 if (frmGetShoplist.ShowDialog() == DialogResult.OK)
+                 {
+                     this.MatchGuiToShoplist(frmGetShoplist.SelectedList);
+                 }
+             }
+        }
+
+        private void MatchGuiToShoplist(ShopList shopList)
+        {
+            List<KeyValuePair<int,int>> quantityByProductIds = shopList.ShoplistItems.Select(si => new KeyValuePair<int,int>(si.ProductId,si.Quantity)).ToList();
+            for (int i = 0; i < this.gvProducts.Rows.Count; i++)            
+            {
+                DataGridViewRow row = this.gvProducts.Rows[i];
+                int productId = (int)row.Cells[DataTableConstans.COL_NAME_ID].Value;
+                //get the quantiny and product Id of this row
+                KeyValuePair<int, int> currPriceByProduct = quantityByProductIds.Where(pair => pair.Key == productId).FirstOrDefault();
+                bool isProductInList =currPriceByProduct.Key > 0; ;
+                //set values in grid view
+                gvProducts.Rows[i].Cells[clmToBuy.Name].Value = isProductInList;
+                gvProducts.Rows[i].Cells[this.clmQuantity.Name].Value = isProductInList ? currPriceByProduct.Value.ToString() : String.Empty;
+                
+                
+            }
+        }
+
+        /// <summary>
+        /// Shows the message.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        private DialogResult ShowMessage(string text)
+        {
+            return this.ShowMessage(this, text, String.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        /// <summary>
+        /// Shows the message.
+        /// </summary>
+        /// <param name="owner">The owner.</param>
+        /// <param name="text">The text.</param>
+        /// <param name="caption">The caption.</param>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="icon">The icon.</param>
+        private DialogResult ShowMessage(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
+        {
+            return MessageBox.Show(owner,text,caption,buttons);
+        }
 
        
 

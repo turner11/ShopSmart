@@ -74,6 +74,10 @@ namespace ShopSmart.Bl
         {
             list.Customer = customer;
             list.CustomerId = customer.Id;
+            if (list.Date == DateTime.MinValue)
+            {
+                list.Date = DateTime.Now;
+            }
 
             string errorMessage;
             return this._db.SaveShoplist(list, out errorMessage);
@@ -236,6 +240,16 @@ namespace ShopSmart.Bl
         public bool DeleteProduct(Product product, out string errorMsg)
         {
             return this._db.DeleteProduct(product, out errorMsg);
+        }
+
+        /// <summary>
+        /// Gets the archived lists of specifrid customer.
+        /// </summary>
+        /// <param name="customer">The customer.</param>
+        /// <returns>the lists saved for customer</returns>
+        public List<ShopList> GetArchivedLists(Customer customer)
+        {
+            return this._db.GetArchivedLists(customer);
         }
     }
 }

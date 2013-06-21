@@ -57,6 +57,7 @@
             this.tsOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsLogin = new System.Windows.Forms.ToolStripMenuItem();
             this.tsRegister = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsGetArchivedLists = new System.Windows.Forms.ToolStripButton();
             this.tcMain.SuspendLayout();
             this.tpShoppingList.SuspendLayout();
             this.tlpMain.SuspendLayout();
@@ -101,9 +102,9 @@
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.29247F));
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.70753F));
             this.tlpMain.Controls.Add(this.gvProducts, 1, 1);
-            this.tlpMain.Controls.Add(this.txbFilter, 1, 0);
             this.tlpMain.Controls.Add(this.chbCheckAll, 0, 0);
             this.tlpMain.Controls.Add(this.tlpCategories, 0, 1);
+            this.tlpMain.Controls.Add(this.txbFilter, 1, 0);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMain.Location = new System.Drawing.Point(3, 3);
             this.tlpMain.Name = "tlpMain";
@@ -350,7 +351,7 @@
             // 
             this.cmbSuperMarkets.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbSuperMarkets.FormattingEnabled = true;
-            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 8);
+            this.cmbSuperMarkets.Location = new System.Drawing.Point(404, 7);
             this.cmbSuperMarkets.Name = "cmbSuperMarkets";
             this.cmbSuperMarkets.Size = new System.Drawing.Size(170, 24);
             this.cmbSuperMarkets.TabIndex = 1;
@@ -359,7 +360,8 @@
             // _toolStrip
             // 
             this._toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsOptions});
+            this.tsOptions,
+            this.tsGetArchivedLists});
             this._toolStrip.Location = new System.Drawing.Point(0, 0);
             this._toolStrip.Name = "_toolStrip";
             this._toolStrip.Size = new System.Drawing.Size(691, 27);
@@ -393,6 +395,16 @@
             this.tsRegister.Size = new System.Drawing.Size(176, 24);
             this.tsRegister.Text = "יצירה...";
             this.tsRegister.Click += new System.EventHandler(this.tsRegister_Click);
+            // 
+            // tsGetArchivedLists
+            // 
+            this.tsGetArchivedLists.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsGetArchivedLists.Image = ((System.Drawing.Image)(resources.GetObject("tsGetArchivedLists.Image")));
+            this.tsGetArchivedLists.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsGetArchivedLists.Name = "tsGetArchivedLists";
+            this.tsGetArchivedLists.Size = new System.Drawing.Size(164, 24);
+            this.tsGetArchivedLists.Text = "טען רשימות שמורות...";
+            this.tsGetArchivedLists.Click += new System.EventHandler(this.tsGetArchivedLists_Click);
             // 
             // ClientForm
             // 
@@ -452,6 +464,7 @@
         private System.Windows.Forms.Button btnEditProduct;
         private System.Windows.Forms.Button btnDeleteProduct;
         private System.Windows.Forms.Button btnNewProduct;
+        private System.Windows.Forms.ToolStripButton tsGetArchivedLists;
     }
 }
 

@@ -146,7 +146,7 @@ namespace ShopSmart.Dal
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Items: '{0}', Total Price: '{1}'.", this.ShoplistItems.Count, this.TotalPrice);
+            return string.Format("{0}, {1}: Items: '{2}', Total Price: '{3}'.", this.Date.ToShortDateString(), this.Supermarket.Name,this.ShoplistItems.Count, this.TotalPrice);
         }
 
         /// <summary>
