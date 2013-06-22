@@ -17,6 +17,7 @@ namespace ShopSmart.Dal
         public Product()
         {
             this.ShoplistItems = new HashSet<ShoplistItem>();
+            this.Commercials = new HashSet<Commercial>();
         }
     
         public int Id { get; set; }
@@ -29,5 +30,6 @@ namespace ShopSmart.Dal
     
         public virtual Category Category { get; set; }
         public virtual ICollection<ShoplistItem> ShoplistItems { get; set; }
+        public virtual ICollection<Commercial> Commercials { get; set; }
     }
 }

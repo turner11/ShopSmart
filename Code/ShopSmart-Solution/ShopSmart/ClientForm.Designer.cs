@@ -36,10 +36,6 @@
             this.tpShoppingList = new System.Windows.Forms.TabPage();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.gvProducts = new System.Windows.Forms.DataGridView();
-            this.clmToBuy = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.clmQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmDirty = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.txbFilter = new System.Windows.Forms.TextBox();
             this.chbCheckAll = new System.Windows.Forms.CheckBox();
             this.tlpCategories = new System.Windows.Forms.TableLayoutPanel();
             this.rdbShowEditorControls = new System.Windows.Forms.RadioButton();
@@ -49,6 +45,8 @@
             this.btnEditProduct = new System.Windows.Forms.Button();
             this.btnDeleteProduct = new System.Windows.Forms.Button();
             this.btnNewProduct = new System.Windows.Forms.Button();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.txbFilter = new System.Windows.Forms.TextBox();
             this.tpSettings = new System.Windows.Forms.TabPage();
             this.tlbSettings = new System.Windows.Forms.TableLayoutPanel();
             this.lblSuperMarkets = new System.Windows.Forms.Label();
@@ -58,14 +56,19 @@
             this.tsLogin = new System.Windows.Forms.ToolStripMenuItem();
             this.tsRegister = new System.Windows.Forms.ToolStripMenuItem();
             this.tsGetArchivedLists = new System.Windows.Forms.ToolStripButton();
+            this.psCommercials = new ShopSmart.Client.PictureSlider();
+            this.clmToBuy = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.clmQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tcMain.SuspendLayout();
             this.tpShoppingList.SuspendLayout();
             this.tlpMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvProducts)).BeginInit();
             this.tlpCategories.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.tpSettings.SuspendLayout();
             this.tlbSettings.SuspendLayout();
             this._toolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.psCommercials)).BeginInit();
             this.SuspendLayout();
             // 
             // tcMain
@@ -104,12 +107,12 @@
             this.tlpMain.Controls.Add(this.gvProducts, 1, 1);
             this.tlpMain.Controls.Add(this.chbCheckAll, 0, 0);
             this.tlpMain.Controls.Add(this.tlpCategories, 0, 1);
-            this.tlpMain.Controls.Add(this.txbFilter, 1, 0);
+            this.tlpMain.Controls.Add(this.flowLayoutPanel1, 1, 0);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMain.Location = new System.Drawing.Point(3, 3);
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 2;
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMain.Size = new System.Drawing.Size(677, 443);
             this.tlpMain.TabIndex = 0;
@@ -139,8 +142,7 @@
             this.gvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clmToBuy,
-            this.clmQuantity,
-            this.clmDirty});
+            this.clmQuantity});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.AliceBlue;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
@@ -150,45 +152,15 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gvProducts.DefaultCellStyle = dataGridViewCellStyle3;
             this.gvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gvProducts.Location = new System.Drawing.Point(3, 33);
+            this.gvProducts.Location = new System.Drawing.Point(3, 53);
             this.gvProducts.MultiSelect = false;
             this.gvProducts.Name = "gvProducts";
             this.gvProducts.RowTemplate.Height = 24;
-            this.gvProducts.Size = new System.Drawing.Size(493, 408);
+            this.gvProducts.Size = new System.Drawing.Size(493, 410);
             this.gvProducts.TabIndex = 0;
             this.gvProducts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvProducts_CellEndEdit);
             this.gvProducts.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gvProducts_EditingControlShowing);
             this.gvProducts.SelectionChanged += new System.EventHandler(this.gvProducts_SelectionChanged);
-            // 
-            // clmToBuy
-            // 
-            this.clmToBuy.Frozen = true;
-            this.clmToBuy.HeaderText = "לקנות?";
-            this.clmToBuy.Name = "clmToBuy";
-            this.clmToBuy.Width = 54;
-            // 
-            // clmQuantity
-            // 
-            this.clmQuantity.Frozen = true;
-            this.clmQuantity.HeaderText = "כמות";
-            this.clmQuantity.Name = "clmQuantity";
-            this.clmQuantity.Width = 60;
-            // 
-            // clmDirty
-            // 
-            this.clmDirty.HeaderText = "IsDirty";
-            this.clmDirty.Name = "clmDirty";
-            this.clmDirty.Visible = false;
-            this.clmDirty.Width = 53;
-            // 
-            // txbFilter
-            // 
-            this.txbFilter.BackColor = System.Drawing.SystemColors.Info;
-            this.txbFilter.Location = new System.Drawing.Point(290, 3);
-            this.txbFilter.Name = "txbFilter";
-            this.txbFilter.Size = new System.Drawing.Size(206, 22);
-            this.txbFilter.TabIndex = 1;
-            this.txbFilter.TextChanged += new System.EventHandler(this.txbFilter_TextChanged);
             // 
             // chbCheckAll
             // 
@@ -215,7 +187,7 @@
             this.tlpCategories.Controls.Add(this.btnDeleteProduct, 0, 5);
             this.tlpCategories.Controls.Add(this.btnNewProduct, 0, 3);
             this.tlpCategories.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpCategories.Location = new System.Drawing.Point(502, 33);
+            this.tlpCategories.Location = new System.Drawing.Point(502, 53);
             this.tlpCategories.Name = "tlpCategories";
             this.tlpCategories.RowCount = 7;
             this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -226,13 +198,13 @@
             this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCategories.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCategories.Size = new System.Drawing.Size(172, 408);
+            this.tlpCategories.Size = new System.Drawing.Size(172, 410);
             this.tlpCategories.TabIndex = 4;
             // 
             // rdbShowEditorControls
             // 
             this.rdbShowEditorControls.AutoSize = true;
-            this.rdbShowEditorControls.Location = new System.Drawing.Point(42, 259);
+            this.rdbShowEditorControls.Location = new System.Drawing.Point(42, 261);
             this.rdbShowEditorControls.Name = "rdbShowEditorControls";
             this.rdbShowEditorControls.Size = new System.Drawing.Size(127, 21);
             this.rdbShowEditorControls.TabIndex = 8;
@@ -244,7 +216,7 @@
             // rdbShowUserControls
             // 
             this.rdbShowUserControls.AutoSize = true;
-            this.rdbShowUserControls.Location = new System.Drawing.Point(26, 232);
+            this.rdbShowUserControls.Location = new System.Drawing.Point(26, 234);
             this.rdbShowUserControls.Name = "rdbShowUserControls";
             this.rdbShowUserControls.Size = new System.Drawing.Size(143, 21);
             this.rdbShowUserControls.TabIndex = 7;
@@ -259,14 +231,14 @@
             this.cblCategories.FormattingEnabled = true;
             this.cblCategories.Location = new System.Drawing.Point(3, 3);
             this.cblCategories.Name = "cblCategories";
-            this.cblCategories.Size = new System.Drawing.Size(166, 223);
+            this.cblCategories.Size = new System.Drawing.Size(166, 225);
             this.cblCategories.TabIndex = 2;
             this.cblCategories.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.cblCategories_ItemCheck);
             // 
             // btnSort
             // 
             this.btnSort.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSort.Location = new System.Drawing.Point(3, 381);
+            this.btnSort.Location = new System.Drawing.Point(3, 383);
             this.btnSort.Name = "btnSort";
             this.btnSort.Size = new System.Drawing.Size(166, 24);
             this.btnSort.TabIndex = 3;
@@ -277,7 +249,7 @@
             // btnEditProduct
             // 
             this.btnEditProduct.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnEditProduct.Location = new System.Drawing.Point(3, 321);
+            this.btnEditProduct.Location = new System.Drawing.Point(3, 323);
             this.btnEditProduct.Name = "btnEditProduct";
             this.btnEditProduct.Size = new System.Drawing.Size(166, 24);
             this.btnEditProduct.TabIndex = 4;
@@ -289,7 +261,7 @@
             // btnDeleteProduct
             // 
             this.btnDeleteProduct.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDeleteProduct.Location = new System.Drawing.Point(3, 351);
+            this.btnDeleteProduct.Location = new System.Drawing.Point(3, 353);
             this.btnDeleteProduct.Name = "btnDeleteProduct";
             this.btnDeleteProduct.Size = new System.Drawing.Size(166, 24);
             this.btnDeleteProduct.TabIndex = 4;
@@ -301,7 +273,7 @@
             // btnNewProduct
             // 
             this.btnNewProduct.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnNewProduct.Location = new System.Drawing.Point(3, 286);
+            this.btnNewProduct.Location = new System.Drawing.Point(3, 288);
             this.btnNewProduct.Name = "btnNewProduct";
             this.btnNewProduct.Size = new System.Drawing.Size(166, 29);
             this.btnNewProduct.TabIndex = 4;
@@ -309,6 +281,26 @@
             this.btnNewProduct.UseVisualStyleBackColor = true;
             this.btnNewProduct.Visible = false;
             this.btnNewProduct.Click += new System.EventHandler(this.btnNewProduct_Click);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.txbFilter);
+            this.flowLayoutPanel1.Controls.Add(this.psCommercials);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(493, 44);
+            this.flowLayoutPanel1.TabIndex = 5;
+            // 
+            // txbFilter
+            // 
+            this.txbFilter.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.txbFilter.BackColor = System.Drawing.SystemColors.Info;
+            this.txbFilter.Location = new System.Drawing.Point(284, 12);
+            this.txbFilter.Name = "txbFilter";
+            this.txbFilter.Size = new System.Drawing.Size(206, 22);
+            this.txbFilter.TabIndex = 1;
+            this.txbFilter.TextChanged += new System.EventHandler(this.txbFilter_TextChanged);
             // 
             // tpSettings
             // 
@@ -406,6 +398,36 @@
             this.tsGetArchivedLists.Text = "טען רשימות שמורות...";
             this.tsGetArchivedLists.Click += new System.EventHandler(this.tsGetArchivedLists_Click);
             // 
+            // psCommercials
+            // 
+            this.psCommercials.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.psCommercials.ErrorImage = null;
+            this.psCommercials.Image = global::ShopSmart.Client.Properties.Resources.ShopSmart_Logo;
+            this.psCommercials.InitialImage = global::ShopSmart.Client.Properties.Resources.ShopSmart_Logo;
+            this.psCommercials.Location = new System.Drawing.Point(15, 3);
+            this.psCommercials.Name = "psCommercials";
+            this.psCommercials.Size = new System.Drawing.Size(263, 41);
+            this.psCommercials.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.psCommercials.SlideInterval = 2147483647;
+            this.psCommercials.TabIndex = 2;
+            this.psCommercials.TabStop = false;
+            // 
+            // clmToBuy
+            // 
+            this.clmToBuy.Frozen = true;
+            this.clmToBuy.HeaderText = "לקנות?";
+            this.clmToBuy.Name = "clmToBuy";
+            this.clmToBuy.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.clmToBuy.Width = 73;
+            // 
+            // clmQuantity
+            // 
+            this.clmQuantity.Frozen = true;
+            this.clmQuantity.HeaderText = "כמות";
+            this.clmQuantity.Name = "clmQuantity";
+            this.clmQuantity.Width = 60;
+            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -427,11 +449,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvProducts)).EndInit();
             this.tlpCategories.ResumeLayout(false);
             this.tlpCategories.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.tpSettings.ResumeLayout(false);
             this.tlbSettings.ResumeLayout(false);
             this.tlbSettings.PerformLayout();
             this._toolStrip.ResumeLayout(false);
             this._toolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.psCommercials)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -452,19 +477,20 @@
         private System.Windows.Forms.TableLayoutPanel tlbSettings;
         private System.Windows.Forms.Label lblSuperMarkets;
         private System.Windows.Forms.ComboBox cmbSuperMarkets;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn clmToBuy;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmQuantity;
         private System.Windows.Forms.ToolStrip _toolStrip;
         private System.Windows.Forms.ToolStripDropDownButton tsOptions;
         private System.Windows.Forms.ToolStripMenuItem tsLogin;
         private System.Windows.Forms.ToolStripMenuItem tsRegister;
         private System.Windows.Forms.RadioButton rdbShowEditorControls;
         private System.Windows.Forms.RadioButton rdbShowUserControls;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn clmDirty;
         private System.Windows.Forms.Button btnEditProduct;
         private System.Windows.Forms.Button btnDeleteProduct;
         private System.Windows.Forms.Button btnNewProduct;
         private System.Windows.Forms.ToolStripButton tsGetArchivedLists;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private PictureSlider psCommercials;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn clmToBuy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmQuantity;
     }
 }
 

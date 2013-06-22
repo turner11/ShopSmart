@@ -213,5 +213,11 @@ namespace ShopSmart.Client
             }
 
         }
+
+        private void btnEditComercials_Click(object sender, EventArgs e)
+        {
+            EditCommercials frmCommercials = new EditCommercials(this._product);
+            frmCommercials.ShowDialog();
+        }
     }
 }

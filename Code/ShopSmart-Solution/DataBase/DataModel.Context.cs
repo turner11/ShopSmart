@@ -40,6 +40,7 @@ namespace ShopSmart.Dal
         public DbSet<FullyJoinedProduct> FullyJoinedProducts { get; set; }
         public DbSet<FullyJoinedShoppingList> FullyJoinedShoppingLists { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Commercial> Commercials { get; set; }
     
         [EdmFunction("ShopSmartEntities", "GetProductsBySupermarkrt")]
         public virtual IQueryable<GetProductsBySupermarkrt_Result> GetProductsBySupermarkrt(Nullable<int> superMarketId)

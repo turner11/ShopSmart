@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.IO;
 using Log;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 
 namespace ShopSmart.Client
 {
@@ -22,11 +23,13 @@ namespace ShopSmart.Client
     /// </summary>
     public partial class ClientForm : Form
     {
+        #region HotKeys
         /*Keys for keyboard shortcuts*/
         const Keys NEW_KEY = Keys.Control | Keys.N;
         const Keys EDIT_KEY = Keys.Control | Keys.E;
         const Keys DELETE_KEY = Keys.Control | Keys.D;
-        const Keys SORT_KEY = Keys.Control | Keys.S;
+        const Keys SORT_KEY = Keys.Control | Keys.S; 
+        #endregion
 
         #region Data Members
 
@@ -102,6 +105,10 @@ namespace ShopSmart.Client
 
         }
 
+        private Timer _tmrCommercials;
+        private const int INTERVAL_CHECK_FOR_COMMERCIALS = 5000;
+        private const int INTERVAL_SLIDE_COMMERCIALS = 5000;
+
         #endregion
 
         #region C'tors
@@ -115,7 +122,11 @@ namespace ShopSmart.Client
             this.SetAllCategoriesdCheckState(true);
             this.MatchGuiToUserType(this.CurrentUserType);
             this.rdbShowUserControls.Checked = true;
+
+            this.InitCommercials();
         }
+
+        
 
         /// <summary>
         /// Refreshes the data.
@@ -533,29 +544,7 @@ namespace ShopSmart.Client
             return dtProducts;
         }
 
-        /// <summary>
-        /// Gets the products that where edited .
-        /// </summary>
-        /// <returns>the list of edited products</returns>
-        private List<Product> GetEditedProducts()
-        {
-            List<Product> products = new List<Product>();
-
-            //Adding products from rows that are marked as edited
-            foreach (DataGridViewRow row in this.gvProducts.Rows)
-            {
-                object objEdited = row.Cells[this.clmDirty.Index].Value;
-                bool isEdited = objEdited is bool && (bool)objEdited;
-                if (isEdited)
-                {
-                    Product currProd = row.Cells[DataTableConstans.COL_NAME_PRODUCT].Value as Product;
-                    Debug.Assert(currProd != null, "Could not get product from gridview row!");
-                    products.Add(currProd);
-
-                }
-            }
-            return products;
-        }
+        
 
         /// <summary>
         /// Saves the changes to database.
@@ -734,9 +723,89 @@ namespace ShopSmart.Client
             this.ExportListToExcel(soretd);
         }
 
+        /// <summary>
+        /// Matches the GUI to shoplist.
+        /// </summary>
+        /// <param name="shopList">The shop list.</param>
+        private void MatchGuiToShoplist(ShopList shopList)
+        {
+            List<KeyValuePair<int, int>> quantityByProductIds = shopList.ShoplistItems.Select(si => new KeyValuePair<int, int>(si.ProductId, si.Quantity)).ToList();
+            for (int i = 0; i < this.gvProducts.Rows.Count; i++)
+            {
+                DataGridViewRow row = this.gvProducts.Rows[i];
+                int productId = (int)row.Cells[DataTableConstans.COL_NAME_ID].Value;
+                //get the quantiny and product Id of this row
+                KeyValuePair<int, int> currPriceByProduct = quantityByProductIds.Where(pair => pair.Key == productId).FirstOrDefault();
+                bool isProductInList = currPriceByProduct.Key > 0; ;
+                //set values in grid view
+                gvProducts.Rows[i].Cells[clmToBuy.Name].Value = isProductInList;
+                gvProducts.Rows[i].Cells[this.clmQuantity.Name].Value = isProductInList ? currPriceByProduct.Value.ToString() : String.Empty;
+
+
+            }
+        }
+
+        /// <summary>
+        /// Shows the message.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        private DialogResult ShowMessage(string text)
+        {
+            return this.ShowMessage(this, text, String.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        /// <summary>
+        /// Shows the message.
+        /// </summary>
+        /// <param name="owner">The owner.</param>
+        /// <param name="text">The text.</param>
+        /// <param name="caption">The caption.</param>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="icon">The icon.</param>
+        private DialogResult ShowMessage(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
+        {
+            return MessageBox.Show(owner, text, caption, buttons);
+        }
+
+        /// <summary>
+        /// Inits the commercials timer.
+        /// </summary>
+        private void InitCommercials()
+        {
+            this.psCommercials = new PictureSlider(null, INTERVAL_SLIDE_COMMERCIALS);
+
+            this._tmrCommercials = new Timer();
+            this._tmrCommercials.Interval = INTERVAL_CHECK_FOR_COMMERCIALS;
+            this._tmrCommercials.Tick += _tmrCommercials_Tick;
+            this._tmrCommercials.Start();
+
+        }
+
+        
         #endregion
 
         #region Event Handlers
+
+        void _tmrCommercials_Tick(object sender, EventArgs e)
+        {
+            List<int> selectedProductsIds = this.GetSelectedProductsIds();
+            List<Commercial> commercials = this._logicsService.GetCommecialsForProducts(selectedProductsIds);
+            this.psCommercials.Images.Clear();
+            foreach (Commercial com in commercials)
+            {
+                this.psCommercials.Images.Add(com.GetImage());
+            }
+            
+        }
+
+        private List<int> GetSelectedProductsIds()
+        {
+            List<DataGridViewRow> selectedRows = this.gvProducts.Rows
+                                                .Cast<DataGridViewRow>()
+                                                .Where(r => Convert.ToBoolean(r.Cells[this.clmToBuy.Index].Value)).ToList();
+
+            return selectedRows.Select(r => ((Product)r.Cells[DataTableConstans.COL_NAME_PRODUCT].Value).Id).ToList();
+        }
+
         /// <summary>
         /// Handles the ItemCheck event of the cblCategories control.
         /// </summary>
@@ -748,7 +817,34 @@ namespace ShopSmart.Client
             this.BeginInvoke(new MethodInvoker(FilterProducts), null);                      
         }
 
-        
+        /// <summary>
+        /// Handles the Click event of the tsGetArchivedLists control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void tsGetArchivedLists_Click(object sender, EventArgs e)
+        {
+            if (this.CurrentUser == null)
+            {
+                this.ShowMessage("יש להתחבר כמשתמש רשום על מנת לטעון רשימות");
+                return;
+            }
+            List<ShopList> savedLists = this._logicsService.GetArchivedLists(this.CurrentUser);
+            if (savedLists.Count == 0)
+            {
+                this.ShowMessage("לא נמצאו רשימות שמורות עבור משתמש נוכחי.");
+            }
+            else
+            {
+                SelectShoppingList frmGetShoplist = new SelectShoppingList(savedLists);
+                ControlEffects.Animate(frmGetShoplist, ControlEffects.Effect.Roll, 150, 180);
+
+                if (frmGetShoplist.ShowDialog() == DialogResult.OK)
+                {
+                    this.MatchGuiToShoplist(frmGetShoplist.SelectedList);
+                }
+            }
+        }
 
         /// <summary>
         /// Handles the CheckedChanged event of the chbCheckAll control.
@@ -855,10 +951,7 @@ namespace ShopSmart.Client
                     cllQuant.Value = 1;
                 }
             }
-            else if (this.gvProducts.Columns[e.ColumnIndex].IsDataBound) //If we left a bound row, it meanse the row is dirty, should be marked as such
-            {
-                row.Cells[this.clmDirty.Index].Value = true;
-            }
+           
 
         }
 
@@ -1214,71 +1307,48 @@ namespace ShopSmart.Client
             }
 
         }
+
+        /// <summary>
+        /// From: http://stackoverflow.com/questions/6102241/how-can-i-add-moving-effects-to-my-controls-in-c
+        ///  Sample usage:
+        ///  private void button2_Click(object sender, EventArgs e)
+        ///  {
+        ///      Util.Animate(button1, Util.Effect.Slide, 150, 180);
+        ///  }
+        /// </summary>
+        public static class ControlEffects
+        {
+            public enum Effect { Roll, Slide, Center, Blend }
+
+            public static bool Animate(Control ctl, Effect effect, int msec, int angle)
+            {
+                int flags = effmap[(int)effect];
+                if (ctl.Visible) { flags |= 0x10000; angle += 180; }
+                else
+                {
+                    if (ctl.TopLevelControl == ctl) flags |= 0x20000;
+                    else if (effect == Effect.Blend) throw new ArgumentException();
+                }
+                flags |= dirmap[(angle % 360) / 45];
+                bool ok = AnimateWindow(ctl.Handle, msec, flags);
+                //if (!ok) throw new Exception("Animation failed");
+                ctl.Visible = !ctl.Visible;
+                return ok;
+            }
+
+            private static int[] dirmap = { 1, 5, 4, 6, 2, 10, 8, 9 };
+            private static int[] effmap = { 0, 0x40000, 0x10, 0x80000 };
+
+            [DllImport("user32.dll")]
+            private static extern bool AnimateWindow(IntPtr handle, int msec, int flags);
+        }
+
         #endregion
-
-        private void tsGetArchivedLists_Click(object sender, EventArgs e)
-        {
-            if (this.CurrentUser == null)
-            {
-                this.ShowMessage("יש להתחבר כמשתמש רשום על מנת לטעון רשימות");
-                return;
-            }
-             List<ShopList> savedLists = this._logicsService.GetArchivedLists(this.CurrentUser);
-             if (savedLists.Count == 0)
-             {
-                 this.ShowMessage("לא נמצאו רשימות שמורות עבור משתמש נוכחי.");
-             }
-             else
-             {
-                 SelectShoppingList frmGetShoplist = new SelectShoppingList(savedLists);
-                 if (frmGetShoplist.ShowDialog() == DialogResult.OK)
-                 {
-                     this.MatchGuiToShoplist(frmGetShoplist.SelectedList);
-                 }
-             }
-        }
-
-        private void MatchGuiToShoplist(ShopList shopList)
-        {
-            List<KeyValuePair<int,int>> quantityByProductIds = shopList.ShoplistItems.Select(si => new KeyValuePair<int,int>(si.ProductId,si.Quantity)).ToList();
-            for (int i = 0; i < this.gvProducts.Rows.Count; i++)            
-            {
-                DataGridViewRow row = this.gvProducts.Rows[i];
-                int productId = (int)row.Cells[DataTableConstans.COL_NAME_ID].Value;
-                //get the quantiny and product Id of this row
-                KeyValuePair<int, int> currPriceByProduct = quantityByProductIds.Where(pair => pair.Key == productId).FirstOrDefault();
-                bool isProductInList =currPriceByProduct.Key > 0; ;
-                //set values in grid view
-                gvProducts.Rows[i].Cells[clmToBuy.Name].Value = isProductInList;
-                gvProducts.Rows[i].Cells[this.clmQuantity.Name].Value = isProductInList ? currPriceByProduct.Value.ToString() : String.Empty;
-                
-                
-            }
-        }
-
-        /// <summary>
-        /// Shows the message.
-        /// </summary>
-        /// <param name="text">The text.</param>
-        private DialogResult ShowMessage(string text)
-        {
-            return this.ShowMessage(this, text, String.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        /// <summary>
-        /// Shows the message.
-        /// </summary>
-        /// <param name="owner">The owner.</param>
-        /// <param name="text">The text.</param>
-        /// <param name="caption">The caption.</param>
-        /// <param name="buttons">The buttons.</param>
-        /// <param name="icon">The icon.</param>
-        private DialogResult ShowMessage(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
-        {
-            return MessageBox.Show(owner,text,caption,buttons);
-        }
 
        
 
+        
+       
 
     }
 

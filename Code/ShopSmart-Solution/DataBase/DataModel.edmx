@@ -8,6 +8,7 @@
         <EntityContainer Name="ShopSmartModelStoreContainer">
           <EntitySet Name="Categories" EntityType="ShopSmartModel.Store.Categories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CategorySorts" EntityType="ShopSmartModel.Store.CategorySorts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Commercials" EntityType="ShopSmartModel.Store.Commercials" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Customers" EntityType="ShopSmartModel.Store.Customers" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Products" EntityType="ShopSmartModel.Store.Products" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ShoplistItems" EntityType="ShopSmartModel.Store.ShoplistItems" store:Type="Tables" Schema="dbo" />
@@ -56,6 +57,10 @@
             <End Role="Supermarkets" EntitySet="Supermarkets" />
             <End Role="CategorySorts" EntitySet="CategorySorts" />
           </AssociationSet>
+          <AssociationSet Name="FK_Commercials_Products" Association="ShopSmartModel.Store.FK_Commercials_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Commercials" EntitySet="Commercials" />
+          </AssociationSet>
           <AssociationSet Name="FK_Customers_UserTypes" Association="ShopSmartModel.Store.FK_Customers_UserTypes">
             <End Role="UserTypes" EntitySet="UserTypes" />
             <End Role="Customers" EntitySet="Customers" />
@@ -98,6 +103,14 @@
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="SupermarketId" Type="int" Nullable="false" />
           <Property Name="SortValue" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Commercials">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Image" Type="image" Nullable="false" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -245,6 +258,18 @@
             </Principal>
             <Dependent Role="CategorySorts">
               <PropertyRef Name="SupermarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Commercials_Products">
+          <End Role="Products" Type="ShopSmartModel.Store.Products" Multiplicity="1" />
+          <End Role="Commercials" Type="ShopSmartModel.Store.Commercials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commercials">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -450,6 +475,11 @@
             <End Role="UserType" EntitySet="UserTypes" />
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
+          <EntitySet Name="Commercials" EntityType="ShopSmartModel.Commercial" />
+          <AssociationSet Name="FK_Commercials_Products" Association="ShopSmartModel.FK_Commercials_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Commercial" EntitySet="Commercials" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetProductsBySupermarkrt_Result">
           <Property Name="Id" Type="Int32" Nullable="false" />
@@ -508,6 +538,7 @@
           <NavigationProperty Name="Category" Relationship="ShopSmartModel.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="ShoplistItems" Relationship="ShopSmartModel.FK_ItemsToBuy_Products" FromRole="Products" ToRole="ShoplistItems" />
           <Property Type="Guid" Name="guid" Nullable="false" />
+          <NavigationProperty Name="Commercials" Relationship="ShopSmartModel.FK_Commercials_Products" FromRole="Product" ToRole="Commercial" />
         </EntityType>
         <EntityType Name="ShoplistItem">
           <Key>
@@ -725,6 +756,27 @@
               <PropertyRef Name="UserType" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Commercial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <Property Type="Binary" Name="Image" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Product" Relationship="ShopSmartModel.FK_Commercials_Products" FromRole="Commercial" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Commercials_Products">
+          <End Type="ShopSmartModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="ShopSmartModel.Commercial" Role="Commercial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commercial">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>        
       </Schema>
     </edmx:ConceptualModels>
@@ -896,6 +948,15 @@
             <EntityTypeMapping TypeName="ShopSmartModel.UserType">
               <MappingFragment StoreEntitySet="UserTypes">
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Commercials">
+            <EntityTypeMapping TypeName="ShopSmartModel.Commercial">
+              <MappingFragment StoreEntitySet="Commercials">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

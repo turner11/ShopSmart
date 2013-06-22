@@ -318,5 +318,15 @@ namespace ShopSmart.Dal
             List<ShopList> savedLists = this._db.ShopLists.Where(sl => sl.Customer.Id == customer.Id).ToList();
             return savedLists;
         }
+
+        /// <summary>
+        /// Gets the commecials for the specified products.
+        /// </summary>
+        /// <param name="productsIds">The selected products ids.</param>
+        /// <returns></returns>
+        public List<Commercial> GetCommecialsForProducts(List<int> productsIds)
+        {
+            return this._db.Commercials.Where(com => productsIds.Contains(com.ProductId)).ToList(); ;
+        }
     }
 }

@@ -24,6 +24,8 @@
         <AssociationConnector Association="ShopSmartModel.FK_ShopLists_Supermarkets" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ShopSmartModel.UserType" Width="1.5" PointX="10.125" PointY="13.375" />
         <AssociationConnector Association="ShopSmartModel.FK_Customers_UserTypes" />
+        <EntityTypeShape EntityType="ShopSmartModel.Commercial" Width="1.5" PointX="13.75" PointY="11.75" />
+        <AssociationConnector Association="ShopSmartModel.FK_Commercials_Products" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

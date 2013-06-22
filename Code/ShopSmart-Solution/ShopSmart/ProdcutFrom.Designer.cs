@@ -38,6 +38,7 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnEditCategory = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnEditComercials = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupPrice)).BeginInit();
             this.SuspendLayout();
@@ -47,25 +48,27 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
             this.tableLayoutPanel1.Controls.Add(this.lblProductName, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblPrice, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblCategory, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.txbProductName, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.nupPrice, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.cmbCategory, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnOk, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.btnEditCategory, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnCancel, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnOk, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.btnCancel, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.btnEditCategory, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnEditComercials, 2, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(346, 123);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(346, 147);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // lblProductName
@@ -126,7 +129,7 @@
             // btnOk
             // 
             this.btnOk.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnOk.Location = new System.Drawing.Point(152, 93);
+            this.btnOk.Location = new System.Drawing.Point(152, 119);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(91, 23);
             this.btnOk.TabIndex = 6;
@@ -137,8 +140,7 @@
             // btnEditCategory
             // 
             this.btnEditCategory.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnEditCategory.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnEditCategory.Location = new System.Drawing.Point(21, 59);
+            this.btnEditCategory.Location = new System.Drawing.Point(159, 89);
             this.btnEditCategory.Name = "btnEditCategory";
             this.btnEditCategory.Size = new System.Drawing.Size(108, 23);
             this.btnEditCategory.TabIndex = 7;
@@ -150,7 +152,7 @@
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(21, 93);
+            this.btnCancel.Location = new System.Drawing.Point(21, 119);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(108, 23);
             this.btnCancel.TabIndex = 7;
@@ -158,13 +160,24 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // btnEditComercials
+            // 
+            this.btnEditComercials.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnEditComercials.Location = new System.Drawing.Point(21, 89);
+            this.btnEditComercials.Name = "btnEditComercials";
+            this.btnEditComercials.Size = new System.Drawing.Size(108, 23);
+            this.btnEditComercials.TabIndex = 7;
+            this.btnEditComercials.Text = "ערוך פרסומות...";
+            this.btnEditComercials.UseVisualStyleBackColor = true;
+            this.btnEditComercials.Click += new System.EventHandler(this.btnEditComercials_Click);
+            // 
             // ProductForm
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(346, 123);
+            this.ClientSize = new System.Drawing.Size(346, 147);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ProductForm";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -188,5 +201,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnEditCategory;
+        private System.Windows.Forms.Button btnEditComercials;
     }
 }

@@ -105,11 +105,23 @@
     <Compile Include="CategoryForm.Designer.cs">
       <DependentUpon>CategoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditCommercials.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditCommercials.Designer.cs">
+      <DependentUpon>EditCommercials.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PictureSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PictureSlider.Designer.cs">
+      <DependentUpon>PictureSlider.cs</DependentUpon>
     </Compile>
     <Compile Include="ProdcutFrom.cs">
       <SubType>Form</SubType>
@@ -140,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CategoryForm.resx">
       <DependentUpon>CategoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditCommercials.resx">
+      <DependentUpon>EditCommercials.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -215,6 +230,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShopSmart_Logo.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

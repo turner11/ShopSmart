@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.IO;
+using System.Drawing;
 
 
 namespace ShopSmart.Dal
@@ -253,6 +255,34 @@ namespace ShopSmart.Dal
         {
             return String.Format("UserName: '{0}'; Type: '{1}'",this.UserName,this.UserType);
         }
+    }
+
+    public partial class Commercial
+    {
+        public byte[] imageToByteArray(Image image)
+        {
+            MemoryStream ms = new MemoryStream();
+            image.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            return ms.ToArray();
+        }
+
+        public Image byteArrayToImage(byte[] byteArray)
+        {
+            MemoryStream ms = new MemoryStream(byteArray);
+            Image returnImage = System.Drawing.Image.FromStream(ms);
+            return returnImage;
+        }
+
+        public Image GetImage()
+        {
+            return this.byteArrayToImage(this.Image);
+        }
+
+        public void SetImage(Image imageIn)
+        {
+            this.Image = this.imageToByteArray(imageIn);
+        }
+        
     }
 
     /// <summary>

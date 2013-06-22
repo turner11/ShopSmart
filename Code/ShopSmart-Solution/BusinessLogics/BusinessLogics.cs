@@ -251,5 +251,15 @@ namespace ShopSmart.Bl
         {
             return this._db.GetArchivedLists(customer);
         }
+
+        /// <summary>
+        /// Gets the commecials for the specified products.
+        /// </summary>
+        /// <param name="productsIds">The selected products ids.</param>
+        /// <returns></returns>
+        public List<Commercial> GetCommecialsForProducts(List<int> productsIds)
+        {
+            return this._db.GetCommecialsForProducts(productsIds);
+        }
     }
 }
