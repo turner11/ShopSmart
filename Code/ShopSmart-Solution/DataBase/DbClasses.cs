@@ -65,7 +65,7 @@ namespace ShopSmart.Dal
     /// <summary>
     /// An extension for the category ef entity
     /// </summary>
-    public partial class Category
+    public partial class Category 
     {
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

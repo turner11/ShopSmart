@@ -12,7 +12,7 @@ namespace ShopSmart.Dal
     using System;
     using System.Collections.Generic;
     
-    public partial class Supermarket
+    public partial class Supermarket 
     {
         public Supermarket()
         {

@@ -91,6 +91,7 @@
     <Compile Include="GetProductsBySupermarkrt_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IDataBase.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

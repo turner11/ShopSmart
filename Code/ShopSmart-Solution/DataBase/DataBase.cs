@@ -12,7 +12,7 @@ namespace ShopSmart.Dal
     /// <summary>
     /// Hanles access to Data base and data manipulation
     /// </summary>
-    public class DataBase:IDisposable
+    public class DataBase:IDisposable, ShopSmart.Dal.IDataBase
     {
         
         /// <summary>

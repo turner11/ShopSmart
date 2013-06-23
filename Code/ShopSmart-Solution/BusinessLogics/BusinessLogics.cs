@@ -24,7 +24,7 @@ namespace ShopSmart.Bl
         /// <summary>
         /// The data base that we are working against
         /// </summary>
-        DataBase _db;
+        IDataBase _db;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SmartShopLogics"/> class.
@@ -40,7 +40,7 @@ namespace ShopSmart.Bl
         /// Initializes a new instance of the <see cref="SmartShopLogics"/> class.
         /// </summary>
         /// <param name="db">The database object.</param>
-        public SmartShopLogics(DataBase db)
+        public SmartShopLogics(IDataBase db)
         {
             //Initializing the DAL
             this._db = db;
