@@ -28,7 +28,8 @@ namespace ShopSmart.Client
         const Keys NEW_KEY = Keys.Control | Keys.N;
         const Keys EDIT_KEY = Keys.Control | Keys.E;
         const Keys DELETE_KEY = Keys.Control | Keys.D;
-        const Keys SORT_KEY = Keys.Control | Keys.S; 
+        const Keys SORT_KEY = Keys.Control | Keys.S;
+        const Keys FILTER_KEY = Keys.Control | Keys.F; 
         #endregion
 
         #region Data Members
@@ -105,9 +106,20 @@ namespace ShopSmart.Client
 
         }
 
+        /// <summary>
+        /// Handles commercials slide
+        /// </summary>
+        private PictureSliderProccessor psCommercials;
+           
+
         private Timer _tmrCommercials;
+#if !DEBUG
         private const int INTERVAL_CHECK_FOR_COMMERCIALS = 5000;
         private const int INTERVAL_SLIDE_COMMERCIALS = 5000;
+#else
+        private const int INTERVAL_CHECK_FOR_COMMERCIALS = 1000;
+        private const int INTERVAL_SLIDE_COMMERCIALS = 1000;
+#endif
 
         #endregion
 
@@ -122,6 +134,7 @@ namespace ShopSmart.Client
             this.SetAllCategoriesdCheckState(true);
             this.MatchGuiToUserType(this.CurrentUserType);
             this.rdbShowUserControls.Checked = true;
+            this.psCommercials = new ShopSmart.Client.PictureSliderProccessor();
 
             this.InitCommercials();
         }
@@ -178,6 +191,7 @@ namespace ShopSmart.Client
                 {
                     col.HeaderText = dataCol.Caption;
                 }
+                col.SortMode = DataGridViewColumnSortMode.Automatic;
                 
             }
 
@@ -259,7 +273,13 @@ namespace ShopSmart.Client
         private static DataTable BuildProductsTableStructure()
         {
             DataTable dt = new DataTable();
-
+            /*To Buy*/
+            DataColumn colToBuy = new DataColumn(DataTableConstans.COL_NAME_TO_BUY, typeof(bool));           
+            colToBuy.DefaultValue = false;
+            dt.Columns.Add(colToBuy);
+            /*Quantity*/
+            DataColumn colQuantity = new DataColumn(DataTableConstans.COL_NAME_QUANTITY, typeof(string));            
+            dt.Columns.Add(colQuantity);
             /*Id*/
             DataColumn colId = new DataColumn(DataTableConstans.COL_NAME_ID, typeof (int));
             dt.Columns.Add(colId);
@@ -352,8 +372,8 @@ namespace ShopSmart.Client
 
             foreach (DataGridViewRow currRow in this.gvProducts.Rows)
             {
-                bool toBuy = Convert.ToBoolean( currRow.Cells[this.clmToBuy.Index].Value);
-                DataGridViewCell cllQuant = currRow.Cells[this.clmQuantity.Index];
+                bool toBuy = Convert.ToBoolean( currRow.Cells[DataTableConstans.COL_NAME_TO_BUY].Value);
+                DataGridViewCell cllQuant = currRow.Cells[DataTableConstans.COL_NAME_QUANTITY];
                 int quantity;
                 if (toBuy && cllQuant.Value != null && int.TryParse(cllQuant.Value.ToString(),out quantity))
                 {
@@ -606,8 +626,12 @@ namespace ShopSmart.Client
             {
                 this.ExportSortedList();
             }
+            else if(keyData == ClientForm.FILTER_KEY)
+            {
+                this.txbFilter.Focus();
+            }
 
-
+            
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -738,8 +762,8 @@ namespace ShopSmart.Client
                 KeyValuePair<int, int> currPriceByProduct = quantityByProductIds.Where(pair => pair.Key == productId).FirstOrDefault();
                 bool isProductInList = currPriceByProduct.Key > 0; ;
                 //set values in grid view
-                gvProducts.Rows[i].Cells[clmToBuy.Name].Value = isProductInList;
-                gvProducts.Rows[i].Cells[this.clmQuantity.Name].Value = isProductInList ? currPriceByProduct.Value.ToString() : String.Empty;
+                gvProducts.Rows[i].Cells[DataTableConstans.COL_NAME_TO_BUY].Value = isProductInList;
+                gvProducts.Rows[i].Cells[DataTableConstans.COL_NAME_QUANTITY].Value = isProductInList ? currPriceByProduct.Value.ToString() : String.Empty;
 
 
             }
@@ -771,14 +795,31 @@ namespace ShopSmart.Client
         /// </summary>
         private void InitCommercials()
         {
-            this.psCommercials = new PictureSlider(null, INTERVAL_SLIDE_COMMERCIALS);
+            this.psCommercials = new PictureSliderProccessor(null, INTERVAL_SLIDE_COMMERCIALS);
 
             this._tmrCommercials = new Timer();
             this._tmrCommercials.Interval = INTERVAL_CHECK_FOR_COMMERCIALS;
             this._tmrCommercials.Tick += _tmrCommercials_Tick;
+            this.psCommercials.OnImageChanged += psCommercials_OnImageChanged;
             this._tmrCommercials.Start();
-
         }
+
+        /// <summary>
+        /// Sets the commercial image (thread safe).
+        /// </summary>
+        /// <param name="image">The image.</param>
+        private void SetCommercialImage(Image image)
+        {
+            if (this.pbCommercials.InvokeRequired)
+            {
+                this.pbCommercials.BeginInvoke(new Action<Image>(this.SetCommercialImage), new object[] { image });
+            }
+            else
+            {
+                this.pbCommercials.Image = image;
+            }
+        }
+        
 
         
         #endregion
@@ -787,7 +828,7 @@ namespace ShopSmart.Client
 
         void _tmrCommercials_Tick(object sender, EventArgs e)
         {
-            List<int> selectedProductsIds = this.GetSelectedProductsIds();
+           List<int> selectedProductsIds = this.GetSelectedProductsIds();
             List<Commercial> commercials = this._logicsService.GetCommecialsForProducts(selectedProductsIds);
             this.psCommercials.Images.Clear();
             foreach (Commercial com in commercials)
@@ -795,13 +836,31 @@ namespace ShopSmart.Client
                 this.psCommercials.Images.Add(com.GetImage());
             }
             
+
+            
         }
+
+        void psCommercials_OnImageChanged(object sender, ImageArgs e)
+        {
+            Debug.WriteLine(">>>>Picture changed");
+            this.SetCommercialImage(e.Image);
+            //Form f = new Form();
+            //PictureBox p = new PictureBox();
+            //p.Image = this.psCommercials.Image;
+            //f.Controls.Add(p);
+            //p.Dock = DockStyle.Fill;
+            //f.WindowState = FormWindowState.Maximized;
+            
+            //f.Show();
+        }
+
+        
 
         private List<int> GetSelectedProductsIds()
         {
             List<DataGridViewRow> selectedRows = this.gvProducts.Rows
                                                 .Cast<DataGridViewRow>()
-                                                .Where(r => Convert.ToBoolean(r.Cells[this.clmToBuy.Index].Value)).ToList();
+                                                .Where(r => Convert.ToBoolean(r.Cells[DataTableConstans.COL_NAME_TO_BUY].Value ?? false)).ToList();
 
             return selectedRows.Select(r => ((Product)r.Cells[DataTableConstans.COL_NAME_PRODUCT].Value).Id).ToList();
         }
@@ -914,11 +973,11 @@ namespace ShopSmart.Client
         private void gvProducts_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewRow row = this.gvProducts.Rows[e.RowIndex];
-            DataGridViewCell cllQuant = row.Cells[this.clmQuantity.Index];
-            var cllToBuy = row.Cells[this.clmToBuy.Index] as DataGridViewCheckBoxCell;
+            DataGridViewCell cllQuant = row.Cells[DataTableConstans.COL_NAME_QUANTITY];
+            var cllToBuy = row.Cells[DataTableConstans.COL_NAME_TO_BUY] as DataGridViewCheckBoxCell;
 
 
-            if (e.ColumnIndex == this.clmQuantity.Index)
+            if (e.ColumnIndex == this.gvProducts.Columns[DataTableConstans.COL_NAME_QUANTITY].Index)
             {
                 #region Remove to buy mark if quantity is 0
                 
@@ -938,7 +997,7 @@ namespace ShopSmart.Client
                 } 
                 #endregion
             }
-            else if (e.ColumnIndex == this.clmToBuy.Index)
+            else if (e.ColumnIndex == this.gvProducts.Columns[DataTableConstans.COL_NAME_TO_BUY].Index)
             {
                 bool toBuy = cllToBuy != null && Convert.ToBoolean(cllToBuy.Value);
                 if (!toBuy)
@@ -963,7 +1022,7 @@ namespace ShopSmart.Client
         private void gvProducts_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             int colIdx = this.gvProducts.CurrentCell.ColumnIndex;
-            if (colIdx == this.clmQuantity.Index)
+            if (colIdx == this.gvProducts.Columns[DataTableConstans.COL_NAME_QUANTITY].Index)
             {
                 //bind to the text box...
                 TextBox cellTb = e.Control as TextBox;
@@ -1232,6 +1291,10 @@ namespace ShopSmart.Client
 	        #endregion
 
             #region Constants
+            public const string COL_NAME_TO_BUY = "To Buy";
+
+            public const string COL_NAME_QUANTITY = "Quantity";
+
             public const string COL_NAME_ID = "Id";
 
             public const string COL_NAME_PRODUCTNAME = "ProductName";
@@ -1257,7 +1320,9 @@ namespace ShopSmart.Client
                 DataTableConstans.ColHeaderByName = new Dictionary<string, string>
                     {
                        #region Populate
-		                 {DataTableConstans.COL_NAME_ID, "Id"},
+                        {DataTableConstans.COL_NAME_TO_BUY, "לקנות?"},
+                        {DataTableConstans.COL_NAME_QUANTITY, "כמות"},
+		                {DataTableConstans.COL_NAME_ID, "Id"},
                         {DataTableConstans.COL_NAME_PRODUCTNAME, "מוצר"},
                         {DataTableConstans.COL_NAME_NOTES, "הערות"},
                         {DataTableConstans.COL_NAME_PRICE, "מחיר"},
@@ -1345,11 +1410,7 @@ namespace ShopSmart.Client
 
         #endregion
 
-       
-
-        
-       
-
+   
     }
 
   

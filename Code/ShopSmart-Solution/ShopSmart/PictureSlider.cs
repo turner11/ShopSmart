@@ -11,8 +11,17 @@ using System.Collections.ObjectModel;
 
 namespace ShopSmart.Client
 {
-    public partial class PictureSlider : PictureBox
+    public partial class PictureSliderProccessor 
     {
+        public event EventHandler<ImageArgs> OnImageChanged;
+
+        Image _currentImage;
+
+        public Image CurrentImage
+        {
+            get { return _currentImage; }
+        }
+
         ObservableCollection<Image> _images;
         /// <summary>
         /// Gets the images.
@@ -43,7 +52,7 @@ namespace ShopSmart.Client
         }
 
         Timer _tmrSloder;
-        public PictureSlider(IList<Image> images,int slideInterval)
+        public PictureSliderProccessor(IList<Image> images,int slideInterval)
         {
             images = images ?? new List<Image>();
             InitializeComponent();
@@ -67,7 +76,7 @@ namespace ShopSmart.Client
         }
 
         //For designer
-        public PictureSlider()
+        public PictureSliderProccessor()
             : this(null, int.MaxValue)
         {
         }
@@ -75,19 +84,20 @@ namespace ShopSmart.Client
         void Images_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             bool hasImages = this._images.Count > 0;
-            this.Image = hasImages ? this._images[0]: null ;
+            this._currentImage = hasImages ? this._images[0]: null ;
             this._tmrSloder.Enabled = hasImages;
         }
 
         void _tmrSloder_Tick(object sender, EventArgs e)
         {
             int imageTodiplayIdx = 0;
-            Image displyedImage = this.Image;
+            Image displyedImage = this._currentImage;
             if (displyedImage != null && this._images.Count >1)
             {
-                 imageTodiplayIdx = (this._images.IndexOf(displyedImage) + 1) % (this._images.Count - 1);
+                int currentIndex = this._images.IndexOf(displyedImage);
+                 imageTodiplayIdx = (currentIndex+1) % (this._images.Count);
             }
-            if (this._images.Count >0)
+            if (this._images.Count > imageTodiplayIdx)
             {
                 Image ImageToDisplay = this._images[imageTodiplayIdx];
                 this.SetImage(ImageToDisplay);
@@ -98,14 +108,14 @@ namespace ShopSmart.Client
 
         private void SetImage(Image ImageToDisplay)
         {
-            if (this.InvokeRequired)
+
+            this._currentImage = ImageToDisplay;
+
+            if (this.OnImageChanged != null)
             {
-                this.BeginInvoke(new Action<Image>(this.SetImage), new object[] { ImageToDisplay });
+                this.OnImageChanged(this, new ImageArgs(this._currentImage));
             }
-            else
-            {
-                this.Image = ImageToDisplay;
-            }
+
         }
 
         /// <summary>
@@ -122,5 +132,23 @@ namespace ShopSmart.Client
             
         }
 
+       
+
     }
+
+    public class ImageArgs:EventArgs
+    {
+        Image _image;
+
+        public Image Image
+        {
+            get { return _image; }
+        }
+
+        public ImageArgs(Image img)
+        {
+            this._image = img;
+        }
+    }
+
 }
