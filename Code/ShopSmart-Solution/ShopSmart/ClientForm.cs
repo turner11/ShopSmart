@@ -896,7 +896,7 @@ namespace ShopSmart.Client
             else
             {
                 SelectShoppingList frmGetShoplist = new SelectShoppingList(savedLists);
-                ControlEffects.Animate(frmGetShoplist, ControlEffects.Effect.Roll, 150, 180);
+                //ControlEffects.Animate(frmGetShoplist, ControlEffects.Effect.Roll, 150, 180);
 
                 if (frmGetShoplist.ShowDialog() == DialogResult.OK)
                 {
