@@ -1,0 +1,608 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7D81F27D-D58F-4224-A2C7-08DFDE295300}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ShopSmart.Web</RootNamespace>
+    <AssemblyName>ShopSmart.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.jQuery">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.1.8.2\lib\net40\AspNet.ScriptManager.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.jQuery.UI.Combined">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.UI.Combined.1.8.24\lib\net40\AspNet.ScriptManager.jQuery.UI.Combined.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.2\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.1.4.12333\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.1.4.12333\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.1.4.12333\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.1.4.12333\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.1.4.12333\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Membership.OpenAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.Membership.OpenAuth.1.0.1\lib\net40\Microsoft.AspNet.Membership.OpenAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.0\lib\net40\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Default.aspx" />
+    <Content Include="Jquery\css\start\images\animated-overlay.gif" />
+    <Content Include="Jquery\css\start\images\ui-bg_flat_55_999999_40x100.png" />
+    <Content Include="Jquery\css\start\images\ui-bg_flat_75_aaaaaa_40x100.png" />
+    <Content Include="Jquery\css\start\images\ui-bg_glass_45_0078ae_1x400.png" />
+    <Content Include="Jquery\css\start\images\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="Jquery\css\start\images\ui-bg_glass_75_79c9ec_1x400.png" />
+    <Content Include="Jquery\css\start\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="Jquery\css\start\images\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
+    <Content Include="Jquery\css\start\images\ui-bg_gloss-wave_75_2191c0_500x100.png" />
+    <Content Include="Jquery\css\start\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Jquery\css\start\images\ui-icons_0078ae_256x240.png" />
+    <Content Include="Jquery\css\start\images\ui-icons_056b93_256x240.png" />
+    <Content Include="Jquery\css\start\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Jquery\css\start\images\ui-icons_e0fdff_256x240.png" />
+    <Content Include="Jquery\css\start\images\ui-icons_f5e175_256x240.png" />
+    <Content Include="Jquery\css\start\images\ui-icons_f7a50d_256x240.png" />
+    <Content Include="Jquery\css\start\images\ui-icons_fcd113_256x240.png" />
+    <Content Include="Jquery\css\start\jquery-ui-1.10.3.custom.css" />
+    <Content Include="Jquery\css\start\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="Jquery\js\jquery-1.9.1.js" />
+    <Content Include="Jquery\js\jquery-ui-1.10.3.custom.js" />
+    <Content Include="Jquery\js\jquery-ui-1.10.3.custom.min.js" />
+    <Content Include="Pages\About.aspx" />
+    <Content Include="Account\Login.aspx" />
+    <Content Include="Account\Manage.aspx" />
+    <Content Include="Account\OpenAuthProviders.ascx" />
+    <Content Include="Account\Register.aspx" />
+    <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="Pages\Contact.aspx" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
+    <Content Include="packages.config" />
+    <Content Include="GenericHandlers\GetProductsTable.ashx" />
+    <Content Include="Scripts\bootstrap\img\Thumbs.db" />
+    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Scripts\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Scripts\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.js" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Scripts\Home.js" />
+    <Content Include="Scripts\Infragistics\i18n\infragistics-bg.js" />
+    <Content Include="Scripts\Infragistics\i18n\infragistics-de.js" />
+    <Content Include="Scripts\Infragistics\i18n\infragistics-es.js" />
+    <Content Include="Scripts\Infragistics\i18n\infragistics-fr.js" />
+    <Content Include="Scripts\Infragistics\i18n\infragistics-ja.js" />
+    <Content Include="Scripts\Infragistics\i18n\infragistics-ru.js" />
+    <Content Include="Scripts\Infragistics\infragistics.js" />
+    <Content Include="Scripts\Infragistics\infragistics.loader.js" />
+    <Content Include="Scripts\Infragistics\modernizr.min.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.datasource-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.datasource-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.datasource-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.datasource-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.datasource-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.datasource-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.shared-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.shared-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.shared-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.shared-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.shared-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.shared-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.templating-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.templating-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.templating-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.templating-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.templating-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.templating-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.combo-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.combo-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.combo-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.combo-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.combo-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.combo-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.dialog-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.dialog-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.dialog-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.dialog-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.dialog-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.dialog-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.editors-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.editors-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.editors-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.editors-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.editors-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.editors-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.grid-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.grid-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.grid-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.grid-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.grid-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.grid-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.tree-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.tree-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.tree-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.tree-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.tree-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.tree-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.validator-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.validator-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.validator-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.validator-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.validator-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\infragistics.ui.validator-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-af.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-ar.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-az.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-bg.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-bs.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-ca.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-cs.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-da.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-de.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-el.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-en-GB.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-en.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-es.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-et.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-fa.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-fi.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-fo.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-fr-CH.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-fr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-he.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-hr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-hu.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-hy.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-i18n.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-id.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-is.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-it.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-ja.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-ko.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-lt.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-lv.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-ms.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-nl.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-no.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-pl.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-pt-BR.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-ro.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-ru.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-sk.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-sl.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-sq.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-sr-SR.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-sr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-sv.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-ta.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-th.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-tr.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-uk.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-vi.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-zh-CN.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-zh-HK.js" />
+    <Content Include="Scripts\Infragistics\modules\i18n\regional\infragistics.ui.regional-zh-TW.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.datasource.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.templating.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.combo.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.dialog.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.editors.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.columnmoving.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.featurechooser.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.filtering.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.framework.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.groupby.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.hiding.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.hierarchical.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.mergedcells.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.multicolumnheaders.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.paging.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.resizing.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.rowselectors.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.selection.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.sorting.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.summaries.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.tooltips.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.grid.updating.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.scroll.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.shared.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.tree.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.ui.validator.js" />
+    <Content Include="Scripts\Infragistics\modules\infragistics.util.js" />
+    <Content Include="Scripts\JqGrid\css\ellipsis-xbl.xml" />
+    <Content Include="Scripts\JqGrid\css\ui.jqgrid.css" />
+    <Content Include="Scripts\JqGrid\js\Changes.txt" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-ar.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-bg.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-bg1251.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-cat.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-cn.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-cs.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-da.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-de.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-dk.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-el.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-en.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-es.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-fa.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-fi.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-fr.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-gl.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-he.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-hr.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-hr1250.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-hu.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-id.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-is.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-it.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-ja.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-kr.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-lt.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-mne.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-nl.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-no.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-pl.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-pt-br.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-pt.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-ro.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-ru.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-sk.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-sr-latin.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-sr.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-sv.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-th.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-tr.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-tw.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-ua.js" />
+    <Content Include="Scripts\JqGrid\js\i18n\grid.locale-vi.js" />
+    <Content Include="Scripts\JqGrid\js\install.txt" />
+    <Content Include="Scripts\JqGrid\js\jquery-1.9.0.min.js" />
+    <Content Include="Scripts\JqGrid\js\jquery.jqGrid.min.js" />
+    <Content Include="Scripts\JqGrid\js\jquery.jqGrid.src.js" />
+    <Content Include="Scripts\JqGrid\plugins\grid.addons.js" />
+    <Content Include="Scripts\JqGrid\plugins\grid.postext.js" />
+    <Content Include="Scripts\JqGrid\plugins\grid.setcolumns.js" />
+    <Content Include="Scripts\JqGrid\plugins\jquery.contextmenu.js" />
+    <Content Include="Scripts\JqGrid\plugins\jquery.searchFilter.js" />
+    <Content Include="Scripts\JqGrid\plugins\jquery.tablednd.js" />
+    <Content Include="Scripts\JqGrid\plugins\searchFilter.css" />
+    <Content Include="Scripts\JqGrid\plugins\ui.multiselect.css" />
+    <Content Include="Scripts\JqGrid\plugins\ui.multiselect.js" />
+    <Content Include="Scripts\JqGrid\src\css\ellipsis-xbl.xml" />
+    <Content Include="Scripts\JqGrid\src\css\ui.jqgrid.css" />
+    <Content Include="Scripts\JqGrid\src\css\ui.multiselect.css" />
+    <Content Include="Scripts\JqGrid\src\grid.base.js" />
+    <Content Include="Scripts\JqGrid\src\grid.celledit.js" />
+    <Content Include="Scripts\JqGrid\src\grid.common.js" />
+    <Content Include="Scripts\JqGrid\src\grid.custom.js" />
+    <Content Include="Scripts\JqGrid\src\grid.filter.js" />
+    <Content Include="Scripts\JqGrid\src\grid.formedit.js" />
+    <Content Include="Scripts\JqGrid\src\grid.grouping.js" />
+    <Content Include="Scripts\JqGrid\src\grid.import.js" />
+    <Content Include="Scripts\JqGrid\src\grid.inlinedit.js" />
+    <Content Include="Scripts\JqGrid\src\grid.jqueryui.js" />
+    <Content Include="Scripts\JqGrid\src\grid.loader.js" />
+    <Content Include="Scripts\JqGrid\src\grid.subgrid.js" />
+    <Content Include="Scripts\JqGrid\src\grid.tbltogrid.js" />
+    <Content Include="Scripts\JqGrid\src\grid.treegrid.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-ar.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-bg.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-bg1251.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-cat.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-cn.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-cs.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-da.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-de.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-dk.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-el.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-en.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-es.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-fa.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-fi.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-fr.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-gl.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-he.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-hr.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-hr1250.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-hu.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-id.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-is.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-it.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-ja.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-kr.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-lt.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-mne.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-nl.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-no.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-pl.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-pt-br.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-pt.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-ro.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-ru.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-sk.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-sr-latin.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-sr.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-sv.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-th.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-tr.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-tw.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-ua.js" />
+    <Content Include="Scripts\JqGrid\src\i18n\grid.locale-vi.js" />
+    <Content Include="Scripts\JqGrid\src\jqDnR.js" />
+    <Content Include="Scripts\JqGrid\src\jqModal.js" />
+    <Content Include="Scripts\JqGrid\src\jquery.fmatter.js" />
+    <Content Include="Scripts\JqGrid\src\jquery.jqGrid.js" />
+    <Content Include="Scripts\JqGrid\src\JsonXml.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\Master.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\TableSorter\jquery.tablesorter.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Pages\Home.aspx" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="ViewSwitcher.ascx" />
+    <Content Include="Web.config" />
+    <Content Include="Site.Mobile.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Manage.aspx.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Manage.aspx.designer.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\OpenAuthProviders.ascx.cs">
+      <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\OpenAuthProviders.ascx.designer.cs">
+      <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\RegisterExternalLogin.aspx.cs">
+      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
+      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Pages\Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GenericHandlers\GetProductsTable.ashx.cs">
+      <DependentUpon>GetProductsTable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShopSmartWebLogics.cs" />
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.designer.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.designer.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\Web.config" />
+    <Content Include="Site.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogics\SmartShopLogics.csproj">
+      <Project>{b3a8eb56-47e3-4134-a05b-d11a7b9990a3}</Project>
+      <Name>SmartShopLogics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{81acc0eb-38fa-478f-aadf-5bae79dc00d7}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataBase\DataBase.csproj">
+      <Project>{3992a9a9-715a-4bd2-899d-e32835674316}</Project>
+      <Name>DataBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logger\Log.csproj">
+      <Project>{6cd02d01-c4de-4eb8-9fa4-7bb0716c11a1}</Project>
+      <Name>Log</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>59010</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:56365/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

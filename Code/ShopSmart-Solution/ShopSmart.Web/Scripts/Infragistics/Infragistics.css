@@ -1,0 +1,177 @@
+﻿a {
+    font: inherit;
+    color: inherit;
+    text-decoration: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font: 1em "Segoe UI",Helvetica,Tahoma,Arial,Verdana,sans-serif;
+    color: rgb(64, 64, 64);
+    text-decoration: none;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    font-size: 1.75em;
+    font-weight: normal;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+}
+
+h3 {
+    margin: .5em 0 0 0;
+    padding: 0;
+    font-size: 1.25em;
+}
+
+h4 {
+    margin: .5em 0 0 0;
+    padding: 0;
+    font-size: 1em;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.content-section {
+    margin: 0 0 1em 0;
+    width: inherit;
+}
+
+.contents {
+    background: rgb(229, 229, 229);
+    padding: .5em 1em 1em 1em;
+}
+
+.contents-list {
+    margin: .8em 0 0 0;
+    float: left;
+    min-width: 140px;
+    width: 33%;
+    max-width: 260px;
+}
+
+.contents-list-control {
+    font-weight: bold;
+    margin: 0 0 .8em 0;
+}
+
+.contents-list-sample {
+    font-weight: normal;
+}
+
+.contents-nav {
+    height: 280px;
+}
+
+    .contents-nav a {
+        font: inherit;
+        color: rgb(64, 64, 64);
+        text-decoration: none;
+    }
+
+    .contents-nav a:hover {
+        font: inherit;
+        color: rgb(128, 128, 128);
+        text-decoration: underline;
+    }
+
+.getting-started-section {
+    float: left;
+    margin: 0 1.5em 0 0;
+    width: 45%;
+    padding: 0 0 2em 0;
+}
+
+    .getting-started-section a {
+        font: inherit;
+        color: rgb(64, 64, 64);
+        text-decoration: underline;
+    }
+
+    .getting-started-section a:hover {
+        font: inherit;
+        color: rgb(128, 128, 128);
+        text-decoration: underline;
+    }
+
+.header {
+    color: rgb(256,256,256);
+}
+
+.header-button {
+    float: right;
+    padding: .5em;
+}
+
+.header-container {
+    margin: 0 0 1.5em 0;
+    background: rgb(0, 0, 0);
+    padding: .5em 0 .5em 0;
+    height: 40px;
+}
+
+    .header-container a {
+        font: inherit;
+        color: rgb(256,256,256);
+        text-decoration: none;
+    }
+
+    .header-container img {
+        float: left;
+    }
+
+.main {
+    margin: 0 auto 0 auto;
+    width: 1024px;
+}
+
+.main-contents {
+    margin: 0 0 0 150px;
+    /*min-width: 420px;*/
+}
+
+.productnav {
+    float: left;
+    margin: 0 1.5em 0 0;
+}
+
+    .productnav a {
+        font: inherit;
+        color: rgb(256,256,256);
+        text-decoration: none;
+    }
+
+.productnav-item {
+    background: rgb(128, 128, 128);
+    padding: .5em;
+    margin: 0 0 .5em 0;
+    color: rgb(256,256,256);
+    width: 120px;
+}
+
+.purchase {
+    background: #ff9900;
+    color: rgb(256,256,256);
+}
