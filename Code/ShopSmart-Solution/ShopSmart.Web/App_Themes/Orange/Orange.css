@@ -1,0 +1,44 @@
+﻿.header
+{
+  background-image:url("image/header.png");
+  color:Black;     
+  font-size:xx-large; 
+}
+table
+    {
+        width:100%;
+    }
+th
+    {
+        text-align:center;
+        font-family:Forte;
+        font-size:18px;
+     }
+.sides {width:10%;}
+.center { width:80%;}
+body
+{
+    background-color:Black;
+    color:White;
+    font-family: Times New Roman;
+    font-size:13px;
+}
+.footer
+{
+  background-image:url("image/header.png");
+  position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;     
+}
+.label
+{
+     font-family: Andalus; font-size: larger; text-transform: uppercase; 
+       color: #053585;text-align:right;position:absolute;right:10px;font-weight:bold;  
+}
+hr
+{
+    height: 2px;
+    color:#996633;
+    background-color:#996633;
+}

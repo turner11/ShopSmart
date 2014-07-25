@@ -117,17 +117,7 @@ namespace ShopSmart.Web
         internal static string GetProductsAsJson(int superMarketId)
         {
             List<Product> products = ShopSmartWebLogics.Products;
-            //DataTable dt = new DataTable();
-
-            //dt.Columns.Add("col1");
-            //dt.Columns.Add("col2");
-            //dt.Columns.Add("col3");
-            //dt.Rows.Add(new object[] { "a", "b", "c" });
-            //dt.Rows.Add(new object[] { "d", "e", "f" });
-
-            //string json = GetJsonFromProducts(products);
-
-
+            
             //Use anonymus types to display only what we want...
             var flatProducts = products.Select(p => new
                                 {
@@ -136,6 +126,8 @@ namespace ShopSmart.Web
                                     CategoryId = p.CategoryID,
                                     CategoryName = p.Category.Name,
                                     Price = p.Price ?? 0,
+                                    Quantity = 0
+                                    
                                 }
            );
 
@@ -144,29 +136,6 @@ namespace ShopSmart.Web
             return json;
         }
 
-        private static string GetJsonFromProducts(List<Product> products)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("[");
-            string template = "ProductId:{0}, ProductName:'{1}', CategoryId:{2}, CategoryName:'{3}', Price:{4}";
-            foreach (Product p in products)
-            {
-                sb.Append("{");
-                sb.Append(String.Format(template, p.Id, p.ProductName, p.CategoryID, p.Category.Name, p.Price ?? 0));
-                sb.Append("},");
-                if (products.IndexOf(p) > 3)
-                {
-                    break;
-                }
-            }
-                        //removing last comma
-            sb.Remove(sb.Length - 1, 1);
-            sb.Append("]");
-
-            return sb.ToString();
-        }
-
-       
         #endregion
     }
 }

@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" data-ng-app="demoApp">
+<head>
+
+    <title>Shop smart - the smart way to shop!</title>
+</head>
+<body data-ng-controller="SimpleController">
+    <div class="container">
+        Name:
+    <br />
+        <input type="text" data-ng-model="nameText" />{{ nameText }}
+    </div>
+    <div class="container" >
+        <h3>Looping:</h3>
+        <br />
+        <ul>
+            <li data-ng-repeat="cust in customers">{{ cust.name | uppercase }}: {{ cust.age }}</li>
+        </ul>
+
+    </div>
+
+     <div class="container" >
+        <h3>Looping 2:</h3>
+        <br />
+        <ul>
+            <li data-ng-repeat="cust in customers | filter:nameText | orderBy:'name'">{{  cust.name  | filter:nameText }}</li>
+        </ul>
+
+            
+
+    </div>
+    <script src="Scripts/AngularJS/angular.min.js"></script>
+    <script src="Scripts/ngHome.js"></script>
+
+</body>
+</html>

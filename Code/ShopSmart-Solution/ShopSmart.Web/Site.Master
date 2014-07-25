@@ -1,11 +1,11 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ShopSmart.Web.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ShopSmart.Web.SiteMaster" EnableTheming="true" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
     <title><%: Page.Title %> - My ASP.NET Application</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Jquery/css/start/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css" />
     <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <asp:PlaceHolder runat="server">
@@ -18,13 +18,8 @@
         <link href="<%: ResolveUrl("~/Scripts/bootstrap/css/bootstrap.css") %>" rel="stylesheet" type="text/css" />
         <link href="<%: ResolveUrl("~/Scripts/bootstrap/css/bootstrap-responsive.css") %>" rel="stylesheet" type="text/css" />
 
-      
-
-        
-
-       <%--<script type="text/javascript" src="~/Scripts/TableSorter/jquery.tablesorter.min.js"></script>--%>
-        <%--<script type="text/javascript" src="<%: ResolveUrl("~/Scripts/TableSorter/jquery.tablesorter.min.js")%>"></script>--%>
-    </asp:PlaceHolder>`
+    </asp:PlaceHolder>
+    `
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
 
@@ -80,7 +75,7 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title"><a runat="server" href="~/">your logo here</a></p>
+                    <asp:Image ID="imgLogo" AlternateText="ShopSmart" runat="server" />
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -101,8 +96,8 @@
                             </LoggedInTemplate>
                         </asp:LoginView>
                     </section>
-                    <nav>
-                        <ul id="menu">
+                    <nav >
+                        <ul id="menu" class="ui-tabs-nav">
                             <li><a runat="server" href="~/">Home</a></li>
                             <li><a runat="server" href="~/About">About</a></li>
                             <li><a runat="server" href="~/Contact">Contact</a></li>
@@ -111,7 +106,7 @@
                 </div>
             </div>
         </header>
-        <div id="body">
+        <div id="body" dir="rtl">
             <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
             <section class="content-wrapper main-content clear-fix">
                 <asp:ContentPlaceHolder runat="server" ID="MainContent" />

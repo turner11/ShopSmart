@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartShopClient", "ShopSmart\SmartShopClient.csproj", "{0CB6B70F-7FA1-4719-9E44-ACBB563C43DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartShopLogics", "BusinessLogics\SmartShopLogics.csproj", "{B3A8EB56-47E3-4134-A05B-D11A7B9990A3}"
@@ -31,10 +33,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Logger\Log.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSmart.Web", "ShopSmart.Web\ShopSmart.Web.csproj", "{7D81F27D-D58F-4224-A2C7-08DFDE295300}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShopSmart.Web2", "http://localhost:59700", "{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_59700"
+		Debug.AspNetCompiler.PhysicalPath = "ShopSmart.Web2\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59700\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_59700"
+		Release.AspNetCompiler.PhysicalPath = "ShopSmart.Web2\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59700\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "ShopSmart.Web2\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSmart.Web.MVC", "ShopSmart.Web.MVC\ShopSmart.Web.MVC.csproj", "{1F9E67E9-8B01-4790-A651-32C8AA99592E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSmart.Web.MVC.Tests", "ShopSmart.Web.MVC.Tests\ShopSmart.Web.MVC.Tests.csproj", "{8B9909B3-9945-43EC-8EFE-55847B327413}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = ShopSmart.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -125,8 +150,41 @@ Global
 		{7D81F27D-D58F-4224-A2C7-08DFDE295300}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7D81F27D-D58F-4224-A2C7-08DFDE295300}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7D81F27D-D58F-4224-A2C7-08DFDE295300}.Release|x86.ActiveCfg = Release|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{284EEAC4-03C6-45BD-9CBD-B7A95B5BD915}.Release|x86.ActiveCfg = Debug|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1F9E67E9-8B01-4790-A651-32C8AA99592E}.Release|x86.ActiveCfg = Release|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8B9909B3-9945-43EC-8EFE-55847B327413}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = ShopSmart.vsmdi
 	EndGlobalSection
 EndGlobal

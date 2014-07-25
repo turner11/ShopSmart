@@ -1,14 +1,16 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="ShopSmart.Web.Home" %>
 
+
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
+    <%--<asp:Literal ID="Literal3" runat="server" Text="<%$Resources:shopSmart.language,Products%>"/>--%>
 
+    <link rel="stylesheet" type="text/css" media="screen" href="<%: ResolveUrl("~/Content/Home.css") %>" />
+    <%-- JqGrid --%>
+    <link rel="stylesheet" type="text/css" media="screen" href="<%: ResolveUrl("~/Scripts/JqGrid/css/ui.jqgrid.css") %>" />
+    <script src="<%: ResolveUrl("~/Scripts/JqGrid/js/i18n/grid.locale-he.js") %>" type="text/javascript"></script>
+    <script src="<%: ResolveUrl("~/Scripts/JqGrid/js/jquery.jqGrid.min.js") %>" type="text/javascript"></script>
 
-     <%-- JqGrid --%>
-        <link rel="stylesheet" type="text/css" media="screen" href="<%: ResolveUrl("~/Scripts/JqGrid/css/ui.jqgrid.css") %>" />
-        <script src="<%: ResolveUrl("~/Scripts/JqGrid/js/i18n/grid.locale-he.js") %>" type="text/javascript"></script>
-        <script src="<%: ResolveUrl("~/Scripts/JqGrid/js/jquery.jqGrid.min.js") %>" type="text/javascript"></script>
-
-     <script src="<%: ResolveUrl("~/Scripts/Home.js") %>"></script>
+    <script src="<%: ResolveUrl("~/Scripts/Home.js") %>"></script>
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
@@ -21,41 +23,34 @@
                 If you have any questions about ASP.NET visit
                 <a href="http://forums.asp.net/18.aspx" title="ASP.NET Forum">our forums</a>.
             </p>
-            
+
         </div>
-         
+
     </section>
-    
+
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <asp:Button Text="text" runat="server" CausesValidation="false" class="btn btn-primary btn-large"/>
-    <h3>We suggest the following:</h3>
-    <ol class="round">
-        <li class="one">
-            <h5>Getting Started</h5>
-            ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245146">Learn more…</a>
-        </li>
-        <li class="two">
-            <h5>Add NuGet packages and jump-start your coding</h5>
-            NuGet makes it easy to install and update free libraries and tools.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245147">Learn more…</a>
-        </li>
-        <li class="three">
-            <h5>Find Web Hosting</h5>
-            You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245143">Learn more…</a>
-        </li>
-    </ol>
+        <asp:Label ID="Label1" Text="פילטר:" runat="server" />
+    <input type="text" id="txbFilter" onkeyup="FilterList(arguments[0]||event)" />
+    <asp:Button ID="btnExpandAll" Text="הרחב הכל" runat="server" CausesValidation="false" class="btn btn-primary btn-large" OnClientClick="SetGroupsState(true); return false;" />
+    <asp:Button ID="btnCollapseAll" Text="צמצם הכל" runat="server" CausesValidation="false" class="btn btn-primary btn-large" OnClientClick="SetGroupsState(false); return false;" />
+    <asp:Button ID="btnGetShoppingList" Text="קבל רשימת קניות" runat="server" CausesValidation="false" class="btn btn-large" OnClientClick="GetSelectedProducts(); return false;" />
+
+    
+<div>
+	
+    
+</div>
+
     <section>
 
-         <table id="jsonmap">  </table>
-         <div id="pjmap"> </div>
-        
-    <table id="tblProducts">
-        <tr><td>dummy</td></tr> 
-    </table>
-       
-        </section>
+
+
+        <table id="tblProducts">
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+        <div id="divTblProductsPage"></div>
+    </section>
 </asp:Content>
