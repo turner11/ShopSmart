@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ShopSmart.Common.ShoplistItemCandidate>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create your shop list</h2>
+
+@Html.Partial("ShopListCandidatesBase",this.Model);
+
+

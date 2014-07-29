@@ -6,6 +6,7 @@ using System.Text;
 using System.Web.Services;
 using Log;
 using ShopSmart.Dal;
+using ShopSmart.Common;
 
 
 namespace ShopSmart.Bl
@@ -260,6 +261,14 @@ namespace ShopSmart.Bl
         public List<Commercial> GetCommecialsForProducts(List<int> productsIds)
         {
             return this._db.GetCommecialsForProducts(productsIds);
+        }
+
+        public IEnumerable<ShoplistItemCandidate> GetAllShoplistCandidates()
+        {
+            var allProducts = this.GetAllProducts();
+            return allProducts.Select(p => new ShoplistItemCandidate(p));
+            
+            
         }
     }
 }
