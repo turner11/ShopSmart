@@ -6,6 +6,22 @@
 
 <h2>Create your shop list</h2>
 
-@Html.Partial("ShopListCandidatesBase",this.Model);
+@Html.Partial("ShopListCandidatesBase", this.Model);
 
+@section AddToHead
+{
+    <script type="text/javascript">
+        
+        var l = $("#txbToBuy").length;
+        alert("test: "+ l);
+        $("#txbToBuy input:checkbox").click(function () {
+            alert("to buy");
+        });
+
+        /*
+        $(".totalElementChanged").onchange(function () {
+            alert("a");
+        });*/
+    </script>
+}
 

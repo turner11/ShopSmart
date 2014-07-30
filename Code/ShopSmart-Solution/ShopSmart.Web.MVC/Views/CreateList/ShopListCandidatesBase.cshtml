@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<ShopSmart.Common.ShoplistItemCandidate>
 
+
 <p>
     @Html.ActionLink("Create New", "Create")
+    @System.Web.Optimization.BundleTable.Bundles.GetBundleFor("~/Scripts");
 </p>
 <table class="table">
     <tr>
@@ -67,19 +69,5 @@
 }
 
 </table>
-<script type="text/javascript">
 
-    $(document).ready(
-        function () { alert("raedy!"); }
-    );
-
-    $(".txbToBuy input:checkbox").click(function () {
-        alert("to buy");
-    });
-
-
-    $(".totalElementChanged input:text").onchange(function () {
-        alert("a");
-    });
-</script>
 
