@@ -27,6 +27,9 @@ namespace ShopSmart.Web.MVC
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new StyleBundle("~/bundles/ShoplistBase").Include(
+                      "~/Scripts/ViewsScripts/ShopListCandidatesBase.js"));
+
             //Minifying etc...
             BundleTable.EnableOptimizations = true;
         }

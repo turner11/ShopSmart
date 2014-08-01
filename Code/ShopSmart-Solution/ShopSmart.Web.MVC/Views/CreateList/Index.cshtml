@@ -2,26 +2,22 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    /*@Scripts.Render("~/Scripts/ViewsScripts/CreateList.js")*/
 }
 
 <h2>Create your shop list</h2>
+<p>
+    @Html.ActionLink("Get List", "DisplayList")
+    @*@Ajax.ActionLink("Get List!", "GetList", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" })*@
+</p>
 
-@Html.Partial("ShopListCandidatesBase", this.Model);
+<div id="ProductsDiv" style="max-height: 550px; background-color: orange; overflow: auto">
 
-@section AddToHead
-{
-    <script type="text/javascript">
-        
-        var l = $("#txbToBuy").length;
-        alert("test: "+ l);
-        $("#txbToBuy input:checkbox").click(function () {
-            alert("to buy");
-        });
+    @Html.Partial("ShopListCandidatesBase", this.Model);
 
-        /*
-        $(".totalElementChanged").onchange(function () {
-            alert("a");
-        });*/
-    </script>
+</div>
+@section scripts
+{    
+    @Scripts.Render("~/Scripts/ViewsScripts/CreateList.js")
+    @*<script language="javascript" type="text/javascript" src="~/Scripts/CreateList.js"></script>*@
 }
-

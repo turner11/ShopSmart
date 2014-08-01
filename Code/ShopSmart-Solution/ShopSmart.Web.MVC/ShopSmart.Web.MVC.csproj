@@ -165,6 +165,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Common\BaseController.cs" />
     <Compile Include="Controllers\CreateListController.cs" />
+    <Compile Include="Controllers\DisplayListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -195,7 +196,10 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ViewsScripts\CreateList.js" />
+    <Content Include="Scripts\ViewsScripts\ShopListCandidatesBase.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Styles\Main.css" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -216,6 +220,7 @@
     <Content Include="Views\CreateList\Index.cshtml" />
     <Content Include="Web.Config" />
     <Content Include="Views\CreateList\ShopListCandidatesBase.cshtml" />
+    <Content Include="Views\DisplayList\DisplayList.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
@@ -225,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Code\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
