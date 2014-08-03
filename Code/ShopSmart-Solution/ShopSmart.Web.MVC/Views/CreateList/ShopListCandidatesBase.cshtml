@@ -40,7 +40,7 @@
     {
             <tr>
                 <td>
-                    @Html.CheckBoxFor(modelItem => item.ToBuy, new { @class = "chkToBuy" })
+                    @Html.CheckBoxFor(modelItem => item.ToBuy, new { @class = "chkToBuy", click = "TableToJson()" })
                 </td>
                 <td>
                     @Html.TextBoxFor(modelItem => item.Quantity, new { @class = "text-box single-line totalElementChanged txbQuantity", type = "number" })

@@ -7,8 +7,8 @@
 
 <h2>Create your shop list</h2>
 <p>
-    @Html.ActionLink("Get List", "DisplayList")
-    @*@Ajax.ActionLink("Get List!", "GetList", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" })*@
+    @*@Html.ActionLink("Get List", "DisplayList")*@
+    @Ajax.ActionLink("Get List!", "DisplayList", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" })
 </p>
 
 <div id="ProductsDiv" style="max-height: 550px; background-color: orange; overflow: auto">
