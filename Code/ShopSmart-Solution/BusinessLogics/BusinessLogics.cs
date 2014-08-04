@@ -66,6 +66,28 @@ namespace ShopSmart.Bl
             return list;
         }
 
+        public ShopList GetShoppingList(Dictionary<Product, int> quantityByProduct, Supermarket market, Customer customer)
+        {
+            ShopList list = new ShopList();
+
+            foreach (var pair in quantityByProduct)
+            {
+                var product = pair.Key;
+                var quantity = pair.Value;
+                ShoplistItem item = new ShoplistItem();
+                item.Product = product;
+                item.ProductId = product.Id;
+                item.Quantity = quantity;
+                item.ShopList = list;
+                list.ShoplistItems.Add(item);
+
+            }
+
+            list.Supermarket = market;
+            list.SuperMarketId = market.Id;
+            return this.GetSortedList(list,customer);
+        }
+
         /// <summary>
         /// Saves the shop listto DB.
         /// </summary>

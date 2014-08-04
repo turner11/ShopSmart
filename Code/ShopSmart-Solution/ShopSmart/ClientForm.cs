@@ -364,35 +364,47 @@ namespace ShopSmart.Client
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        private ShopList GetShoppingListFromGui()
+        private ShopList GetShoppingList()
         {
             Logger.Log("Getting shopping list from gui");
-            ShopList list = new ShopList();
-            
 
-            foreach (DataGridViewRow currRow in this.gvProducts.Rows)
-            {
-                bool toBuy = Convert.ToBoolean( currRow.Cells[DataTableConstans.COL_NAME_TO_BUY].Value);
-                DataGridViewCell cllQuant = currRow.Cells[DataTableConstans.COL_NAME_QUANTITY];
-                int quantity;
-                if (toBuy && cllQuant.Value != null && int.TryParse(cllQuant.Value.ToString(),out quantity))
+            #region Funcs for code reuse...
+            Func<DataGridViewRow, int> getRowQuantity = (row) =>
+               {
+                   DataGridViewCell cllQuant = row.Cells[DataTableConstans.COL_NAME_QUANTITY];
+                   int quantity = 0;
+                   if (cllQuant.Value != null)
+                   {
+                       int.TryParse(cllQuant.Value.ToString(), out quantity);
+                   }
+                   return quantity;
+               };
+            Func<DataGridViewRow, bool> shouldAddToList = (row) =>
                 {
-                    ShoplistItem item = new ShoplistItem();
-                    item.Product = (Product)currRow.Cells[DataTableConstans.COL_NAME_PRODUCT].Value;
-                    item.ProductId = item.Product.Id;
-                    item.Quantity = quantity;
-                    item.ShopList = list;
-                    list.ShoplistItems.Add(item);
-                }
-            }
+                    bool toBuy = Convert.ToBoolean(row.Cells[DataTableConstans.COL_NAME_TO_BUY].Value);
+                    int quantity = getRowQuantity(row);
+                    return (toBuy && quantity > 0);
+                };
 
+            Func<DataGridViewRow, Product> getProductFromRow = (row) =>
+                {
+                    return (Product)row.Cells[DataTableConstans.COL_NAME_PRODUCT].Value;
+                }; 
+            #endregion
+
+            Dictionary<Product,int> quantityByProduct = new Dictionary<Product,int>();
+           
+            this.gvProducts.Rows.Cast<DataGridViewRow>()
+                                                    .Where(r => shouldAddToList(r)).ToList()
+                                                    .ForEach(r=> quantityByProduct.Add(getProductFromRow(r),getRowQuantity(r)));
 
             Supermarket market = this.cmbSuperMarkets.SelectedItem as Supermarket;
-            list.Supermarket = market;
-            list.SuperMarketId = market.Id;
+            ShopList list = this._logicsService.GetShoppingList(quantityByProduct, market,this.CurrentUser);
             Logger.Log(String.Format("got shopping list from gui: {0}", list.ToString()));
             return list;
         }
+
+       
 
         /// <summary>
         /// Matches the GUI to specified user type.
@@ -739,12 +751,9 @@ namespace ShopSmart.Client
         /// </summary>
         private void ExportSortedList()
         {
-            ShopList shoppingList = this.GetShoppingListFromGui();
+            ShopList shoppingList = this.GetShoppingList();
 
-
-            ShopList soretd = this._logicsService.GetSortedList(shoppingList, this.CurrentUser);
-
-            this.ExportListToExcel(soretd);
+            this.ExportListToExcel(shoppingList);
         }
 
         /// <summary>

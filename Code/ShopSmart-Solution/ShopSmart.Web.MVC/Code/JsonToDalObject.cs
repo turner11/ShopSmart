@@ -30,18 +30,24 @@ namespace ShopSmart.Web.MVC.Code
             JToken jlistData = jObject["listData"];
             var a = jlistData["Id"];
             JToken jlistItems = jlistData.First;
-            var ff = jlistItems.First.Next.Next["Id"];
-            object id = null;
-            foreach (var aa in jlistItems)
+            var AllItems = jlistItems.Children()[1];//.FirstOrDefault()["Id"];
+            ShopList sl = new ShopList();
+            var products = Logics.GetAllProducts();
+            foreach (var item in AllItems)
             {
-                foreach (var bb in aa)
-                {
-                    
-                    id = bb["Id"];
-                    var cc = bb.ToString();
+                var product = products.Where(p => p.Id.ToString() == item["Id"].ToString()).FirstOrDefault();
+                int quatinity  = 1;
+                int.TryParse(item["Quantity"].ToString(), out quatinity);
 
-                }
-                
+                sl.ShoplistItems.Add(new ShoplistItem()
+                    {
+                        Product = product,
+                        ProductId 
+                        Quantity = quatinity,
+                        ShopList = sl,                        
+                        
+                        
+                    });
             }
             //name = (string)jUser["name"];
             //teamname = (string)jUser["teamname"];
