@@ -19,9 +19,15 @@ namespace ShopSmart.Web.MVC.Controllers
             var shopListCandidatesItems = this._logics.GetAllShoplistCandidates();
             return View(shopListCandidatesItems); 
         }
-        //GET: /CreateList/DisplayList
-        public ActionResult DisplayList()
+
+        
+        //POST: /CreateList/DisplayList
+        [HttpPost]
+        public ActionResult PostList(dynamic listAsJson)
         {
+            string rows = listAsJson;
+            Session[SessionKeys.JSON_LIST] = listAsJson;
+            //return new ContentResult { Content = "yay!" };  
             return RedirectToAction("Index","DisplayList");
             return View();
         }

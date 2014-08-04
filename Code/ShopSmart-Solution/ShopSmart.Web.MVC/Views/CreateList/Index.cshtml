@@ -8,7 +8,8 @@
 <h2>Create your shop list</h2>
 <p>
     @*@Html.ActionLink("Get List", "DisplayList")*@
-    @Ajax.ActionLink("Get List!", "DisplayList", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" })
+    @*@Ajax.ActionLink("Get List!", "DisplayList", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" })*@
+    <button class="btn-link" id="btnGetList">Get List!</button>
 </p>
 
 <div id="ProductsDiv" style="max-height: 550px; background-color: orange; overflow: auto">
@@ -17,7 +18,11 @@
 
 </div>
 @section scripts
-{    
+{
     @Scripts.Render("~/Scripts/ViewsScripts/CreateList.js")
-    @*<script language="javascript" type="text/javascript" src="~/Scripts/CreateList.js"></script>*@
+    <script type="text/javascript">
+        CREATE_LIST_POST_URL = '@Url.Action("PostList", "CreateList")';
+        @*CREATE_LIST_POST_URL = '@Url.Action("PostList", "CreateListController", new {id="" })';*@
+    </script>
 }
+    

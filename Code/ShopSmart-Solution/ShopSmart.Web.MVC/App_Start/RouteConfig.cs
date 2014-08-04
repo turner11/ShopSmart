@@ -24,6 +24,8 @@ namespace ShopSmart.Web.MVC
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "CreateList", action = "CreateList", id = UrlParameter.Optional }
             );
+
+            
         }
     }
 }
