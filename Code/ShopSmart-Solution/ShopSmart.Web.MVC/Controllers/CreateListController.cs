@@ -23,10 +23,11 @@ namespace ShopSmart.Web.MVC.Controllers
         
         //POST: /CreateList/DisplayList
         [HttpPost]
-        public ActionResult PostList(dynamic listAsJson)
+        public ActionResult PostList(string listAsJson)
         {
-            string rows = listAsJson;
-            Session[SessionKeys.JSON_LIST] = listAsJson;
+            var shopList = Code.JsonToDalObject.GetShopList(listAsJson);
+            //string rows = listAsJson;
+            Session[SessionKeys.JSON_LIST] = shopList;
             //return new ContentResult { Content = "yay!" };  
             return RedirectToAction("Index","DisplayList");
             return View();

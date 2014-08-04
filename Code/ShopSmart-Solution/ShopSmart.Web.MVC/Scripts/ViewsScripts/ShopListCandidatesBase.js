@@ -23,7 +23,7 @@ window.onload = function ()
         SetTotalForRow(currentRow);
     });
     $(".txbQuantity").keyup(function(e) {
-        //debugger
+       //debugger
         if (isModifyingQuntities) { return;}
         isModifyingQuntities = true;
         var txbQuantity = e.target;
