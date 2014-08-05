@@ -2,6 +2,7 @@
 using ShopSmart.Bl;
 using ShopSmart.Dal;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,37 +24,38 @@ namespace ShopSmart.Web.MVC.Code
             }
         }
         
-
-        public static ShopList GetShopList(string json)
+        /// <summary>
+        /// Gets a sorted shop list from JSON string in expected format
+        /// </summary>
+        /// <param name="json">the json string</param>
+        /// <returns>the shoplist</returns>
+        public static ShopList GetShopList(string json, List<Product> allProducts, Customer customer, Supermarket market)
         {
             JObject jObject = JObject.Parse(json);
             JToken jlistData = jObject["listData"];
-            var a = jlistData["Id"];
-            JToken jlistItems = jlistData.First;
-            var AllItems = jlistItems.Children()[1];//.FirstOrDefault()["Id"];
-            ShopList sl = new ShopList();
-            var products = Logics.GetAllProducts();
-            foreach (var item in AllItems)
-            {
-                var product = products.Where(p => p.Id.ToString() == item["Id"].ToString()).FirstOrDefault();
-                int quatinity  = 1;
-                int.TryParse(item["Quantity"].ToString(), out quatinity);
+            JToken jlistItems = jlistData["listItems"];//jlistData.First;
+            var AllItems = jlistItems.Where(token => token.HasValues).ToList();//jlistItems.Children()[1];//.FirstOrDefault()["Id"];
 
-                sl.ShoplistItems.Add(new ShoplistItem()
-                    {
-                        Product = product,
-                        ProductId 
-                        Quantity = quatinity,
-                        ShopList = sl,                        
-                        
-                        
-                    });
-            }
-            //name = (string)jUser["name"];
-            //teamname = (string)jUser["teamname"];
-            //email = (string)jUser["email"];
-            //players = jUser["players"].ToArray();
-            return null;
+            int temp;
+            var tuplesStr =  
+                AllItems.OfType<JObject>()
+                .Cast<IDictionary<string, JToken>>() //easier to handle as dictionary
+                .Where(i => i.ContainsKey("Id") && i["Id"] !=null && !String.IsNullOrWhiteSpace(i["Id"].ToString())) //make sure ID is available
+                .Select(i => new Tuple<string, string>( i["Id"].ToString() , i.ContainsKey("Quantity") ? i["Quantity"].ToString() : "1"))//get tuple with ID / quantity                
+                 .Where(t => int.TryParse(t.Item1, out temp) && int.TryParse(t.Item2, out temp))//parse to int
+                 .ToList();//list is easier to debug
+
+
+            var quantityByProductDic= new Dictionary<Product,int>();
+            //add products to dictionary
+            tuplesStr.ToList()
+                .ForEach(t => quantityByProductDic.Add(allProducts.FirstOrDefault(p => p.Id == int.Parse(t.Item1)), int.Parse(t.Item2)));
+
+            
+            ShopList sl = Logics.GetShoppingList(quantityByProductDic, market, customer);
+
+            
+            return sl;
              
         }
     }

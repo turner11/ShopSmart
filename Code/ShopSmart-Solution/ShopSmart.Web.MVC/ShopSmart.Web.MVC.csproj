@@ -198,10 +198,11 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ViewsScripts\DispalyList.js" />
     <Content Include="Scripts\ViewsScripts\CreateList.js" />
     <Content Include="Scripts\ViewsScripts\ShopListCandidatesBase.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Styles\Main.css" />
+    <Content Include="Content\Main.css" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

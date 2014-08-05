@@ -48,15 +48,17 @@ function TableToJson() {
 
     // Let's put this in the object like you want and convert to JSON (Note: jQuery will also do this for you on the Ajax request)
     var jObj = {};
-    jObj.listData = {'listItems ' : listData};
+    jObj.listData = {'listItems' : listData};
     return jObj;
    
 }
 
 function postSuccess(data, textStaut, jqXHR) {
-    var a = 1;
+    //debugger
+    window.location.href = DISPLAY_LIST_POST_URL;
 }
 
 function postError(errArg) {
-    var b = 2;
+    //debugger
+    alert("Failed to build list: \n"+errArg.Message?errArg.Message:"");
 }

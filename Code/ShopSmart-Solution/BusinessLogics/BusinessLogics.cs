@@ -82,9 +82,17 @@ namespace ShopSmart.Bl
                 list.ShoplistItems.Add(item);
 
             }
-
-            list.Supermarket = market;
-            list.SuperMarketId = market.Id;
+            
+            
+            if (market == null)
+            {
+                var markets = this.GetAllSuperMarkets();
+                market = markets[0];
+            }
+                list.Supermarket = market;
+                list.SuperMarketId = market.Id;    
+            
+            
             return this.GetSortedList(list,customer);
         }
 

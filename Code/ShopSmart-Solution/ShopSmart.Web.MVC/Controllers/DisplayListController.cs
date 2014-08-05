@@ -6,13 +6,19 @@ using System.Web.Mvc;
 
 namespace ShopSmart.Web.MVC.Controllers
 {
-    public class DisplayListController : Controller
+    public class DisplayListController : BaseController
     {
         //
         // GET: /DisplayList/
         public ActionResult Index()
         {
-            return View();
+            
+            if (this._CurrentShopList == null)
+            {
+                return  RedirectToAction("Index","CreateList");
+            }
+            var view = View("DisplayList",this._CurrentShopList);
+            return view;
         }
 	}
 }

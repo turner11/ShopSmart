@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -23,8 +24,13 @@ namespace ShopSmart.Web.MVC
         
         private void InitSessionVariables()
         {
-            Application[SessionKeys.LOGICS] = new SmartShopLogics();
-           
+            var logics = new SmartShopLogics();
+            Application[SessionKeys.LOGICS] = logics;
+
+            
+            
+            
+            
         }
     }
 }

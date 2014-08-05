@@ -205,8 +205,10 @@ namespace ShopSmart.Dal
                 throw new ArgumentException("Cannot compare shoplist item to a non shoplist item");                
             }
 
-            int mySort = this.Product.Category.CategorySorts.SingleOrDefault(cs => cs.SupermarketId == this.ShopList.SuperMarketId).SortValue;
-            int otherSort = other.Product.Category.CategorySorts.SingleOrDefault(cs => cs.SupermarketId == other.ShopList.SuperMarketId).SortValue;
+            CategorySort myCatSort = this.Product.Category.CategorySorts.SingleOrDefault(cs => cs.SupermarketId == this.ShopList.SuperMarketId);
+            CategorySort otherCatSort = other.Product.Category.CategorySorts.SingleOrDefault(cs => cs.SupermarketId == other.ShopList.SuperMarketId);
+            int mySort = myCatSort != null? myCatSort.SortValue : int.MaxValue;
+            int otherSort = otherCatSort != null? otherCatSort.SortValue : int.MaxValue;
 
             return mySort.CompareTo(otherSort);
         }
