@@ -13,7 +13,13 @@
         $("#btnGetList").prop('disabled', !isList);
     });
 
+
+    var filterIntervalId;
     $("#txbFilter").bind('keyup', function () {
+
+        //prevent previous filters to take place
+        clearInterval(filterIntervalId);
+
         var $txbFilter = $("#txbFilter");
         var filterText = $txbFilter[0].value;
 
@@ -43,12 +49,17 @@
             });
         });
 
+       
         //for perormance, do the effect just for rows that will be effectd...
         rowsToShow = rowsToShow.filter(":hidden");
         rowsToHide = rowsToHide.filter(":visible");
 
+        filterIntervalId = setTimeout(function () {
+
+        
         rowsToHide.fadeOut('slow'); 
         rowsToShow.fadeIn('slow');
+        }, 500);
 
 
     });
