@@ -27,7 +27,7 @@ namespace ShopSmart.Web.MVC.Controllers
         [HttpPost]
         public ActionResult PostList(string listAsJson)
         {
-            this._CurrentShopList = Code.JsonToDalObject.GetShopList(listAsJson, this._Products,this._Customer,this.GetSuperMarket(""));           
+            this._CurrentShopList = Code.JsonToDalObject.GetShopList(listAsJson, this._Products, this._Customer, this._Markets);           
             
             //var v = RedirectToAction("Index","DisplayList");
             bool success = this._CurrentShopList != null;

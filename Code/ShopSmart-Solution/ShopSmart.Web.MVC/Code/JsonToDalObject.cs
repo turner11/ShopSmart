@@ -29,10 +29,15 @@ namespace ShopSmart.Web.MVC.Code
         /// </summary>
         /// <param name="json">the json string</param>
         /// <returns>the shoplist</returns>
-        public static ShopList GetShopList(string json, List<Product> allProducts, Customer customer, Supermarket market)
+        public static ShopList GetShopList(string json, List<Product> allProducts, Customer customer, IList<Supermarket> markets)
         {
             JObject jObject = JObject.Parse(json);
             JToken jlistData = jObject["listData"];
+
+            JToken jmarketName = jObject["supermarket"];
+            string superName = jmarketName["superName"].ToString().Trim();
+            Supermarket market = markets.FirstOrDefault(m => m.Name == superName) ?? markets[0];
+
             JToken jlistItems = jlistData["listItems"];//jlistData.First;
             var AllItems = jlistItems.Where(token => token.HasValues).ToList();//jlistItems.Children()[1];//.FirstOrDefault()["Id"];
 
@@ -51,7 +56,7 @@ namespace ShopSmart.Web.MVC.Code
             tuplesStr.ToList()
                 .ForEach(t => quantityByProductDic.Add(allProducts.FirstOrDefault(p => p.Id == int.Parse(t.Item1)), int.Parse(t.Item2)));
 
-            
+
             ShopList sl = Logics.GetShoppingList(quantityByProductDic, market, customer);
 
             

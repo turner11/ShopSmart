@@ -62,10 +62,7 @@ namespace ShopSmart.Web.MVC.Controllers
         }
 
 
-        protected Supermarket GetSuperMarket(string superMarketName)
-        {
-            return this._Markets.FirstOrDefault(s => (s.Name??"").ToUpper() == (superMarketName??"").ToUpper());
-        }
+        
              
     }
 }

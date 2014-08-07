@@ -18,6 +18,14 @@
             @Html.DisplayFor(model => model.TotalPrice)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Supermarket)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supermarket.Name)
+        </dd>
+
         @*@if(!String.IsNullOrWhiteSpace(@Model.Title))
         {
             <dt>

@@ -1,4 +1,12 @@
 ﻿$(document).ready(function () {
+
+    /*Dropdown click handler*/
+    $(".dropdown ul li a").click(function(e){
+        var $item = $(e.target);
+        var ddl = $item.closest(".dropdown").find("button")[0];
+        $(ddl).text($item.text());
+    });
+
     $(".chkToBuy").bind('click', function () {
         var itemCount = $(".chkToBuy:checkbox:checked").length;
         var isList = itemCount > 1;
@@ -92,9 +100,11 @@ function TableToJson() {
         }
     });
 
+    var suprmarketName = $($(".dropdown").find("button")[0]).text();
     // Let's put this in the object like you want and convert to JSON (Note: jQuery will also do this for you on the Ajax request)
     var jObj = {};
-    jObj.listData = {'listItems' : listData};
+    jObj.listData = { 'listItems': listData };
+    jObj.supermarket = { 'superName': suprmarketName };
     return jObj;
    
 }
