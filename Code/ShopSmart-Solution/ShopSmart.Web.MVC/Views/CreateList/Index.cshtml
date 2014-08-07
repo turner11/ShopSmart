@@ -1,28 +1,60 @@
 ﻿@model IEnumerable<ShopSmart.Common.ShoplistItemCandidate>
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    /*@Scripts.Render("~/Scripts/ViewsScripts/CreateList.js")*/
+    Layout = "~/Views/Shared/_Layout.cshtml";    
 }
 
-<h2>Create your shop list</h2>
+
+
+
+<h2 class="page-title">Create your shop list</h2>
 <p>
-    @*@Html.ActionLink("Get List", "DisplayList")*@
-    @*@Ajax.ActionLink("Get List!", "DisplayList", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" })*@
-    <button class="btn-link" id="btnGetList">Get List!</button>
+    <div class="dropdown" id="ddlMarkets">
+
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Supermarkets
+            <span class="caret"></span>
+        </button>
+
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            @{
+
+                var markets = ViewBag.Markets as List<ShopSmart.Dal.Supermarket>;
+                for (int i = 0; i < markets.Count; i++)
+                {
+                    if (i == 1)
+                    {
+                        <li role="presentation" class="divider"></li>
+                    }
+                    var market = markets[i];
+
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">@market.Name</a></li>
+
+                }
+            }
+
+        </ul>
+    </div>
+       
+     <button class="btn btn-primary btn-large" disabled="disabled" id="btnGetList">Get List!</button>
+
+    <input type="text" class="textbox" id="txbFilter" />
+    
 </p>
 
-<div id="ProductsDiv" style="max-height: 550px; background-color: orange; overflow: auto">
-
-    @Html.Partial("ShopListCandidatesBase", this.Model);
+<div id="ProductsDiv"  >
+    
+   @Html.Partial("ShopListCandidatesBase", this.Model);
 
 </div>
 @section scripts
 {
     @Scripts.Render("~/Scripts/ViewsScripts/CreateList.js")
     <script type="text/javascript">
+        
         CREATE_LIST_POST_URL = '@Url.Action("PostList", "CreateList")';
         DISPLAY_LIST_POST_URL = '@Url.Action("Index", "DisplayList")';
+
     </script>
 }
     

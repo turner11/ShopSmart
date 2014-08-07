@@ -7,7 +7,7 @@
     @Scripts.Render("~/bundles/ShoplistBase")
 </p>
 
-    <table class="table">
+    <table class="table" id="#tblProducts">
         <tr>
             <th class="hidden">
                 @Html.DisplayNameFor(model => model.Id)
@@ -47,10 +47,10 @@
                     @Html.TextBoxFor(modelItem => item.Id, new { @class = "text-box single-line disabled hidden" })
                 </td>
                 <td>
-                    @Html.CheckBoxFor(modelItem => item.ToBuy, new { @class = "chkToBuy", click = "TableToJson()" })
+                    @Html.CheckBoxFor(modelItem => item.ToBuy, new { @class = "chkToBuy" })
                 </td>
                 <td>
-                    @Html.TextBoxFor(modelItem => item.Quantity, new { @class = "text-box single-line totalElementChanged txbQuantity", type = "number" })
+                    @Html.TextBoxFor(modelItem => item.Quantity, new { @class = "text-box single-line totalElementChanged txbQuantity numberBox", type = "number" })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductName)
@@ -62,13 +62,13 @@
                     @Html.EditorFor(modelItem => item.Notes)
                 </td>
                 <td>
-                    @Html.TextBoxFor(modelItem => item.Price, new { @class = "text-box single-line txbPrice disabled" })
+                    @Html.TextBoxFor(modelItem => item.Price, new { @class = "text-box single-line txbPrice numberBox disabled " })
                 </td>
                 <td>
                     @Html.EditorFor(modelItem => item.Main)
                 </td>
                 <td>
-                    @Html.TextBoxFor(modelItem => item.TotalCost, new { @class = "text-box single-line txbTotalCost disabled" })
+                    @Html.TextBoxFor(modelItem => item.TotalCost, new { @class = "text-box single-line txbTotalCost numberBox disabled " })
 
                 </td>
                 @*<td>

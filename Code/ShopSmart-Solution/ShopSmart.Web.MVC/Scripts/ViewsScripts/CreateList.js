@@ -1,4 +1,50 @@
 ﻿$(document).ready(function () {
+    $(".chkToBuy").bind('click', function () {
+        var itemCount = $(".chkToBuy:checkbox:checked").length;
+        var isList = itemCount > 1;
+        $("#btnGetList").prop('disabled', !isList);
+    });
+
+    $("#txbFilter").bind('keyup', function () {
+        var $txbFilter = $("#txbFilter");
+        var filterText = $txbFilter[0].value;
+
+        var rowsToShow = $("NO_SELECTOR");
+        var rowsToHide = $("NO_SELECTOR");
+
+        
+
+        $("tr").each(function (rowIndex) {
+            $(this).find("td").each(function (cellIndex) {
+                if (cellIndex == 3 || cellIndex == 4) { // 3= product name; 4 = category name
+                    
+                    var $cell = $(this);
+                    var $row = $cell.closest("tr");
+
+                    /*If we have added the row alredy, do not recheck...*/
+                    if (rowsToShow.index($row) < 0 ) {
+
+                        var text = $cell.text().trim();
+                        /*Does current cell has filter text*/
+                        var show = text.indexOf(filterText) >= 0 || filterText.trim() == "";
+                        if (show) { rowsToShow = rowsToShow.add($row); }
+                        else { rowsToHide = rowsToHide.add($row); }
+                    }
+                }
+
+            });
+        });
+
+        //for perormance, do the effect just for rows that will be effectd...
+        rowsToShow = rowsToShow.filter(":hidden");
+        rowsToHide = rowsToHide.filter(":visible");
+
+        rowsToHide.fadeOut('slow'); 
+        rowsToShow.fadeIn('slow');
+
+
+    });
+    
 
     $("#btnGetList").click(function() {        
         var JsonObj = TableToJson();

@@ -1,13 +1,19 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image:url('/Images/BG.png');
+    background-size:   cover;                      
+    background-repeat: no-repeat;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    background-color:rgba(255, 255, 255, 0.47);    
 }
+
+
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
@@ -42,3 +48,47 @@ input[type="checkbox"].input-validation-error {
 }
 
 .strikeout{text-decoration:line-through;}
+
+/*The shop smart logo*/
+.navbar-inverse .navbar-brand{color:orange;}
+/*navigation links*/
+.navbar-inverse .navbar-nav>li>a{color:#ffd800;}
+
+.numberBox{
+    max-width:80px;
+    text-align:center;
+    background-color:rgba(255, 255, 255, 0.47);
+
+}
+
+#ProductsDiv{
+    max-height: 600px;
+    height:530px; 
+    overflow: auto
+}
+
+.page-title{ text-align:center}
+
+#ddlMarkets{
+    float:right; padding-right:70px
+}
+
+
+
+ .textbox{ 
+    
+    border: 1px solid #848484; 
+    -webkit-border-radius: 30px; 
+    -moz-border-radius: 30px; 
+    border-radius: 30px; 
+    outline:0; 
+    height:25px; 
+    width: 275px; 
+    padding-left:10px; 
+    padding-right:10px; 
+  } 
+
+ #txbFilter{
+    margin-left:350px;
+}
+ 
