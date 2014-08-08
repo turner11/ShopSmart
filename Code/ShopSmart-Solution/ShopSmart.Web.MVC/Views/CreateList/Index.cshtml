@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ShopSmart.Common.ShoplistItemCandidate>
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";    
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -24,37 +24,45 @@
                 {
                     if (i == 1)
                     {
-                        <li role="presentation" class="divider"></li>
+            <li role="presentation" class="divider"></li>
                     }
                     var market = markets[i];
 
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">@market.Name</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">@market.Name</a></li>
 
                 }
             }
 
         </ul>
     </div>
-       
-     <button class="btn btn-primary btn-large" disabled="disabled" id="btnGetList">Get List!</button>
 
-    <input type="text" class="textbox" id="txbFilter" />
-    
+    <button class="btn btn-primary btn-large" disabled="disabled" id="btnGetList">Get List!</button>
+    <div id="divFilterRdb" class="filtersdiv">
+        <span >
+            <label class="radio-inline">
+                <input type="radio" class="radioFilter" id="chbShowAll" name="chbFilter" checked="checked">Show All Item
+                </label>
+            <label class="radio-inline">
+                <input type="radio" class="radioFilter" id="chbShowSelected" name="chbfilter"> Show Selected Items
+                </label>
+</span>
+        <br />
+        <input type="text" class="textbox" id="txbFilter" />
+    </div>
 </p>
 
-<div id="ProductsDiv"  >
-    
-   @Html.Partial("ShopListCandidatesBase", this.Model);
+<div id="ProductsDiv">
+
+    @Html.Partial("ShopListCandidatesBase", this.Model);
 
 </div>
 @section scripts
 {
     @Scripts.Render("~/Scripts/ViewsScripts/CreateList.js")
     <script type="text/javascript">
-        
+
         CREATE_LIST_POST_URL = '@Url.Action("PostList", "CreateList")';
         DISPLAY_LIST_POST_URL = '@Url.Action("Index", "DisplayList")';
 
     </script>
 }
-    

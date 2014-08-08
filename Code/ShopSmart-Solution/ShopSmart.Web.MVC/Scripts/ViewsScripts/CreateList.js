@@ -14,55 +14,9 @@
     });
 
 
-    var filterIntervalId;
-    $("#txbFilter").bind('keyup', function () {
-
-        //prevent previous filters to take place
-        clearInterval(filterIntervalId);
-
-        var $txbFilter = $("#txbFilter");
-        var filterText = $txbFilter[0].value;
-
-        var rowsToShow = $("NO_SELECTOR");
-        var rowsToHide = $("NO_SELECTOR");
-
-        
-
-        $("tr").each(function (rowIndex) {
-            $(this).find("td").each(function (cellIndex) {
-                if (cellIndex == 3 || cellIndex == 4) { // 3= product name; 4 = category name
-                    
-                    var $cell = $(this);
-                    var $row = $cell.closest("tr");
-
-                    /*If we have added the row alredy, do not recheck...*/
-                    if (rowsToShow.index($row) < 0 ) {
-
-                        var text = $cell.text().trim();
-                        /*Does current cell has filter text*/
-                        var show = text.indexOf(filterText) >= 0 || filterText.trim() == "";
-                        if (show) { rowsToShow = rowsToShow.add($row); }
-                        else { rowsToHide = rowsToHide.add($row); }
-                    }
-                }
-
-            });
-        });
-
-       
-        //for perormance, do the effect just for rows that will be effectd...
-        rowsToShow = rowsToShow.filter(":hidden");
-        rowsToHide = rowsToHide.filter(":visible");
-
-        filterIntervalId = setTimeout(function () {
-
-        
-        rowsToHide.fadeOut('slow'); 
-        rowsToShow.fadeIn('slow');
-        }, 500);
-
-
-    });
+    
+    $("#txbFilter").bind('keyup', ApplyFilter);
+    $(".radioFilter").bind('click', ApplyFilter);
     
 
     $("#btnGetList").click(function() {        
@@ -128,4 +82,58 @@ function postSuccess(data, textStaut, jqXHR) {
 function postError(errArg) {
     //debugger
     alert("Failed to build list: \n"+errArg.Message?errArg.Message:"");
+}
+
+var filterIntervalId;
+function ApplyFilter() {
+
+    //prevent previous filters to take place
+    clearInterval(filterIntervalId);
+
+    var $txbFilter = $("#txbFilter");
+    var filterText = $txbFilter[0].value;
+
+    var rowsToShow = $("NO_SELECTOR");
+    var rowsToHide = $("NO_SELECTOR");
+
+        
+
+    $("tr").each(function (rowIndex) {
+        $(this).find("td").each(function (cellIndex) {
+            if (cellIndex == 3 || cellIndex == 4) { // 3= product name; 4 = category name
+                    
+                var $cell = $(this);
+                var $row = $cell.closest("tr");
+                var isToBuy = $($row.find(".chkToBuy"))[0].checked;
+                /*If we have added the row alredy, do not recheck...*/
+                if (rowsToShow.index($row) < 0 ) {
+
+                    var text = $cell.text().trim();
+                    /*Does current cell has filter text*/
+                    var showByCheckboxes = ($("#chbShowAll")[0].checked || ($("#chbShowSelected")[0].checked && isToBuy));
+                    var showByTextFilter = (filterText.trim() == "" || text.indexOf(filterText) >= 0 );// no filter or filter is a substring
+                                    
+                    var show = showByCheckboxes && showByTextFilter;
+
+                    if (show) { rowsToShow = rowsToShow.add($row); }
+                    else { rowsToHide = rowsToHide.add($row); }
+                }
+            }
+
+        });
+    });
+
+       
+    //for perormance, do the effect just for rows that will be effectd...
+    rowsToShow = rowsToShow.filter(":hidden");
+    rowsToHide = rowsToHide.filter(":visible");
+
+    filterIntervalId = setTimeout(function () {
+
+        
+        rowsToHide.fadeOut('slow'); 
+        rowsToShow.fadeIn('slow');
+    }, 500);
+
+
 }

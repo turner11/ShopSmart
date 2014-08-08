@@ -88,7 +88,7 @@ input[type="checkbox"].input-validation-error {
     padding-right:10px; 
   } 
 
- #txbFilter{
-    margin-left:350px;
+ .filtersdiv{
+    padding-left:350px;
 }
  
