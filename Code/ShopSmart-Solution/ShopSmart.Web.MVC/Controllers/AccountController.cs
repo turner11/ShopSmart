@@ -13,7 +13,7 @@ using ShopSmart.Web.MVC.Models;
 namespace ShopSmart.Web.MVC.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         public AccountController()
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
@@ -48,8 +48,17 @@ namespace ShopSmart.Web.MVC.Controllers
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
                 if (user != null)
                 {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    var customer = this._logics.AuthenticateUser(model.UserName, model.Password);
+                    if (customer != null)
+                    {
+                        this._Customer = customer;
+                        await SignInAsync(user, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Failed to retrieve user.");
+                    }
                 }
                 else
                 {
@@ -82,8 +91,20 @@ namespace ShopSmart.Web.MVC.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    string errMsg;
+                    var customer = this._logics.CreateCustomer(user.UserName, model.Password,Dal.UserTypes.User,String.Empty,out errMsg);
+                    this._Customer = customer;
+                    if (customer != null)
+                    {
+                        await SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        AddErrors(new IdentityResult(errMsg));
+                    }
+
+                    
                 }
                 else
                 {

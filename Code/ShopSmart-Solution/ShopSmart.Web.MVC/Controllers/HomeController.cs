@@ -15,14 +15,14 @@ namespace ShopSmart.Web.MVC.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Shop smart. The easy way to shop!";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Our contact details";
 
             return View();
         }

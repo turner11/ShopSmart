@@ -11,7 +11,9 @@
     padding-left: 15px;
     padding-right: 15px;
     background-color:rgba(255, 255, 255, 0.47);    
+    min-height:750px;
 }
+#footer{position:absolute; bottom:0;}
 
 
 
