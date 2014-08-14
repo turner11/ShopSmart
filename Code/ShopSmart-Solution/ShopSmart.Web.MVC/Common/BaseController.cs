@@ -45,7 +45,7 @@ namespace ShopSmart.Web.MVC.Controllers
             set { Session[SessionKeys.JSON_LIST] = value; }
         }
 
-        protected Customer _Customer{
+        public Customer _Customer{
             get { return Session[SessionKeys.CUSTOMER] as Customer; }
             set { Session[SessionKeys.CUSTOMER] = value; }
         }

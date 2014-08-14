@@ -30,6 +30,12 @@ namespace ShopSmart.Web.MVC
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "DisplayList", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "ShopListHistory",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "ShopListHistory", action = "Index", id = UrlParameter.Optional }
+            );
             
         }
     }

@@ -168,6 +168,7 @@
     <Compile Include="Controllers\CreateListController.cs" />
     <Compile Include="Controllers\DisplayListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ShopListHistoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,6 +241,7 @@
     <Content Include="Web.Config" />
     <Content Include="Views\CreateList\ShopListCandidatesBase.cshtml" />
     <Content Include="Views\DisplayList\DisplayList.cshtml" />
+    <Content Include="Views\ShopListHistory\Index.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
