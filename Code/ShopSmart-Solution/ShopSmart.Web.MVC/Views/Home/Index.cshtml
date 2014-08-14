@@ -2,35 +2,31 @@
     ViewBag.Title = "Home Page";
 }
 
-<div >
-    <h1>Shop Smart</h1>
-    <p class="lead">Shop smart is a service for shopping Quickly!</p>
-    <p>Our only goal is to help you save time & money</p>
-    <p>
-        <a href="http://asp.net" class="btn btn-primary btn-large">Register &raquo;</a><br /><br />
-        <a href="http://asp.net" class="btn btn-primary btn-large">Sign in &raquo;</a><br /><br />
-        <a href="http://asp.net" class="btn btn-primary btn-large">Continue without Registering &raquo;</a>
-    </p>
+<div class="jumbotron divWelcome">
+    Shop Smart!  
+   
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Why Shop Smart?</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Shop smart is a free service for shopping Quickly.
+            We help you arrange you shoplist to match the order of items in any supermarket.
+            Arranging you list will save you both time and money!
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        
+        <p>@Html.ActionLink("Create List", "Index", "CreateList", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-large" })</p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Why register?</h2>
+        <p>If you register, Shop smart will be able offer you to base your shopping list on a list you have created in the past.
+        In the future we will also be able to suggest items you might want to buy!</p>
+        <p>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-large" })</p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>Don't want to register?</h2>
+        <p>Not a problem! just go ahead and create your list!</p>
+        <p>@Html.ActionLink("Create List", "Index", "CreateList", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-large" })</p>
     </div>
 </div>

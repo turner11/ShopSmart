@@ -91,4 +91,13 @@ input[type="checkbox"].input-validation-error {
  .filtersdiv{
     padding-left:350px;
 }
- 
+
+.divWelcome {
+    background-image:url('/Images/Shopblare.jpg');
+    background-size: 100%;
+    font-family: "Brush Script MT", cursive;
+    color:white;
+    font-size:65px;
+    height:500px;
+
+}
