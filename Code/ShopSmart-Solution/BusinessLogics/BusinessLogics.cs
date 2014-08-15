@@ -295,10 +295,29 @@ namespace ShopSmart.Bl
 
         public IEnumerable<ShoplistItemCandidate> GetAllShoplistCandidates()
         {
+            
+            return this.GetAllShoplistCandidates(null);
+            
+        }
+
+        public IEnumerable<ShoplistItemCandidate> GetAllShoplistCandidates(ShopList shopListBase)
+        {
             var allProducts = this.GetAllProducts();
-            return allProducts.Select(p => new ShoplistItemCandidate(p));
-            
-            
+            var items = allProducts.Select(p => new ShoplistItemCandidate(p));
+
+            if (shopListBase != null)
+            {
+                foreach (var shopItem in shopListBase.ShoplistItems)
+                {
+                    var matchingItem = items.Where(i => i.Id == shopItem.Id).FirstOrDefault();
+                    if (matchingItem != null)
+                    {
+                        matchingItem.Quantity = shopItem.Quantity;
+                        matchingItem.ToBuy = true;
+                    }
+                }
+            }
+            return items;
         }
     }
 }

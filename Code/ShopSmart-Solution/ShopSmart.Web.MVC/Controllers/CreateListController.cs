@@ -18,7 +18,9 @@ namespace ShopSmart.Web.MVC.Controllers
             ViewBag.Markets = this._Markets;
 
             //var con = new System.Data.SqlClient.SqlConnection();
-            var shopListCandidatesItems = this._logics.GetAllShoplistCandidates();
+            var shopListCandidatesItems = this._logics.GetAllShoplistCandidates(this._CurrentShopList);
+           
+           
             return View(shopListCandidatesItems); 
         }
 
