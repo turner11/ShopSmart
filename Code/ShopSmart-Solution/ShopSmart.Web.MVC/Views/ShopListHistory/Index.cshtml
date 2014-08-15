@@ -10,44 +10,54 @@
 <div>
     <h4>History of shopping lists:</h4>
 	<hr />
-    
+    <button class="btn btn-primary btn-large"  id="btnShowList">Show List!</button>
+
         @for (var i = 0; i < Model.Count; i++)
-{<div>
-        @Html.RadioButtonFor(model => model[0].Id, "false", new { @class = "rdbArchiveList", name = "selectList" })
-        <dl class="dl-horizontal">
+        {<div>
+            @Html.RadioButtonFor(model => model[0].Id, "false", new { @class = "rdbArchiveList", name = "selectList" })
+            <dl class="dl-horizontal">
 
 
-            <dt>
-                @Html.HiddenFor(model => model[i].Id)
-            </dt>
+                <dt>
+                    @Html.HiddenFor(model => model[i].Id)
+                </dt>
 
-            <dd>
-                @Html.HiddenFor(model => model[i].Id)
-            </dd>
+                <dd>
+                    @Html.HiddenFor(model => model[i].Id, new { @class = "idContainer" })
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model[i].TotalPrice)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model[i].TotalPrice)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model[i].TotalPrice)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model[i].TotalPrice)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model[i].Title)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model[i].Title)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model[i].Title)
-            </dd>
-
-
+                <dd>
+                    @Html.DisplayFor(model => model[i].Title)
+                </dd>
 
 
-        </dl>
-    </div>
-}
 
-   
+
+            </dl>
+        </div>
+        }
+
+
 </div>
+@section scripts
+{
+    @Scripts.Render("~/Scripts/ViewsScripts/ShopListHistory.js")
+    <script type="text/javascript">
 
+        CREATE_LIST_POST_URL = '@Url.Action("Index", "CreateList")';
+        SHOPLISTHISTORY_POST_URL = '@Url.Action("PostListIndex", "ShopListHistory")';
+
+    </script>
+}
