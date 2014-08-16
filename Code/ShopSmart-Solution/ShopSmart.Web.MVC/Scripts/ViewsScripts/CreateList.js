@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
 
+    SetSubmitButtenState();
+
     /*Dropdown click handler*/
     $(".dropdown ul li a").click(function(e){
         var $item = $(e.target);
@@ -8,15 +10,14 @@
     });
 
     $(".chkToBuy").bind('click', function () {
-        var itemCount = $(".chkToBuy:checkbox:checked").length;
-        var isList = itemCount > 1;
-        $("#btnGetList").prop('disabled', !isList);
+        SetSubmitButtenState();
     });
 
 
     
     $("#txbFilter").bind('keyup', ApplyFilter);
     $(".radioFilter").bind('click', ApplyFilter);
+
     
 
     $("#btnGetList").click(function() {        
@@ -136,4 +137,10 @@ function ApplyFilter() {
     }, 500);
 
 
+}
+
+function SetSubmitButtenState() {
+    var itemCount = $(".chkToBuy:checkbox:checked").length;
+    var isList = itemCount > 1;
+    $("#btnGetList").prop('disabled', !isList);
 }

@@ -15,12 +15,15 @@ namespace ShopSmart.Web.MVC.Controllers
 
             var settings = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["ShopSmartEntities"];
 
-            ViewBag.Markets = this._Markets;
-
             //var con = new System.Data.SqlClient.SqlConnection();
             var shopListCandidatesItems = this._logics.GetAllShoplistCandidates(this._CurrentShopList);
-           
-           
+
+            if (this._CurrentShopList != null)
+            {
+                this._Markets = this._Markets.OrderByDescending(m => m.Id == this._CurrentShopList.SuperMarketId).ToList();
+
+            }
+            ViewBag.Markets = this._Markets;
             return View(shopListCandidatesItems); 
         }
 

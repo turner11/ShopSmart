@@ -24,11 +24,11 @@
                 {
                     if (i == 1)
                     {
-            <li role="presentation" class="divider"></li>
+                        <li role="presentation" class="divider"></li>
                     }
                     var market = markets[i];
 
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">@market.Name</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">@market.Name</a></li>
 
                 }
             }
@@ -38,14 +38,14 @@
 
     <button class="btn btn-primary btn-large" disabled="disabled" id="btnGetList">Get List!</button>
     <div id="divFilterRdb" class="filtersdiv">
-        <span >
+        <span>
             <label class="radio-inline">
                 <input type="radio" class="radioFilter" id="chbShowAll" name="chbFilter" checked="checked">Show All Item
-                </label>
+            </label>
             <label class="radio-inline">
                 <input type="radio" class="radioFilter" id="chbShowSelected" name="chbfilter"> Show Selected Items
-                </label>
-</span>
+            </label>
+        </span>
         <br />
         <input type="text" class="textbox" id="txbFilter" />
     </div>

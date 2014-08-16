@@ -300,20 +300,20 @@ namespace ShopSmart.Bl
             
         }
 
-        public IEnumerable<ShoplistItemCandidate> GetAllShoplistCandidates(ShopList shopListBase)
+        public List<ShoplistItemCandidate> GetAllShoplistCandidates(ShopList shopListBase)
         {
             var allProducts = this.GetAllProducts();
-            var items = allProducts.Select(p => new ShoplistItemCandidate(p));
+            var items = allProducts.Select(p => new ShoplistItemCandidate(p)).ToList();
 
             if (shopListBase != null)
             {
-                foreach (var shopItem in shopListBase.ShoplistItems)
+                foreach (var candidate in items)
                 {
-                    var matchingItem = items.Where(i => i.Id == shopItem.Id).FirstOrDefault();
+                    var matchingItem = shopListBase.ShoplistItems.Where(si => si.Product.Id == candidate.Id).FirstOrDefault();
                     if (matchingItem != null)
                     {
-                        matchingItem.Quantity = shopItem.Quantity;
-                        matchingItem.ToBuy = true;
+                        candidate.Quantity = matchingItem.Quantity;
+                        candidate.ToBuy = true;
                     }
                 }
             }

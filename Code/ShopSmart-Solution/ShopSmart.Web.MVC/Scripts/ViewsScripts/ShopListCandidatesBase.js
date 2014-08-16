@@ -22,6 +22,9 @@ window.onload = function ()
         var currentRow = $(e.target).closest('tr');
         SetTotalForRow(currentRow);
     });
+
+    
+
     $(".txbQuantity").keyup(function(e) {
        //debugger
         if (isModifyingQuntities) { return;}
