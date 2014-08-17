@@ -201,7 +201,6 @@
     <Content Include="Newtonsoft.Json.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Images\blur\Thumbs.db" />
     <None Include="Properties\PublishProfiles\Shop-Smart.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
