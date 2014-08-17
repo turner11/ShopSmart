@@ -241,6 +241,7 @@
     <Content Include="Views\CreateList\ShopListCandidatesBase.cshtml" />
     <Content Include="Views\DisplayList\DisplayList.cshtml" />
     <Content Include="Views\ShopListHistory\Index.cshtml" />
+    <Content Include="Views\Web.config" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
