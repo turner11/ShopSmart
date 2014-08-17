@@ -27,7 +27,7 @@ namespace ShopSmart.Web.MVC.Tests.Controllers
 
         [TestMethod]
         public void About()
-        {
+        { 
             // Arrange
             HomeController controller = new HomeController();
 
