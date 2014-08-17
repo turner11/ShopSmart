@@ -185,10 +185,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\1280x720.jpg" />
-    <Content Include="Images\blue-green.jpg" />
-    <Content Include="Images\blue.jpg" />
-    <Content Include="Images\blue2.jpg" />
+    <Content Include="Images\1280x720.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\blue-green.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\blue.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\blue2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\blur\1.jpg" />
     <Content Include="Images\blur\2.jpg" />
     <Content Include="Images\blur\3.jpg" />
@@ -197,7 +205,9 @@
     <Content Include="Images\blur\6.jpg" />
     <Content Include="Images\blur\7.jpg" />
     <Content Include="Images\blur\8.jpg" />
-    <Content Include="Images\nature.jpg" />
+    <Content Include="Images\nature.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Newtonsoft.Json.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
