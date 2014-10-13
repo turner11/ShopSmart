@@ -146,10 +146,14 @@ namespace ShopSmart.Client
         /// </summary>
         private void RefreshData()
         {
+            var currentShpoList = GetShoppingList();
+
             this.GetDbItems();
             this.BindSuperMarkets();
             this.BindCategories();
             this.BindProducts();
+
+            this.MatchGuiToShoplist(currentShpoList);
         }
         
         #endregion
@@ -762,17 +766,49 @@ namespace ShopSmart.Client
         /// <param name="shopList">The shop list.</param>
         private void MatchGuiToShoplist(ShopList shopList)
         {
-            List<KeyValuePair<int, int>> quantityByProductIds = shopList.ShoplistItems.Select(si => new KeyValuePair<int, int>(si.ProductId, si.Quantity)).ToList();
-            for (int i = 0; i < this.gvProducts.Rows.Count; i++)
+            int temp;
+            
+            
+            //clear current selection
+            this.gvProducts.Rows.Cast<DataGridViewRow>().Where(r => 
+                                (bool)r.Cells[DataTableConstans.COL_NAME_TO_BUY].Value
+                                || (int.TryParse((r.Cells[DataTableConstans.COL_NAME_QUANTITY].Value ?? "").ToString(), out temp) && temp > 0))
+                .ToList().ForEach(row => 
+                    {
+                        var updateAction = new Action(()=>
+                            {
+                                row.Cells[DataTableConstans.COL_NAME_TO_BUY].Value = false; //TODO: why does this have no effect?
+                                int toBuyColIndex = this.gvProducts.Columns[DataTableConstans.COL_NAME_TO_BUY].Index;
+                                this.HandleRowChanged(toBuyColIndex, row);
+                            });
+                        if (this.gvProducts.InvokeRequired)
+                        {
+                            this.gvProducts.BeginInvoke(updateAction);
+                        }
+                        else
+                        {
+                            updateAction();
+                        }
+                    });
+            
+            var relevantIds = shopList.ShoplistItems.Select(si =>si.ProductId).ToList();
+            var relevantRows = this.gvProducts.Rows.Cast<DataGridViewRow>().Where(r => relevantIds.Contains((int)r.Cells[DataTableConstans.COL_NAME_ID].Value)).ToArray();
+
+            List<KeyValuePair<int, int>> quantityByProductIds = shopList.ShoplistItems.Select(si => new KeyValuePair<int, int>(si.Product.Id, si.Quantity)).ToList();
+            for (int i = 0; i < relevantRows.Length; i++)
             {
-                DataGridViewRow row = this.gvProducts.Rows[i];
+                DataGridViewRow row = relevantRows[i];
                 int productId = (int)row.Cells[DataTableConstans.COL_NAME_ID].Value;
                 //get the quantiny and product Id of this row
                 KeyValuePair<int, int> currPriceByProduct = quantityByProductIds.Where(pair => pair.Key == productId).FirstOrDefault();
-                bool isProductInList = currPriceByProduct.Key > 0; ;
+               // bool isProductInList = currPriceByProduct.Key >= 0; ;
+               
+               // var prod = row.Cells[DataTableConstans.COL_NAME_PRODUCT].Value;
+               // row.Cells[DataTableConstans.COL_NAME_TO_BUY].Value = isProductInList;
                 //set values in grid view
-                gvProducts.Rows[i].Cells[DataTableConstans.COL_NAME_TO_BUY].Value = isProductInList;
-                gvProducts.Rows[i].Cells[DataTableConstans.COL_NAME_QUANTITY].Value = isProductInList ? currPriceByProduct.Value.ToString() : String.Empty;
+                row.Cells[DataTableConstans.COL_NAME_QUANTITY].Value = currPriceByProduct.Value.ToString();
+                int quantColIndex = this.gvProducts.Columns[DataTableConstans.COL_NAME_QUANTITY].Index;
+                this.HandleRowChanged(quantColIndex, row);
 
 
             }
@@ -981,20 +1017,28 @@ namespace ShopSmart.Client
         /// <param name="e">The <see cref="DataGridViewCellEventArgs"/> instance containing the event data.</param>
         private void gvProducts_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            var columIndex = e.ColumnIndex;
             DataGridViewRow row = this.gvProducts.Rows[e.RowIndex];
+            this.HandleRowChanged(columIndex, row);
+           
+
+        }
+
+        private void HandleRowChanged(int columIndex, DataGridViewRow row)
+        {
             DataGridViewCell cllQuant = row.Cells[DataTableConstans.COL_NAME_QUANTITY];
             var cllToBuy = row.Cells[DataTableConstans.COL_NAME_TO_BUY] as DataGridViewCheckBoxCell;
 
 
-            if (e.ColumnIndex == this.gvProducts.Columns[DataTableConstans.COL_NAME_QUANTITY].Index)
+            if (columIndex == this.gvProducts.Columns[DataTableConstans.COL_NAME_QUANTITY].Index)
             {
                 #region Remove to buy mark if quantity is 0
-                
+
                 object objQuant = cllQuant.Value;
                 int quantity;
                 if (objQuant != null && int.TryParse(objQuant.ToString(), out quantity))
                 {
-                   
+
                     if (cllToBuy != null)
                     {
                         cllToBuy.Value = quantity > 0;
@@ -1003,24 +1047,22 @@ namespace ShopSmart.Client
                     {
                         Logger.Log("Could not find to-buy cell");
                     }
-                } 
+                }
                 #endregion
             }
-            else if (e.ColumnIndex == this.gvProducts.Columns[DataTableConstans.COL_NAME_TO_BUY].Index)
+            else if (columIndex == this.gvProducts.Columns[DataTableConstans.COL_NAME_TO_BUY].Index)
             {
                 bool toBuy = cllToBuy != null && Convert.ToBoolean(cllToBuy.Value);
                 if (!toBuy)
                 {
                     cllQuant.Value = String.Empty;
                 }
-                else if (String.IsNullOrEmpty(cllQuant.Value as string)|| int.Parse(cllQuant.Value.ToString()) == 0)
+                else if (String.IsNullOrEmpty(cllQuant.Value as string) || int.Parse(cllQuant.Value.ToString()) == 0)
                 {
                     //if was marked to buy, make sure there is a quantity
                     cllQuant.Value = 1;
                 }
             }
-           
-
         }
 
         /// <summary>

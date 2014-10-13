@@ -95,7 +95,7 @@ namespace ShopSmart.Dal
             /* Filter by username */
             if (!String.IsNullOrWhiteSpace(userName))
             {
-                users = users.Where(customer => customer.UserName == userName).ToList();
+                users = users.Where(customer => customer.UserName.Equals(userName,StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
             /* Filter by password */
             if (!String.IsNullOrWhiteSpace(password))

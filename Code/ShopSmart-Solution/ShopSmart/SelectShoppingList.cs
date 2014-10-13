@@ -55,9 +55,10 @@ namespace ShopSmart.Client
             
             dt.Columns.Add(textHeader, typeof(string));
             dt.Columns.Add(SelectShoppingList.DATA_HEADER, typeof(ShopList));
-            
+
+            var orderredShoplists = this._shoppingLists.OrderByDescending(l => l.Date);
             //build data table
-            foreach (ShopList currList in this._shoppingLists)
+            foreach (ShopList currList in orderredShoplists)
             {
                 DataRow currRow = dt.NewRow();
                 
@@ -66,6 +67,7 @@ namespace ShopSmart.Client
 
                 dt.Rows.Add(currRow);
             }
+           
 
             this.gvShopLists.DataSource = dt;
 
