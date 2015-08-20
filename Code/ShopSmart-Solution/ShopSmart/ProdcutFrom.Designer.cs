@@ -36,8 +36,8 @@
             this.nupPrice = new System.Windows.Forms.NumericUpDown();
             this.cmbCategory = new System.Windows.Forms.ComboBox();
             this.btnOk = new System.Windows.Forms.Button();
-            this.btnEditCategory = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnEditCategory = new System.Windows.Forms.Button();
             this.btnEditComercials = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupPrice)).BeginInit();
@@ -129,17 +129,32 @@
             // btnOk
             // 
             this.btnOk.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnOk.Location = new System.Drawing.Point(152, 119);
+            this.btnOk.AutoSize = true;
+            this.btnOk.Location = new System.Drawing.Point(152, 118);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(91, 23);
+            this.btnOk.Size = new System.Drawing.Size(91, 26);
             this.btnOk.TabIndex = 6;
             this.btnOk.Text = "אישור";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnCancel.AutoSize = true;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(21, 118);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(108, 26);
+            this.btnCancel.TabIndex = 7;
+            this.btnCancel.Text = "ביטול";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // btnEditCategory
             // 
             this.btnEditCategory.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnEditCategory.AutoSize = true;
             this.btnEditCategory.Location = new System.Drawing.Point(159, 89);
             this.btnEditCategory.Name = "btnEditCategory";
             this.btnEditCategory.Size = new System.Drawing.Size(108, 23);
@@ -148,21 +163,10 @@
             this.btnEditCategory.UseVisualStyleBackColor = true;
             this.btnEditCategory.Click += new System.EventHandler(this.btnEditCategory_Click);
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(21, 119);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(108, 23);
-            this.btnCancel.TabIndex = 7;
-            this.btnCancel.Text = "ביטול";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // btnEditComercials
             // 
             this.btnEditComercials.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnEditComercials.AutoSize = true;
             this.btnEditComercials.Location = new System.Drawing.Point(21, 89);
             this.btnEditComercials.Name = "btnEditComercials";
             this.btnEditComercials.Size = new System.Drawing.Size(108, 23);

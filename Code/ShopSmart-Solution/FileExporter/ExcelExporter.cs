@@ -428,7 +428,7 @@ namespace FileExporter
             cell.StyleID = "s77";
             cell.Data.Type = DataType.Number;
             cell.Data.Text = "150.54000000000002";
-            cell.Formula = "=SUM(R[-21]C:R[-2]C)";
+            cell.Formula = "=SUM(R4C:R[-1]C)";
             cell.NamedCell.Add("Print_Area");
         }
     }

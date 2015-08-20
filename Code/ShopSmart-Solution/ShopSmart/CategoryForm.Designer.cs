@@ -94,6 +94,11 @@
             // 
             this.nupSortValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nupSortValue.Location = new System.Drawing.Point(113, 31);
+            this.nupSortValue.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.nupSortValue.Name = "nupSortValue";
             this.nupSortValue.Size = new System.Drawing.Size(121, 22);
             this.nupSortValue.TabIndex = 3;

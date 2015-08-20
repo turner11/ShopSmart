@@ -66,7 +66,7 @@ namespace ShopSmart.Bl
             return list;
         }
 
-        public ShopList GetShoppingList(Dictionary<Product, int> quantityByProduct, Supermarket market, Customer customer)
+        public ShopList GetShoppingList(Dictionary<Product, int> quantityByProduct, Dictionary<Product, string>  commentByProduct, Supermarket market, Customer customer)
         {
             ShopList list = new ShopList();
 
@@ -79,6 +79,10 @@ namespace ShopSmart.Bl
                 item.ProductId = product.Id;
                 item.Quantity = quantity;
                 item.ShopList = list;
+                if (commentByProduct.ContainsKey(product))
+                {
+                    //item.no
+                }
                 list.ShoplistItems.Add(item);
 
             }

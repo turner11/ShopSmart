@@ -383,6 +383,17 @@ namespace ShopSmart.Client
                    }
                    return quantity;
                };
+
+            Func<DataGridViewRow, string> getRowNote = (row) =>
+            {
+                DataGridViewCell cllComment = row.Cells[DataTableConstans.COL_NAME_NOTES];
+                string note = String.Empty; ;
+                if (cllComment.Value != DBNull.Value)
+                {
+                    note = (cllComment.Value ?? "").ToString();
+                }
+                return note;
+            };
             Func<DataGridViewRow, bool> shouldAddToList = (row) =>
                 {
                     bool toBuy = Convert.ToBoolean(row.Cells[DataTableConstans.COL_NAME_TO_BUY].Value);
@@ -396,11 +407,16 @@ namespace ShopSmart.Client
                 }; 
             #endregion
 
-            Dictionary<Product,int> quantityByProduct = new Dictionary<Product,int>();
+            var quantityByProduct = new Dictionary<Product, int>();
+            var commentByProduct = new Dictionary<Product, string>();
+
            
-            this.gvProducts.Rows.Cast<DataGridViewRow>()
-                                                    .Where(r => shouldAddToList(r)).ToList()
-                                                    .ForEach(r=> quantityByProduct.Add(getProductFromRow(r),getRowQuantity(r)));
+            var rowsToAdd = this.gvProducts.Rows.Cast<DataGridViewRow>().Where(r => shouldAddToList(r)).ToList();
+            var formattedData = rowsToAdd.Select(row => new { product = getProductFromRow(row), quantity = getRowQuantity(row), comment = getRowNote(row) }).ToList();
+            formattedData.ForEach(an => quantityByProduct.Add(an.product, an.quantity));
+            formattedData.ForEach(an => commentByProduct.Add(an.product, an.comment));
+
+            
 
             Supermarket market = this.cmbSuperMarkets.SelectedItem as Supermarket;
             ShopList list = this._logicsService.GetShoppingList(quantityByProduct, market,this.CurrentUser);
