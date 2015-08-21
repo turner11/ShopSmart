@@ -419,7 +419,7 @@ namespace ShopSmart.Client
             
 
             Supermarket market = this.cmbSuperMarkets.SelectedItem as Supermarket;
-            ShopList list = this._logicsService.GetShoppingList(quantityByProduct, market,this.CurrentUser);
+            ShopList list = this._logicsService.GetShoppingList(quantityByProduct, commentByProduct, market, this.CurrentUser);
             Logger.Log(String.Format("got shopping list from gui: {0}", list.ToString()));
             return list;
         }

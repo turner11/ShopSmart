@@ -4,93 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ShopSmartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="ShopSmartModelStoreContainer">
-          <EntitySet Name="Categories" EntityType="ShopSmartModel.Store.Categories" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CategorySorts" EntityType="ShopSmartModel.Store.CategorySorts" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Commercials" EntityType="ShopSmartModel.Store.Commercials" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Customers" EntityType="ShopSmartModel.Store.Customers" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Products" EntityType="ShopSmartModel.Store.Products" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ShoplistItems" EntityType="ShopSmartModel.Store.ShoplistItems" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ShopLists" EntityType="ShopSmartModel.Store.ShopLists" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Supermarkets" EntityType="ShopSmartModel.Store.Supermarkets" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="sysdiagrams" EntityType="ShopSmartModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="UserTypes" EntityType="ShopSmartModel.Store.UserTypes" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="FullyJoinedProducts" EntityType="ShopSmartModel.Store.FullyJoinedProducts" store:Type="Views" store:Schema="dbo" store:Name="FullyJoinedProducts">
-            <DefiningQuery>SELECT 
-      [FullyJoinedProducts].[Id] AS [Id], 
-      [FullyJoinedProducts].[ProductName] AS [ProductName], 
-      [FullyJoinedProducts].[Price] AS [Price], 
-      [FullyJoinedProducts].[Main] AS [Main], 
-      [FullyJoinedProducts].[CategoryId] AS [CategoryId], 
-      [FullyJoinedProducts].[CategoryName] AS [CategoryName], 
-      [FullyJoinedProducts].[CategorySort] AS [CategorySort], 
-      [FullyJoinedProducts].[SuperMarketName] AS [SuperMarketName], 
-      [FullyJoinedProducts].[SuperMarketId] AS [SuperMarketId]
-      FROM [dbo].[FullyJoinedProducts] AS [FullyJoinedProducts]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="FullyJoinedShoppingLists" EntityType="ShopSmartModel.Store.FullyJoinedShoppingLists" store:Type="Views" store:Schema="dbo" store:Name="FullyJoinedShoppingLists">
-            <DefiningQuery>SELECT 
-      [FullyJoinedShoppingLists].[Id] AS [Id], 
-      [FullyJoinedShoppingLists].[ProductName] AS [ProductName], 
-      [FullyJoinedShoppingLists].[Price] AS [Price], 
-      [FullyJoinedShoppingLists].[Main] AS [Main], 
-      [FullyJoinedShoppingLists].[CategoryId] AS [CategoryId], 
-      [FullyJoinedShoppingLists].[CategoryName] AS [CategoryName], 
-      [FullyJoinedShoppingLists].[CategorySort] AS [CategorySort], 
-      [FullyJoinedShoppingLists].[ItemId] AS [ItemId], 
-      [FullyJoinedShoppingLists].[Quantity] AS [Quantity], 
-      [FullyJoinedShoppingLists].[ShopListTitle] AS [ShopListTitle], 
-      [FullyJoinedShoppingLists].[ShopListDate] AS [ShopListDate], 
-      [FullyJoinedShoppingLists].[ShopListId] AS [ShopListId], 
-      [FullyJoinedShoppingLists].[SuperMarketName] AS [SuperMarketName], 
-      [FullyJoinedShoppingLists].[SuperMarketId] AS [SuperMarketId], 
-      [FullyJoinedShoppingLists].[CustomerUserName] AS [CustomerUserName], 
-      [FullyJoinedShoppingLists].[CustomerId] AS [CustomerId]
-      FROM [dbo].[FullyJoinedShoppingLists] AS [FullyJoinedShoppingLists]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_CategorySorts_Categories" Association="ShopSmartModel.Store.FK_CategorySorts_Categories">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="CategorySorts" EntitySet="CategorySorts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CategorySorts_Supermarkets" Association="ShopSmartModel.Store.FK_CategorySorts_Supermarkets">
-            <End Role="Supermarkets" EntitySet="Supermarkets" />
-            <End Role="CategorySorts" EntitySet="CategorySorts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Commercials_Products" Association="ShopSmartModel.Store.FK_Commercials_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Commercials" EntitySet="Commercials" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customers_UserTypes" Association="ShopSmartModel.Store.FK_Customers_UserTypes">
-            <End Role="UserTypes" EntitySet="UserTypes" />
-            <End Role="Customers" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemsToBuy_Products" Association="ShopSmartModel.Store.FK_ItemsToBuy_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="ShoplistItems" EntitySet="ShoplistItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemsToBuy_ShopLists" Association="ShopSmartModel.Store.FK_ItemsToBuy_ShopLists">
-            <End Role="ShopLists" EntitySet="ShopLists" />
-            <End Role="ShoplistItems" EntitySet="ShoplistItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Categories" Association="ShopSmartModel.Store.FK_Products_Categories">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ShopLists_Customers" Association="ShopSmartModel.Store.FK_ShopLists_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="ShopLists" EntitySet="ShopLists" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ShopLists_Supermarkets" Association="ShopSmartModel.Store.FK_ShopLists_Supermarkets">
-            <End Role="Supermarkets" EntitySet="Supermarkets" />
-            <End Role="ShopLists" EntitySet="ShopLists" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="ShopSmartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -99,7 +18,7 @@
             <PropertyRef Name="CategoryId" />
             <PropertyRef Name="SupermarketId" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="SupermarketId" Type="int" Nullable="false" />
           <Property Name="SortValue" Type="int" Nullable="false" />
@@ -108,7 +27,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Image" Type="image" Nullable="false" />
         </EntityType>
@@ -116,17 +35,17 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="nvarchar" Nullable="false" MaxLength="10" />
-          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="UserTypeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="20" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="Notes" Type="nvarchar" MaxLength="255" />
@@ -139,7 +58,7 @@
             <PropertyRef Name="ShopListId" />
             <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShopListId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
@@ -148,8 +67,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="CustomerId" Type="int" />
           <Property Name="SuperMarketId" Type="int" />
@@ -158,17 +77,17 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
@@ -176,12 +95,11 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'ShopSmart.dbo.FullyJoinedProducts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
+warning 6002: The table/view 'ShopSmart.dbo.FullyJoinedProducts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="FullyJoinedProducts">
           <Key>
             <PropertyRef Name="Id" />
@@ -198,12 +116,11 @@
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
           <Property Name="CategorySort" Type="int" Nullable="false" />
-          <Property Name="SuperMarketName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="SuperMarketName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SuperMarketId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'ShopSmart.dbo.FullyJoinedShoppingLists' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
+warning 6002: The table/view 'ShopSmart.dbo.FullyJoinedShoppingLists' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="FullyJoinedShoppingLists">
           <Key>
             <PropertyRef Name="Id" />
@@ -229,17 +146,17 @@
           <Property Name="CategorySort" Type="int" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
-          <Property Name="ShopListTitle" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ShopListTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ShopListDate" Type="date" Nullable="false" />
           <Property Name="ShopListId" Type="int" Nullable="false" />
-          <Property Name="SuperMarketName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="SuperMarketName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SuperMarketId" Type="int" Nullable="false" />
-          <Property Name="CustomerUserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CustomerUserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_CategorySorts_Categories">
-          <End Role="Categories" Type="ShopSmartModel.Store.Categories" Multiplicity="1" />
-          <End Role="CategorySorts" Type="ShopSmartModel.Store.CategorySorts" Multiplicity="*" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="CategorySorts" Type="Self.CategorySorts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="Id" />
@@ -250,8 +167,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CategorySorts_Supermarkets">
-          <End Role="Supermarkets" Type="ShopSmartModel.Store.Supermarkets" Multiplicity="1" />
-          <End Role="CategorySorts" Type="ShopSmartModel.Store.CategorySorts" Multiplicity="*" />
+          <End Role="Supermarkets" Type="Self.Supermarkets" Multiplicity="1" />
+          <End Role="CategorySorts" Type="Self.CategorySorts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Supermarkets">
               <PropertyRef Name="Id" />
@@ -262,8 +179,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Commercials_Products">
-          <End Role="Products" Type="ShopSmartModel.Store.Products" Multiplicity="1" />
-          <End Role="Commercials" Type="ShopSmartModel.Store.Commercials" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Commercials" Type="Self.Commercials" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
@@ -274,8 +191,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Customers_UserTypes">
-          <End Role="UserTypes" Type="ShopSmartModel.Store.UserTypes" Multiplicity="1" />
-          <End Role="Customers" Type="ShopSmartModel.Store.Customers" Multiplicity="*" />
+          <End Role="UserTypes" Type="Self.UserTypes" Multiplicity="1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserTypes">
               <PropertyRef Name="Id" />
@@ -286,8 +203,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ItemsToBuy_Products">
-          <End Role="Products" Type="ShopSmartModel.Store.Products" Multiplicity="1" />
-          <End Role="ShoplistItems" Type="ShopSmartModel.Store.ShoplistItems" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ShoplistItems" Type="Self.ShoplistItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
@@ -298,8 +215,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ItemsToBuy_ShopLists">
-          <End Role="ShopLists" Type="ShopSmartModel.Store.ShopLists" Multiplicity="1" />
-          <End Role="ShoplistItems" Type="ShopSmartModel.Store.ShoplistItems" Multiplicity="*" />
+          <End Role="ShopLists" Type="Self.ShopLists" Multiplicity="1" />
+          <End Role="ShoplistItems" Type="Self.ShoplistItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ShopLists">
               <PropertyRef Name="Id" />
@@ -310,8 +227,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Categories">
-          <End Role="Categories" Type="ShopSmartModel.Store.Categories" Multiplicity="1" />
-          <End Role="Products" Type="ShopSmartModel.Store.Products" Multiplicity="*" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="Id" />
@@ -322,8 +239,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ShopLists_Customers">
-          <End Role="Customers" Type="ShopSmartModel.Store.Customers" Multiplicity="0..1" />
-          <End Role="ShopLists" Type="ShopSmartModel.Store.ShopLists" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="ShopLists" Type="Self.ShopLists" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="Id" />
@@ -334,8 +251,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ShopLists_Supermarkets">
-          <End Role="Supermarkets" Type="ShopSmartModel.Store.Supermarkets" Multiplicity="0..1" />
-          <End Role="ShopLists" Type="ShopSmartModel.Store.ShopLists" Multiplicity="*" />
+          <End Role="Supermarkets" Type="Self.Supermarkets" Multiplicity="0..1" />
+          <End Role="ShopLists" Type="Self.ShopLists" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Supermarkets">
               <PropertyRef Name="Id" />
@@ -345,7 +262,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetProductsBySupermarkrt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SuperMarketId" Type="int" Mode="In" />
           <ReturnType>
@@ -358,7 +275,7 @@
                 <Property Name="CategoryId" Type="int" Nullable="false" />
                 <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
                 <Property Name="CategorySort" Type="int" Nullable="false" />
-                <Property Name="SuperMarketName" Type="nvarchar" Nullable="false" MaxLength="50" />
+                <Property Name="SuperMarketName" Type="nvarchar" MaxLength="50" Nullable="false" />
                 <Property Name="SuperMarketId" Type="int" Nullable="false" />
               </RowType>
             </CollectionType>
@@ -394,6 +311,87 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ShopSmartModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategorySorts" EntityType="Self.CategorySorts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Commercials" EntityType="Self.Commercials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoplistItems" EntityType="Self.ShoplistItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShopLists" EntityType="Self.ShopLists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supermarkets" EntityType="Self.Supermarkets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FullyJoinedProducts" EntityType="Self.FullyJoinedProducts" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[FullyJoinedProducts].[Id] AS [Id], 
+[FullyJoinedProducts].[ProductName] AS [ProductName], 
+[FullyJoinedProducts].[Price] AS [Price], 
+[FullyJoinedProducts].[Main] AS [Main], 
+[FullyJoinedProducts].[CategoryId] AS [CategoryId], 
+[FullyJoinedProducts].[CategoryName] AS [CategoryName], 
+[FullyJoinedProducts].[CategorySort] AS [CategorySort], 
+[FullyJoinedProducts].[SuperMarketName] AS [SuperMarketName], 
+[FullyJoinedProducts].[SuperMarketId] AS [SuperMarketId]
+FROM [dbo].[FullyJoinedProducts] AS [FullyJoinedProducts]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FullyJoinedShoppingLists" EntityType="Self.FullyJoinedShoppingLists" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[FullyJoinedShoppingLists].[Id] AS [Id], 
+[FullyJoinedShoppingLists].[ProductName] AS [ProductName], 
+[FullyJoinedShoppingLists].[Price] AS [Price], 
+[FullyJoinedShoppingLists].[Main] AS [Main], 
+[FullyJoinedShoppingLists].[CategoryId] AS [CategoryId], 
+[FullyJoinedShoppingLists].[CategoryName] AS [CategoryName], 
+[FullyJoinedShoppingLists].[CategorySort] AS [CategorySort], 
+[FullyJoinedShoppingLists].[ItemId] AS [ItemId], 
+[FullyJoinedShoppingLists].[Quantity] AS [Quantity], 
+[FullyJoinedShoppingLists].[ShopListTitle] AS [ShopListTitle], 
+[FullyJoinedShoppingLists].[ShopListDate] AS [ShopListDate], 
+[FullyJoinedShoppingLists].[ShopListId] AS [ShopListId], 
+[FullyJoinedShoppingLists].[SuperMarketName] AS [SuperMarketName], 
+[FullyJoinedShoppingLists].[SuperMarketId] AS [SuperMarketId], 
+[FullyJoinedShoppingLists].[CustomerUserName] AS [CustomerUserName], 
+[FullyJoinedShoppingLists].[CustomerId] AS [CustomerId]
+FROM [dbo].[FullyJoinedShoppingLists] AS [FullyJoinedShoppingLists]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CategorySorts_Categories" Association="Self.FK_CategorySorts_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CategorySorts" EntitySet="CategorySorts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategorySorts_Supermarkets" Association="Self.FK_CategorySorts_Supermarkets">
+            <End Role="Supermarkets" EntitySet="Supermarkets" />
+            <End Role="CategorySorts" EntitySet="CategorySorts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Commercials_Products" Association="Self.FK_Commercials_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Commercials" EntitySet="Commercials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customers_UserTypes" Association="Self.FK_Customers_UserTypes">
+            <End Role="UserTypes" EntitySet="UserTypes" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsToBuy_Products" Association="Self.FK_ItemsToBuy_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ShoplistItems" EntitySet="ShoplistItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsToBuy_ShopLists" Association="Self.FK_ItemsToBuy_ShopLists">
+            <End Role="ShopLists" EntitySet="ShopLists" />
+            <End Role="ShoplistItems" EntitySet="ShoplistItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopLists_Customers" Association="Self.FK_ShopLists_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="ShopLists" EntitySet="ShopLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopLists_Supermarkets" Association="Self.FK_ShopLists_Supermarkets">
+            <End Role="Supermarkets" EntitySet="Supermarkets" />
+            <End Role="ShopLists" EntitySet="ShopLists" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -978,6 +976,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

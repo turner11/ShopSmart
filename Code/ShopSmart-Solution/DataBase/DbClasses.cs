@@ -186,6 +186,7 @@ namespace ShopSmart.Dal
     /// </summary>
     public partial class ShoplistItem:IComparable
     {
+        public String Notes { get; set; }
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>

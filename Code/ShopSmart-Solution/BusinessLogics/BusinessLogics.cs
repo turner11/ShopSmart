@@ -81,7 +81,7 @@ namespace ShopSmart.Bl
                 item.ShopList = list;
                 if (commentByProduct.ContainsKey(product))
                 {
-                    //item.no
+                    item.Notes = commentByProduct[product];
                 }
                 list.ShoplistItems.Add(item);
 

@@ -398,7 +398,7 @@ namespace FileExporter
                 workSHeetDatacell = workSHeetDataRow.Cells.Add();
                 workSHeetDatacell.StyleID = "s68";
                 workSHeetDatacell.Data.Type = DataType.String;
-                workSHeetDatacell.Data.Text = currItem.Product.Notes;
+                workSHeetDatacell.Data.Text = currItem.Notes;
                 workSHeetDatacell.NamedCell.Add("Print_Area");
                 workSHeetDatacell = workSHeetDataRow.Cells.Add();
                 workSHeetDatacell.StyleID = "s70";

@@ -286,7 +286,7 @@ namespace ShopSmart.Dal
                 inDb.Supermarket = list.Supermarket;
                 inDb.Customer = list.Customer;
                 inDb.Date = list.Date;
-
+                
                 inDb.Title = list.Title ?? String.Empty;
             }
             else
