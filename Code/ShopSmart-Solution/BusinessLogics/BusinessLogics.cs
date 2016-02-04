@@ -66,6 +66,10 @@ namespace ShopSmart.Bl
             return list;
         }
 
+        public ShopList GetShoppingList(Dictionary<Product, int> quantityByProduct,  Supermarket market, Customer customer)
+        {
+            return this.GetShoppingList(quantityByProduct, new Dictionary<Product, string>(), market, customer);
+        }
         public ShopList GetShoppingList(Dictionary<Product, int> quantityByProduct, Dictionary<Product, string>  commentByProduct, Supermarket market, Customer customer)
         {
             ShopList list = new ShopList();

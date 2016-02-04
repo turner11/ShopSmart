@@ -373,54 +373,58 @@ namespace ShopSmart.Client
             Logger.Log("Getting shopping list from gui");
 
             #region Funcs for code reuse...
-            Func<DataGridViewRow, int> getRowQuantity = (row) =>
+            Func<DataRow, int> getRowQuantity = (row) =>
                {
-                   DataGridViewCell cllQuant = row.Cells[DataTableConstans.COL_NAME_QUANTITY];
+                   var quantObj = row[DataTableConstans.COL_NAME_QUANTITY];
                    int quantity = 0;
-                   if (cllQuant.Value != null)
+                   if (quantObj is int)
                    {
-                       int.TryParse(cllQuant.Value.ToString(), out quantity);
+                       quantity = (int)quantObj; 
                    }
                    return quantity;
                };
 
-            Func<DataGridViewRow, string> getRowNote = (row) =>
+            Func<DataRow, string> getRowNote = (row) =>
             {
-                DataGridViewCell cllComment = row.Cells[DataTableConstans.COL_NAME_NOTES];
+                var commentObj = row[DataTableConstans.COL_NAME_NOTES];
                 string note = String.Empty; ;
-                if (cllComment.Value != DBNull.Value)
+                if (commentObj is string)
                 {
-                    note = (cllComment.Value ?? "").ToString();
+                    note = (commentObj ?? "").ToString();
                 }
                 return note;
             };
-            Func<DataGridViewRow, bool> shouldAddToList = (row) =>
+            Func<DataRow, bool> shouldAddToList = (row) =>
                 {
-                    bool toBuy = Convert.ToBoolean(row.Cells[DataTableConstans.COL_NAME_TO_BUY].Value);
+                    bool toBuy = Convert.ToBoolean(row[DataTableConstans.COL_NAME_TO_BUY]);
                     int quantity = getRowQuantity(row);
                     return (toBuy && quantity > 0);
                 };
 
-            Func<DataGridViewRow, Product> getProductFromRow = (row) =>
+            Func<DataRow, Product> getProductFromRow = (row) =>
                 {
-                    return (Product)row.Cells[DataTableConstans.COL_NAME_PRODUCT].Value;
+                    return (Product)row[DataTableConstans.COL_NAME_PRODUCT];
                 }; 
             #endregion
 
             var quantityByProduct = new Dictionary<Product, int>();
             var commentByProduct = new Dictionary<Product, string>();
 
-           
-            var rowsToAdd = this.gvProducts.Rows.Cast<DataGridViewRow>().Where(r => shouldAddToList(r)).ToList();
-            var formattedData = rowsToAdd.Select(row => new { product = getProductFromRow(row), quantity = getRowQuantity(row), comment = getRowNote(row) }).ToList();
-            formattedData.ForEach(an => quantityByProduct.Add(an.product, an.quantity));
-            formattedData.ForEach(an => commentByProduct.Add(an.product, an.comment));
+            ShopList list = null
+            var dt = this.gvProducts.DataSource as DataTable;
+            if (dt != null)
+            {
+                var rowsToAdd = dt.Rows.OfType<DataRow>().Where(r => shouldAddToList(r)).ToList();
+                var formattedData = rowsToAdd.Select(row => new { product = getProductFromRow(row), quantity = getRowQuantity(row), comment = getRowNote(row) }).ToList();
+                formattedData.ForEach(an => quantityByProduct.Add(an.product, an.quantity));
+                formattedData.ForEach(an => commentByProduct.Add(an.product, an.comment));
 
-            
 
-            Supermarket market = this.cmbSuperMarkets.SelectedItem as Supermarket;
-            ShopList list = this._logicsService.GetShoppingList(quantityByProduct, commentByProduct, market, this.CurrentUser);
-            Logger.Log(String.Format("got shopping list from gui: {0}", list.ToString()));
+
+                Supermarket market = this.cmbSuperMarkets.SelectedItem as Supermarket;
+                list = this._logicsService.GetShoppingList(quantityByProduct, commentByProduct, market, this.CurrentUser);
+                Logger.Log(String.Format("got shopping list from gui: {0}", list.ToString()));
+            }
             return list;
         }
 
@@ -808,13 +812,15 @@ namespace ShopSmart.Client
                     });
             
             var relevantIds = shopList.ShoplistItems.Select(si =>si.ProductId).ToList();
-            var relevantRows = this.gvProducts.Rows.Cast<DataGridViewRow>().Where(r => relevantIds.Contains((int)r.Cells[DataTableConstans.COL_NAME_ID].Value)).ToArray();
+
+            var dt = this.gvProducts.DataSource as DataTable;
+            var relevantRows = dt.Rows.Cast<DataRow>().Where(r => relevantIds.Contains((int)r[DataTableConstans.COL_NAME_ID])).ToArray();
 
             List<KeyValuePair<int, int>> quantityByProductIds = shopList.ShoplistItems.Select(si => new KeyValuePair<int, int>(si.Product.Id, si.Quantity)).ToList();
             for (int i = 0; i < relevantRows.Length; i++)
             {
-                DataGridViewRow row = relevantRows[i];
-                int productId = (int)row.Cells[DataTableConstans.COL_NAME_ID].Value;
+                DataRow row = relevantRows[i];
+                int productId = (int)row[DataTableConstans.COL_NAME_ID];
                 //get the quantiny and product Id of this row
                 KeyValuePair<int, int> currPriceByProduct = quantityByProductIds.Where(pair => pair.Key == productId).FirstOrDefault();
                // bool isProductInList = currPriceByProduct.Key >= 0; ;
@@ -822,9 +828,10 @@ namespace ShopSmart.Client
                // var prod = row.Cells[DataTableConstans.COL_NAME_PRODUCT].Value;
                // row.Cells[DataTableConstans.COL_NAME_TO_BUY].Value = isProductInList;
                 //set values in grid view
-                row.Cells[DataTableConstans.COL_NAME_QUANTITY].Value = currPriceByProduct.Value.ToString();
+                row[DataTableConstans.COL_NAME_QUANTITY] = currPriceByProduct.Value.ToString();
                 int quantColIndex = this.gvProducts.Columns[DataTableConstans.COL_NAME_QUANTITY].Index;
-                this.HandleRowChanged(quantColIndex, row);
+                var gvRow = this.gvProducts.Rows.OfType<DataGridViewRow>().FirstOrDefault(r=>(int)(r.Cells[DataTableConstans.COL_NAME_ID].Value) == productId);
+                this.HandleRowChanged(quantColIndex, gvRow);
 
 
             }
@@ -1042,6 +1049,10 @@ namespace ShopSmart.Client
 
         private void HandleRowChanged(int columIndex, DataGridViewRow row)
         {
+            if (row == null)
+            {
+                return;
+            }
             DataGridViewCell cllQuant = row.Cells[DataTableConstans.COL_NAME_QUANTITY];
             var cllToBuy = row.Cells[DataTableConstans.COL_NAME_TO_BUY] as DataGridViewCheckBoxCell;
 
@@ -1238,6 +1249,38 @@ namespace ShopSmart.Client
         private void txbFilter_TextChanged(object sender, EventArgs e)
         {
             this.FilterProducts();
+        }
+        private void txbFilter_KeyUp(object sender, KeyEventArgs e)
+        {
+            if ((e.Shift || e.Control) && ((e.KeyData & Keys.Space) == Keys.Space) && this.txbFilter.SelectionStart == this.txbFilter.Text.Length)
+            {
+                var currText = this.txbFilter.Text;
+                if (currText.Trim().Length > 0)
+                {
+                    var revertedText = new string(this.txbFilter.Text.Take(currText.Length - 1).ToArray());
+                    this.txbFilter.Text = revertedText;
+                    this.txbFilter.SelectionLength= 0;
+                    this.txbFilter.SelectionStart = this.txbFilter.Text.Length;
+
+                    var idx = this.gvProducts.Rows.GetFirstRow(DataGridViewElementStates.Displayed);
+                    if (idx >= 0)
+                    {
+                        var row = this.gvProducts.Rows[idx];
+                        var cell = row.Cells[DataTableConstans.COL_NAME_ID] as DataGridViewTextBoxCell;
+                        if (cell != null && cell.Value is int)
+                        {
+                            var id = (int)cell.Value;
+                            var dt = this.gvProducts.DataSource as DataTable;
+                            var datarow = dt.Rows.OfType<DataRow>().Where(r => (int)r[DataTableConstans.COL_NAME_ID] == id ).FirstOrDefault();
+                           datarow[DataTableConstans.COL_NAME_TO_BUY] = !(bool)datarow[DataTableConstans.COL_NAME_TO_BUY];
+
+                            var gvRow = this.gvProducts.Rows.OfType<DataGridViewRow>().FirstOrDefault(r => (int)(r.Cells[DataTableConstans.COL_NAME_ID].Value) == id);
+                            int toBuyColIndex = this.gvProducts.Columns[DataTableConstans.COL_NAME_TO_BUY].Index;
+                            this.HandleRowChanged(toBuyColIndex, gvRow);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -1475,9 +1518,10 @@ namespace ShopSmart.Client
             private static extern bool AnimateWindow(IntPtr handle, int msec, int flags);
         }
 
+
         #endregion
 
-   
+        
     }
 
   
